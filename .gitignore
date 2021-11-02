@@ -3,3 +3,6 @@
 **/7777_documents
 **/6666_private
 **/5555_preliminary_analysis
+*.csv
+*.yaml
+.Rproj.user

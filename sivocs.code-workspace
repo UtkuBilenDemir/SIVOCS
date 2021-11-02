@@ -4,5 +4,7 @@
 			"path": "."
 		}
 	],
-	"settings": {}
+	"settings": {
+		"terminal.integrated.tabs.description": "${task}${separator}${local}${separator}${workspaceFolder}"
+	}
 }
