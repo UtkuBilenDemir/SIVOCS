@@ -2,23 +2,52 @@
 title: "SIVOCS"
 output: html_notebook
 ---
-```{r echo=FALSE, warnings=FALSE}
+```{r libraries, echo=FALSE, warning=FALSE}
 library(ggplot2)
 library(plotly)
 library(magrittr)
 ```
 
 
-```{r echo=FALSE, warnings=FALSE}
-df <- read.csv("./01_data/results-survey718586.csv")
-head(df)
+```{r echo=FALSE, warning=FALSE}
+na_values <- c("")
+df <- read.csv("../01_data/results-survey718586.csv", na = na_values)
 
+```
+
+```{r methods, echo=FALSE, warning=FALSE}
+
+barplot <- function (df, var) {
+  return(plot_ly(df, x = df[[var]]))
+}
 ```
 
 
 ## Age distribution
 
 ```{r}
-plot_ly(df, x = ~How.old.are.you.)
+barplot(df, 'How.old.are.you.')
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---
+
+```{r test}
+unique(df$How.old.are.you.)
 ```
 
