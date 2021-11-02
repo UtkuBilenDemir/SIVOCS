@@ -1,0 +1,24 @@
+---
+title: "SIVOCS"
+output: html_notebook
+---
+```{r echo=FALSE, warnings=FALSE}
+library(ggplot2)
+library(plotly)
+library(magrittr)
+```
+
+
+```{r echo=FALSE, warnings=FALSE}
+df <- read.csv("./01_data/results-survey718586.csv")
+head(df)
+
+```
+
+
+## Age distribution
+
+```{r}
+plot_ly(df, x = ~How.old.are.you.)
+```
+
