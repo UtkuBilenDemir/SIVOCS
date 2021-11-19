@@ -1,3 +1,1 @@
-df <- read.csv("./01_data/results-survey718586.csv")
-head(df)
-table(df$How.old.are.you.)
+data <- read.csv("./01_data/results-survey718586.csv")

@@ -19,28 +19,17 @@ survey_vector <- call_limer(method='list_surveys')
 # Convert the vector into a matrix
 survey_matrix <- matrix(survey_vector, ncol=5)
 
-print(survey_matrix[1,])
 data <- get_responses(iSurveyID = 718586, sResponseType = 'short')
+nrow(data)
 
-dim(data)
 
-responses <- base64_to_df(get_responses(718586))
-get_responses(iSurveyID= 718586, sLanguageCode= 'latin1', sResponseType='short')
-
-call_limer(method="export_responses",
-params = list (iSurveyID=718586,
-sDocumentType="csv",
-sLanguageCode=" "))
-
-data <- call_limer(method = "export_statistics" ,
-                  params = list(iSurveyID = 718586
-                  ))
-data <- base64_to_df(data)
-data
-
-hmac(key = base64decode(data),
- object = data,
- algo = 'sha512',
- raw = TRUE)
-
-### !!! USELESS UNTIL the connector GETS PERMISSION ON RESPONSES !!! ###
+## raw_data <- call_limer(method = "export_responses", 
+##                         params = list(iSurveyID = 718586, 
+##                                     sDocumentType = ".R", 
+##                                     sLanguageCode = "en", 
+##                                     sCompletionStatus = "complete", 
+##                                     sHeadingType = "code", 
+##                                     sResponseType = "long"))
+## 
+## raw_data <- base64_to_df(raw_data)
+## raw_data
