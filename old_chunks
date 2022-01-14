@@ -1,0 +1,489 @@
+---
+
+
+# Correlation Matrix
+
+```{r echo=FALSE, fig.width=16}
+
+den_cor <- round(cor(as.data.frame(cbind(g1.df, data$transdisciplinaryExp.rate., data$familiarWithSI.response., data$contribToSI.rate.)), method = "spearman", use = "pairwise.complete.obs"), 1)
+
+corrp.mat <- cor_pmat(as.data.frame(cbind(g1.df, data$transdisciplinaryExp.rate., data$familiarWithSI.response., data$contribToSI.rate.)))
+ggcorrplot( den_cor, 
+            hc.order=FALSE, 
+            type="lower", 
+            lab=TRUE,  
+            p.mat = corrp.mat, 
+            ggtheme = ggplot2::theme_minimal,
+            colors = c("#3C9AB2", "white", "#F22300"),
+            insig="blank")
+
+
+```
+
+
+
+---
+
+
+# Familiarity with SI and Transdisciplinarity vs Impact Assessment, Correlation Matrix
+
+```{r echo=FALSE, fig.width=16}
+
+corr_df <- as.data.frame(cbind(g1.df, data$transdisciplinaryExp.rate., data$familiarWithSI.response., data$contribToSI.rate.))
+den_cor <- round(cor(corr_df, method = "spearman", use = "pairwise.complete.obs"), 1)
+
+corrp.mat <- cor_pmat(corr_df)
+ggcorrplot( den_cor, 
+            hc.order=FALSE, 
+            type="lower", 
+            lab=TRUE,  
+            p.mat = corrp.mat, 
+            ggtheme = ggplot2::theme_minimal,
+            colors = c("#3C9AB2", "white", "#F22300"),
+            insig="blank")
+
+
+```
+
+---
+
+# Motivation Types vs Targeted Impact, Correlation Matrix
+
+```{r echo=FALSE, fig.width=16}
+
+corr_df <- as.data.frame(cbind(d1.df, g6.df))
+den_cor <- round(cor(corr_df, method = "spearman", use = "pairwise.complete.obs"), 1)
+
+corrp.mat <- cor_pmat(corr_df)
+ggcorrplot( den_cor, 
+            hc.order=FALSE, 
+            type="lower", 
+            lab=TRUE,  
+            p.mat = corrp.mat, 
+            ggtheme = ggplot2::theme_minimal,
+            colors = c("#3C9AB2", "white", "#F22300"),
+            insig="blank")
+
+
+```
+
+
+---
+
+
+# Correlation Matrix
+
+```{r echo=FALSE}
+
+den_cor <- round(cor(as.data.frame(cbind(g6.df, data$transdisciplinaryExp.rate., data$familiarWithSI.response., data$contribToSI.rate.)), method = "spearman", use = "pairwise.complete.obs"), 1)
+
+corrp.mat <- cor_pmat(as.data.frame(cbind(g6.df, data$transdisciplinaryExp.rate., data$familiarWithSI.response., data$contribToSI.rate.)))
+ggcorrplot( den_cor, 
+            hc.order=FALSE, 
+            type="lower", 
+            lab=TRUE,  
+            p.mat = corrp.mat, 
+            ggtheme = ggplot2::theme_minimal,
+            colors = c("#3C9AB2", "white", "#F22300"),
+            insig="blank")
+
+
+```
+
+.right[This is a center- and middle- aligned slide.]
+
+
+
+
+---
+# Inter-/Transdisciplinarity | Alternative
+
+
+
+```{r echo=FALSE, fig.width=16}
+e1_items_likert <- 
+  #round(d1.df) %>%
+  e1.df_named %>%
+  mutate_all(likert_recode2) %>%
+  likert()
+
+likert_plot(e1_items_likert, h=FALSE) + ggtitle("In your research processes, did you actively involve one or more of the following groups(*)?") 
+```
+
+---
+# Inter-/Transdisciplinarity | Alternative 2
+
+.pull-left[
+
+```{r echo=FALSE}
+e2_items_likert <- 
+  #round(d1.df) %>%
+  e2.df %>%
+  mutate_all(likert_recode2) %>%
+  likert()
+
+likert_plot(e2_items_likert, h=FALSE)
+
+
+```
+]
+
+.pull-right[
+
+```{r echo=FALSE}
+e1_items_likert <- 
+  #round(d1.df) %>%
+  e1.df %>%
+  mutate_all(likert_recode2) %>%
+  likert()
+
+likert_plot(e1_items_likert, h=FALSE)
+```
+]
+
+
+
+
+---
+# Outcome | Alternative
+
+```{r echo=FALSE, fig.width=16}
+g1_items_likert <- 
+  #round(d1.df) %>%
+  g1.df_named %>%
+  mutate_all(likert_recode) %>%
+  likert()
+
+likert_plot(g1_items_likert, h=FALSE) + ggtitle("To what degree has your project directly contributed to new or better services, products, processes, or ways of doing things that were targeted towards...") 
+
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---
+
+# Currently in the Works
+    
+ * statistical tests
+   * non-parametric (@utku: 2-3 beispiele einfügen?)
+   * Dimension reduction, factor analysis (@utku: 1 bespiel einfügen, z.b. outcomes/impact?)
+
+```{r include=FALSE}
+
+```
+
+
+---
+
+# Correlation Matrix: Impact Assessment vs. Motivation
+
+.small[**mot.**: When you designed your project, to what degree were you motivated to…
+
+**impactGr.**: To what degree has your project directly contributed to new or better services, products, processes, or ways of doing things that were targeted towards ...]
+
+.pull-left[
+
+```{r echo=FALSE}
+
+den_cor <- round(cor(as.data.frame(cbind(g1.df, d1.df)), method = "spearman", use = "pairwise.complete.obs"), 1)
+
+rownames(den_cor) <- c("impactGr.public",          "impactGr.business",         "impactGr.socGroups",        "impactGr.welfareOrg", "impactGr.civSoc",       "impactGr.policy",       "impactGr.academia",         "mot.phenomenon",          "mot.problem",           "mot.welfare" )
+
+colnames(den_cor) <- rownames(den_cor)
+
+corrp.mat <- cor_pmat(as.data.frame(cbind(g1.df, d1.df)))
+ggcorrplot( den_cor, 
+            hc.order=FALSE, 
+            type="lower", 
+            lab=TRUE,  
+            p.mat = corrp.mat, 
+            ggtheme = ggplot2::theme_minimal,
+            colors = c("#3C9AB2", "white", "#F22300"),
+            insig="blank")
+
+
+```
+
+
+
+
+
+]
+
+.pull-right[
+
+* *Motivations* do not correlate highly with *direct contribution to new or better services, products, processes, or ways of doing things* by projects
+* *Motivation to improve human condition* shows significant correlations with almost all impact statements (excl. purely academic contribution)
+* Strongest positive correlation is between *the benefit to general population* and *motivation to improve human condition* (0.5)
+
+]
+
+
+---
+
+# Familiarity with SI and Transdisciplinarity vs Impact Assessment, Correlation Matrix
+
+.small[**involv.**: In your research processes, did you actively involve one or more of the following groups(*)?
+
+**policy.uptake**: From your perspective, to what extent were project results taken up by policy-making and/or public administration and/or governmental agencies?
+
+**scalability**: How would you assess in the long term the scalability of the results generated by your project?
+]
+
+.pull-left[
+```{r echo=FALSE}
+
+
+corr_df <- as.data.frame(cbind(e1.df, g4.df,h2.df))
+colnames(corr_df) <- c("involv.researchers", "involv.business", "involv.civSoc", "involv.policy", "involv.citizens" ,
+"involv.media", "involv.welfare", "policy.uptake", "scalability.up.", "scalability.out.", "scalability.deep.")
+den_cor <- round(cor(corr_df, method = "spearman", use = "pairwise.complete.obs"), 1)
+
+corrp.mat <- cor_pmat(corr_df)
+ggcorrplot( den_cor, 
+            hc.order=FALSE, 
+            type="lower", 
+            lab=TRUE,  
+            p.mat = corrp.mat, 
+            ggtheme = ggplot2::theme_minimal,
+            colors = c("#3C9AB2", "white", "#F22300"),
+            insig="blank")
+
+
+```
+]
+
+.pull-right[
+
+* There is almost no stat. significant correlations between up-, out-scalability and inter-/transdisciplinary involvement.
+* Deep-scalability correlates with several of the trans-/disciplinary involvement with the highest being the involvement of citizens (0.4).
+* Policy uptake also correlates relatively strongly with transdisciplinary involvement in the project, especially when policymakers and civil society organisations involved.
+
+]
+
+---
+
+# Correlation Matrix: Motivation Types vs Trans-, Interdisciplinary Involvement
+
+
+.small[
+**involv.**: In your research processes, did you actively involve one or more of the following groups(*)?
+
+**mot.**: When you designed your project, to what degree were you motivated to…
+]
+
+.pull-left[
+```{r echo=FALSE}
+
+corr_df <- as.data.frame(cbind(d1.df, e1.df))
+colnames(corr_df) <- c("mot.phenomenon",          "mot.problem",           "mot.welfare", "involv.researchers", "involv.business", "involv.civSoc", "involv.policy", "involv.citizens" ,"involv.media", "involv.welfare")
+den_cor <- round(cor(corr_df, method = "spearman", use = "pairwise.complete.obs"), 1)
+
+corrp.mat <- cor_pmat(corr_df)
+ggcorrplot( den_cor, 
+            hc.order=FALSE, 
+            type="lower", 
+            lab=TRUE,  
+            p.mat = corrp.mat, 
+            ggtheme = ggplot2::theme_minimal,
+            colors = c("#3C9AB2", "white", "#F22300"),
+            insig="blank")
+
+
+```
+]
+
+.pull-right[
+
+* Motivation to *understand a natural, technical, economic, or social phenomenon better* and *directly address a natural, technical, economic, or social problem* do not necessarily correlate with inter-/transdisciplinary involvements.
+
+* Although weakly, motivation to improve human condition/welfare correlates with all of the inter-/transdisciplinary involvements with the strongest ones being *civil society* and *civil society* organisations. 
+
+]
+
+
+
+
+
+---
+
+# Transdisciplinary Experience vs. Contribution to SI by Sciencetific Domains
+
+```{r echo=FALSE, fig.width=16}
+
+den <- as.data.frame(cbind(contribToSI.rate. = data$contribToSI.rate., motivation.welfare. = d1.df$motivation.welfare.))
+
+ggplot(den, 
+       aes(x = data$transdisciplinaryExp.rate., y = contribToSI.rate., color=data$domain)) + 
+  geom_point() + 
+  ggtitle("") + 
+  geom_smooth(method=lm
+              , se=FALSE, fullrange=TRUE)+
+  #geom_jitter(color='#377eb8')+
+  geom_jitter()+
+  theme_minimal() +
+  scale_x_continuous(breaks = seq(0,10,2)) + 
+  scale_color_manual(values = c("#FC4E07", "#E7B800", "#00AFBB")) + 
+#  geom_point(color='#377eb8') +
+ labs(
+    x="Transdisciplinarity Experience",
+    y = "Contribution to SI (self assessment)") 
+  ##stat_cor( output.type = "text", method = "spearman") +
+  ##stat_regline_equation(output.type = "text")
+
+
+
+```
+
+---
+
+# Scaleability vs. Transdisciplinarity by Scientific Domains
+
+```{r echo = FALSE, fig.width=16}
+e1h2.df <- cbind(e12.trans_df,
+                 h2.scaleability.composite = (h2.df$scalabilityRating.deep. + h2.df$scalabilityRating.up. + h2.df$scalabilityRating.out.)/3)
+e1h2.model <- lm(data = e1h2.df, h2.scaleability.composite ~ inv.other.disciplines + inv.trans
+)
+
+e1h2.df$domain <- data$domain
+ggplot(e1h2.df, 
+       aes(x = inv.trans, y = h2.scaleability.composite, color=domain)) + 
+  geom_point() + 
+  ggtitle("") + 
+  geom_smooth(method=lm, se=FALSE, fullrange=TRUE)+
+  #geom_jitter(color='#377eb8')+
+  geom_jitter()+
+  theme_minimal() +
+  scale_x_continuous(breaks = seq(0,10,2)) + 
+  scale_color_manual(values = c("#FC4E07", "#E7B800", "#00AFBB")) + 
+  
+#  geom_point(color='#377eb8') +
+ labs(
+    x="Transdisciplinary Involvement",
+    y = "Scaleability") 
+  ##stat_cor( output.type = "text", method = "spearman") +
+  ##stat_regline_equation(output.type = "text")
+
+```
+
+
+
+
+
+
+
+---
+
+```{r echo = FALSE, fig.width=16, include=FALSE}
+e1h2.df <- cbind(e12.trans_df,
+                 h2.scaleability.composite = (h2.df$scalabilityRating.deep. + h2.df$scalabilityRating.up. + h2.df$scalabilityRating.out.)/3 )
+e1h2.model <- lm(data = e1h2.df, h2.scaleability.composite ~ inv.other.disciplines + inv.trans
+)
+
+e1h2.df$domain <- data$domain
+ggplot(e1h2.df, 
+       aes(x = inv.other.disciplines, y = h2.scaleability.composite, color=domain)) + 
+  geom_point() + 
+  ggtitle("") + 
+  geom_smooth(method=lm, se=FALSE, fullrange=TRUE)+
+  #geom_jitter(color='#377eb8')+
+  geom_jitter()+
+  theme_minimal() +
+  scale_x_continuous(breaks = seq(0,10,2)) + 
+  scale_color_manual(values = c("#FC4E07", "#E7B800", "#00AFBB")) + 
+  
+#  geom_point(color='#377eb8') +
+ labs(
+    x="Interdisciplinary Involvement",
+    y = "Scaleability") 
+  ##stat_cor( output.type = "text", method = "spearman") +
+  ##stat_regline_equation(output.type = "text")
+
+```
+
+
+
+
+
+```{r fig.width=16, include=FALSE}
+library(gridExtra)
+data.df <- cbind(d1.df,
+                 contribToSI.rate.= e1.df_trans)
+data.df$domain <- data$domain
+a<-ggplot(data.df, 
+       aes(x = motivation.welfare., y = contribToSI.rate.)) + 
+  geom_point() + 
+  ggtitle("") + 
+  geom_smooth(method=lm, se=FALSE, fullrange=TRUE)+
+  #geom_jitter(color='#377eb8')+
+  geom_jitter()+
+  theme_minimal() +
+  scale_x_continuous(breaks = seq(0,10,2)) + 
+  scale_color_manual(values = c("#FC4E07", "#E7B800", "#00AFBB")) + 
+  
+#  geom_point(color='#377eb8') +
+ labs(
+    x="Interdisciplinary Involvement",
+    y = "Scaleability") 
+  ##stat_cor( output.type = "text", method = "spearman") +
+  ##stat_regline_equation(output.type = "text")
+b<-ggplot(data.df, 
+       aes(x = motivation.prob., y = contribToSI.rate.)) + 
+  geom_point() + 
+  ggtitle("") + 
+  geom_smooth(method=lm, se=FALSE, fullrange=TRUE)+
+  #geom_jitter(color='#377eb8')+
+  geom_jitter()+
+  theme_minimal() +
+  scale_x_continuous(breaks = seq(0,10,2)) + 
+  scale_color_manual(values = c("#FC4E07", "#E7B800", "#00AFBB")) + 
+  
+#  geom_point(color='#377eb8') +
+ labs(
+    x="Interdisciplinary Involvement",
+    y = "Scaleability") 
+ 
+c<-ggplot(data.df, 
+       aes(x = motivation.pheno., y = contribToSI.rate.)) + 
+  geom_point() + 
+  ggtitle("") + 
+  geom_smooth(method=lm, se=FALSE, fullrange=TRUE)+
+  #geom_jitter(color='#377eb8')+
+  geom_jitter()+
+  theme_minimal() +
+  scale_x_continuous(breaks = seq(0,10,2)) + 
+  scale_color_manual(values = c("#FC4E07", "#E7B800", "#00AFBB")) + 
+  
+#  geom_point(color='#377eb8') +
+ labs(
+    x="Interdisciplinary Involvement",
+    y = "Scaleability") 
+ 
+grid.arrange(a,b,c)
+```
+
+
+
+
+
+
+
+
+
+
+
+

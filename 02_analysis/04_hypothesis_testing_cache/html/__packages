@@ -1,0 +1,12 @@
+base
+tufte
+dplyr
+ggplot2
+magrittr
+zoo
+xts
+PerformanceAnalytics
+psych
+corrplot
+lattice
+nFactors

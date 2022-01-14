@@ -53,7 +53,9 @@ temp_ind <- which(df_high_td.stem$contribToSI.rate. %in%
       round(summary(df_high_td.stem$contribToSI.rate.)["Mean"]) : summary(df_high_td.stem$contribToSI.rate.)["Max."])
 df_high_td.stem.si <- df_high_td.stem[temp_ind, ] # 7 Obs, 7m
 # Females of high trans. and stem ?
-df_high_td.stem.fe <- df_high_td.stem %>% filter(gender == "female") %>% filter(contribToSI.rate. >= summary(contribToSI.rate.)["1st Qu."])
+df_high_td.stem.fe <- df_high_td.stem %>% 
+  filter(gender == "female") %>% 
+  filter(contribToSI.rate. >= summary(contribToSI.rate.)["1st Qu."])
 
 
 # examine further disc.
@@ -100,25 +102,6 @@ cbind(df_high_hc.civsoc$discipline, df_high_hc.civsoc$title)
 
 data[data$id == 216,]
 (data)
-
-
-## data_num <- data[,1:99] %>% dplyr::select(where(is.numeric))
-## data_num[is.na(data_num)] <- 0 
-## 
-## factanal(data_num, 3, rotation="varimax")
-## princomp(data_num, cor=TRUE)
-## 
-## library(corrplot)
-## corrplot(data_num, type = "upper", order = "hclust", 
-##         tl.col = "black", tl.srt = 45)
-## 
-## library("PerformanceAnalytics")
-## chart.Correlation(data_num[,1:10], histogram=TRUE, pch=19)
-## colnames(data_num)
-## 
-
-dim(df_ult)
-
 
 # Unsatisfactory representation 
 data_fem <- data[data$gender == "female", ]

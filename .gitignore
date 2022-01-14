@@ -9,8 +9,7 @@
 *.yaml
 .Rproj.user
 *.aux
-*.glo
-*.idx
+*.glo *.idx
 *.log
 *.toc
 *.ist
@@ -31,3 +30,4 @@
 *.mtc1
 *.out
 *.synctex.gz
+*.RData
