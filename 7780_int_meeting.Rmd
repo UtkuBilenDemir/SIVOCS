@@ -1,0 +1,412 @@
+---
+title: "SIVOCS"
+
+subtitle: ""
+
+date: ""
+ 
+institute: ""
+
+output:
+  xaringan::moon_reader:
+    self_contained: TRUE
+    css: [default, metropolis, metropolis, metropolis-fonts]
+    #css: [robot, robot, robot-fonts]
+    #css: [default, metropolis, default-fonts, "mtheme.css", "fonts_mtheme.css"]
+    #css: [default, metropolis, default-fonts]
+    #css: xaringan-themer.css
+    
+    lib_dir: libs
+    nature:
+      nature:
+      highlightStyle: github
+      highlightLines: true
+      highlightSpans: true
+      countIncrementalSlides: false
+      ratio: "16:9"
+    background-image: url(../../doc/zsi_logo.svg)
+    background-position: 0% 100%
+    background-size: 30%
+
+---
+
+<style>
+
+.center2 {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.large { font-size: 130% }
+.small { font-size: 70% }
+
+.remark-slide-content.hljs-default {
+  border-top: 60px solid #23373B;
+}
+
+.remark-slide-content > h1 {
+  font-size: 30px;
+  margin-top: -75px;
+}
+
+</style>
+
+
+```{r setup, include = FALSE}
+library(tufte)
+# invalidate cache when the tufte version changes
+knitr::opts_chunk$set(
+	message = FALSE,
+	warning = FALSE,
+	cache.extra = packageVersion("tufte")
+)
+options(htmltools.dir.version = FALSE)
+library(dplyr)
+library(plyr)
+library(ggplot2)
+library(ggbeeswarm)
+library(plotly)
+library(magrittr)
+library(ggplot2)
+library(PerformanceAnalytics)
+library(psych)
+library(corrplot)
+library(nFactors)
+library(kableExtra)
+require(ggiraph)
+require(ggiraphExtra)
+require(plyr)
+library(sjPlot)
+library(sjmisc)
+library(sjlabelled)
+library(tidyverse)
+library(gt)
+library(grid)
+library(ggpubr)
+library(psych)
+library(GPArotation)
+library(car)
+library(candisc)
+library(jtools)
+library(formattable)
+# Activate likert and plyr
+library(likert)
+library(plyr)
+library(ggcorrplot)
+library(waffle)
+library(hrbrthemes)
+library(tidyverse)
+library(scales)
+library(sjPlot)
+library(sjmisc)
+library(sjlabelled)
+library(ggbiplot)
+
+setwd("/home/ubd/Nextcloud/utku_SIVOCS")
+# Data Frame
+source("./02_analysis/02_static_responses.R")
+# colnames of the specific question groups
+#source("./02_analysis/99_question_groups.R")
+# A good table to display factor analysis
+source("https://raw.githubusercontent.com/franciscowilhelm/r-collection/master/fa_table.R")
+
+den <- read.csv("./01_data/sample_meta.csv")
+
+domain_colors <- c("#FC4E07", "#E7B800", "#00AFBB")
+knitr::opts_chunk$set(fig.retina=2, echo=FALSE, dev='svg', fig.width = 16)
+
+data$domain[data$domain == unique(data$domain)[1]] <- "Math., Natur. and Eng. Sci."
+
+g_tick_size_main <- 14
+g_tick_size_side <- 12
+
+```
+
+## B1: How familiar are you with the concept of “social innovation”
+
+--
+
+**H**: The familiarity with the concept of SI depends on the field of research. 
+
+---
+# B1 (NEW): Kruskal-Wallis test: SI familiarity depends on sci. domains?
+
+
+
+```{r echo=FALSE}
+bartlett.test(data=data, familiarWithSI.response. ~ domain)
+
+
+
+```
+
+
+```{r}
+kwtest <- kruskal.test(data=data, familiarWithSI.response. ~ domain)
+kwtest
+
+```
+
+* Mean ranks of the groups are not the same, SI fam. depends on domain
+
+
+
+---
+# Pairwise Wilcoxon
+
+```{r}
+b1.wilcox <- pairwise.wilcox.test(data$familiarWithSI.response., data$domain, mu = 0, alt = "two.sided", conf.int = T, conf.level = 0.95, paired = F, correct = T, p.adjust="bonferroni" )
+b1.wilcox
+
+```
+
+
+---
+
+# B1: *Familiarity with SI* across scientific domains
+
+<br>
+
+```{r echo=FALSE, fig.width=12, fig.height=4, dev='svg', fig.retina=2, fig.align='center'}
+b1domain.df <-data.frame(familiarWithSI = data$familiarWithSI.response.,
+                         domain =  data$domain)
+
+b1domain.df$familiarWithSI <- as.numeric(b1domain.df$familiarWithSI)
+b1domain.df %>% 
+  gather(key="domain", value="familiarWithSI") %>%
+  ggplot( aes(x=familiarWithSI, y=domain, fill=domain),  show.legend = FALSE) +
+    geom_boxplot() +
+  ylab(" ")+
+  theme_light() + 
+  theme(axis.text.y=element_blank())+ scale_fill_discrete(name = "Domain") + xlab("Familiarity with SI") + scale_fill_manual(values=c("#FC4E07", "#E7B800", "#00AFBB"), name="Domain") +
+  scale_x_continuous(breaks = seq(0,10,2))  
+
+```
+<br>
+<br>
+
+* *Familiarity with SI* differs across scientific domains (Kruskal-Wallis p-value < 0.05)
+* *Biology and Medicine* and *Math., Natur, and Eng. Sci.* are **not** stat. significantly different (pairwise Wilcoxon p-value > 0.05)
+
+* *Humanities and Social Sciences* are significantly different than the others (pairwise t-test with each: p < 0.05)
+
+
+---
+class:clear
+##  H:  Generating deeper/better understanding of a specific social issue depends on (the level of) transdisciplinary involvement of citizens
+
+
+```{r}
+shapiro.test(data.questions$Impactstatements.understanding.)
+```
+
+
+```{r}
+shapiro.test(data.questions$groupsInvolved.citiz.)
+```
+
+---
+
+```{r}
+kwtest <- kruskal.test(data=data.questions, Impactstatements.understanding. ~ groupsInvolved.citiz.)
+kwtest
+
+```
+* Different involvement levels make difference.
+
+
+---
+
+
+```{r}
+
+cor.test(data.questions$Impactstatements.understanding., data.questions$groupsInvolved.citiz., method="spearman", use = "complete.obs")
+
+```
+
+
+
+
+
+---
+
+
+```{r echo=FALSE, fig.align='center'}
+#--- Scatter plot
+lm_scatter <- function(df, x, y, labx="", laby="", title="", posx=9, posy=0) {
+ggplotly(
+ggplot(df, 
+       aes(y = y, x = x)) + 
+  geom_point() + 
+  ggtitle(title) + 
+  geom_smooth(method=lm, se=TRUE, fullrange=TRUE, color='#e7298a')+
+  geom_jitter(color='#377eb8')+
+  theme_minimal() +
+  geom_point(color='#377eb8') +
+  labs(
+    y=laby,
+    x =labx) +
+  stat_cor(label.x = posx, label.y =posy , cor.coef.name = "rho", output.type = "text", method = "spearman") +
+  stat_regline_equation(output.type = "text",label.x = posx, label.y = posy +1)
+)
+
+}
+
+
+
+lm_scatter(data.questions, y=data.questions$Impactstatements.understanding., x=data.questions$groupsInvolved.citiz., posx=0, posy=9,
+           laby="Deeper/better understanding of a specific social issue", labx="Involvement level of citizens")
+
+
+```
+
+
+
+
+---
+
+# D1: Motivation Types 
+
+
+## H: Motivation Types depend on sci. domains
+
+---
+###### Phenomenon
+
+.pull-left[
+```{r}
+pheno <- as.data.frame(table(data.questions$motivation.pheno.))
+
+
+ggplot(data=pheno, aes(x=Var1, y=Freq)) +
+  geom_bar(stat="identity")
+
+
+
+```
+]
+
+.pull-right[
+
+
+```{r}
+
+shapiro.test(data.questions$motivation.pheno.)
+```
+```{r}
+kwtest <- kruskal.test(data=data.questions, motivation.pheno. ~ domain)
+kwtest
+
+```
+* No stat. sig. difference between domains
+
+]
+
+---
+
+--- 
+
+# Dim. Red.: PCA
+
+```{r}
+library(ggplot2)
+library(ggbiplot)
+library(psych)
+
+# -------------------- PCA
+
+# Are there completely NA colums?
+sum(apply(FUN = sum,
+          MARGIN = 2,
+          apply(FUN = is.na,
+                MARGIN = 2,
+                data.num_questions)) == nrow(data.num_questions
+                )
+    )
+
+pca_model <- prcomp(na.omit(data.num_questions),
+                    scale = TRUE,
+                    center = TRUE)
+#plot(pca_model$x[, 1], pca_model$x[, 2])
+
+
+# How much variation in each component
+pca_model.var <- pca_model$sdev^2
+pca_model.var_per <- cumsum(pca_model.var)/sum(pca_model.var)
+
+barplot(pca_model.var_per,
+        main = "Scree Plot")
+
+```
+
+---
+# Dim. Red.: PCA
+
+
+```{r, fig.width=16}
+# Visualisation of all components
+ggbiplot(pca_model)
+
+```
+
+---
+# Dim. Red.: PCA, imp. features in PC1
+
+```{r}
+# Most important features
+loading_scores <- abs(pca_model$rotation[, 1])
+loading_scores.ranked <- sort(loading_scores, decreasing = TRUE)
+top_10_features <- loading_scores.ranked[1:10]
+
+top_10_features
+
+```
+
+
+---
+# Dim. Red.: Factor Analysis
+
+```{r}
+parallel <- fa.parallel(data.num_questions,
+                        fm = "minres",
+                        fa = 'fa')
+```
+
+---
+# Dim. Red.: FActor Analysis
+
+```{r}
+factors <- fa(data.num_questions, 
+              nfactors = 10, 
+              rotate = 'oblimin', 
+              fm = 'minres')
+print(factors)
+
+```
+
+---
+
+```{r}
+library(lavaan)
+
+model <- '
+F1 =~ groupsInvolved.civsoc.+groupsInvolved.citiz.+groupsInvolved.welfare.+targetGroupsGoals.socneeds.+targetGroupsGoals.socgroups.+targetGroupsGoals.empower.
+F2 =~ adoptByPolicy.rate.+Impactstatements.capab.+Impactstatements.emanc.+Impactstatements.understanding.+Impactstatements.mitig.+Impactstatements.unknown.+Impactstatements.unaddressed.
+F3 =~ concepts.pub.+concepts.data.+concepts.code.+concepts.infra.+dissChannels.trad.+dissChannels.web.+dissChannels.platf.
+F4 =~ targetGroupsGoals.diversity.
+F5 =~ scalabilityRating.up.+scalabilityRating.out.+scalabilityRating.deep.
+F6 =~ groupsInvolved.policy.+impactTargetGroup.policy.+dissChannels.policy.
+F7 =~ transdisciplinaryExp.rate.+groupsInvolved.busi.+impactTargetGroup.pub.+impactTargetGroup.busi.
+F8 =~ dissChannels.conf.
+F9 =~ contribToSI.rate.
+F10 =~ motivation.pheno.+motivation.prob.
+'
+
+fit <- cfa(model, data = data.num_questions, )
+summary(fit, fit.measures=TRUE, standardized=TRUE)
+```
+
