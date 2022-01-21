@@ -114,7 +114,7 @@ e12.df <- data.frame( inv.other.disciplines = e1.df$groupsInvolved.res. + e2.df$
                       inv.media = e1.df$groupsInvolved.media. + e2.df$natureOfInvolvement.media.,
                       inv.welfare = e1.df$groupsInvolved.welfare. + e2.df$natureOfInvolvement.welfare.                     
                       )
-e12.df <- as.data.frame(sapply(e12.df, FUN=function(x) {rescale(x, to=c(0,10))}))
+### e12.df <- as.data.frame(sapply(e12.df, FUN=function(x) {rescale(x, to=c(0,10))}))
 
 
 # Create a transdiscip. variable
@@ -125,9 +125,9 @@ e12.trans <- e12.df$inv.citiz +
                 e12.df$inv.policy +
                 e12.df$inv.business
 
-e12.trans_df <- data.frame( inv.other.disciplines  = e12.df$inv.other.disciplines,
-                            inv.trans = rescale(e12.trans, c(0,10))
-)
+### e12.trans_df <- data.frame( inv.other.disciplines  = e12.df$inv.other.disciplines,
+###                             inv.trans = rescale(e12.trans, c(0,10))
+### )
 
 
 #e12.trans_df <- rescale(e12.trans_df, to = c(0, 10))
@@ -182,35 +182,35 @@ g6.df[g6.df == 99] <- NA
 #G6 composite
 
 # First calculate the "importance of each column"
-g6.col_weight <- as.vector(rescale(10 - colMeans(g6.df, na.rm = TRUE), c(0.6, 1)))
-g6.weighted_df <- g6.df 
-g6.weighted_df$Impactstatements.capab. <- g6.weighted_df$Impactstatements.capab. * g6.col_weight[1]
-g6.weighted_df$Impactstatements.emanc. <- g6.weighted_df$Impactstatements.emanc. * g6.col_weight[2]
-g6.weighted_df$Impactstatements.understanding. <- g6.weighted_df$Impactstatements.understanding. * g6.col_weight[3]
-g6.weighted_df$Impactstatements.mitig. <- g6.weighted_df$Impactstatements.mitig. * g6.col_weight[4]
-g6.weighted_df$Impactstatements.unknown. <- g6.weighted_df$Impactstatements.unknown. * g6.col_weight[5]
-g6.weighted_df$Impactstatements.unaddressed. <- g6.weighted_df$Impactstatements.unaddressed. * g6.col_weight[6]
-
-# Take rowsums
-g6.weighted_df$rowSums <- rowSums(g6.weighted_df, na.rm = TRUE)
-g6.weighted_df$nCell <- 6 - apply(g6.weighted_df[, 1:6], MARGIN=1, FUN=function(x){sum(is.na(x))})
-g6.weighted_df$zCell <- apply(g6.weighted_df[, 1:6], MARGIN=1, FUN=function(x){sum(x == 0)})
-g6.weighted_df$nCell[g6.weighted_df$zCell >=3] <-3
-
-# COMPOSITE
-g6.weighted_df$nCell[g6.weighted_df$nCell == 0] <- 99  
-g6.weighted_df$nCell[g6.weighted_df$nCell <= 3] <- 3 
-g6.weighted_df$composite <- g6.weighted_df$rowSums / g6.weighted_df$nCell
-g6.weighted_df$composite[g6.weighted_df$nCell == 99] <- NA
-
-
-g6.dummy <- g6.weighted_df[, 1:6]
-g6.dummy[is.na(g6.dummy)] <- 0
-g6.weighted_df$composite2 <- rowMeans(g6.dummy)
+### g6.col_weight <- as.vector(rescale(10 - colMeans(g6.df, na.rm = TRUE), c(0.6, 1)))
+### g6.weighted_df <- g6.df 
+### g6.weighted_df$Impactstatements.capab. <- g6.weighted_df$Impactstatements.capab. * g6.col_weight[1]
+### g6.weighted_df$Impactstatements.emanc. <- g6.weighted_df$Impactstatements.emanc. * g6.col_weight[2]
+### g6.weighted_df$Impactstatements.understanding. <- g6.weighted_df$Impactstatements.understanding. * g6.col_weight[3]
+### g6.weighted_df$Impactstatements.mitig. <- g6.weighted_df$Impactstatements.mitig. * g6.col_weight[4]
+### g6.weighted_df$Impactstatements.unknown. <- g6.weighted_df$Impactstatements.unknown. * g6.col_weight[5]
+### g6.weighted_df$Impactstatements.unaddressed. <- g6.weighted_df$Impactstatements.unaddressed. * g6.col_weight[6]
+### 
+### # Take rowsums
+### g6.weighted_df$rowSums <- rowSums(g6.weighted_df, na.rm = TRUE)
+### g6.weighted_df$nCell <- 6 - apply(g6.weighted_df[, 1:6], MARGIN=1, FUN=function(x){sum(is.na(x))})
+### g6.weighted_df$zCell <- apply(g6.weighted_df[, 1:6], MARGIN=1, FUN=function(x){sum(x == 0)})
+### g6.weighted_df$nCell[g6.weighted_df$zCell >=3] <-3
+### 
+### # COMPOSITE
+### g6.weighted_df$nCell[g6.weighted_df$nCell == 0] <- 99  
+### g6.weighted_df$nCell[g6.weighted_df$nCell <= 3] <- 3 
+### g6.weighted_df$composite <- g6.weighted_df$rowSums / g6.weighted_df$nCell
+### g6.weighted_df$composite[g6.weighted_df$nCell == 99] <- NA
+### 
+### 
+### g6.dummy <- g6.weighted_df[, 1:6]
+### g6.dummy[is.na(g6.dummy)] <- 0
+### g6.weighted_df$composite2 <- rowMeans(g6.dummy)
 
 # Scale to 10
-g6.weighted_df$composite.10 <- rescale(g6.weighted_df$composite, c(0, 10))
-g6.weighted_df$composite2.10 <- rescale(g6.weighted_df$composite2, c(0, 10))
+### g6.weighted_df$composite.10 <- rescale(g6.weighted_df$composite, c(0, 10))
+### g6.weighted_df$composite2.10 <- rescale(g6.weighted_df$composite2, c(0, 10))
 
 # Handle decimals
 is.num <- sapply(g6.weighted_df, is.numeric)
@@ -237,7 +237,7 @@ h2.df[h2.df==99] <- NA
 
 h1.df <- data[, h1.colnames]
 h1.df[is.na(h1.df)] <- 0
-h1.df$h1.composite <- round(rescale(rowMeans(h1.df), c(0,10)), 1)
+### h1.df$h1.composite <- round(rescale(rowMeans(h1.df), c(0,10)), 1)
 
 #------------------------ Combined Variables
 
@@ -299,7 +299,7 @@ h2.composite <- (h2.df$scalabilityRating.deep. + h2.df$scalabilityRating.up. + h
 
 
 #--- AN ATTEMPT FOR AN SI.COMPOSITE
-g1.civil_composite <- round(rescale(rowMeans(g1.df_civil), c(0,10)), 2)
+### g1.civil_composite <- round(rescale(rowMeans(g1.df_civil), c(0,10)), 2)
 
 outcome.df <- data.frame( g1.civil_composite = g1.civil_composite,
                           g4.composite = g4.df,
@@ -310,12 +310,12 @@ outcome.df <- data.frame( g1.civil_composite = g1.civil_composite,
 temp <- outcome.df
 temp[is.na(outcome.df)] <- 0
 outcome.composite <- rowMeans(temp)
-outcome.composite <- rescale(outcome.composite, c(0,10))
+### outcome.composite <- rescale(outcome.composite, c(0,10))
 outcome.composite <- round(outcome.composite, 2)
 
 
 outcome.composite2 <- rowMeans(outcome.df, na.rm=TRUE)
-outcome.composite2 <- rescale(outcome.composite2, c(0,10))
+### outcome.composite2 <- rescale(outcome.composite2, c(0,10))
 outcome.composite2 <- round(outcome.composite2, 2)
 
 outcome.composite[is.na(outcome.composite2)] <- NA
