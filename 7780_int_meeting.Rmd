@@ -93,6 +93,7 @@ library(car)
 library(candisc)
 library(jtools)
 library(formattable)
+library(htmltools)
 # Activate likert and plyr
 library(likert)
 library(plyr)
@@ -106,7 +107,6 @@ library(sjmisc)
 library(sjlabelled)
 library(ggbiplot)
 
-setwd("/home/ubd/Nextcloud/utku_SIVOCS")
 # Data Frame
 source("./02_analysis/02_static_responses.R")
 # colnames of the specific question groups
