@@ -50,6 +50,12 @@ levels(fata.questions[, fac_cols[26]]) <- ny
 levels(fata.questions[, fac_cols[27]]) <- ny
 
 # Split META and FEATURE variables
+fata.wo_questions <- fata[, !(colnames(fata) %in% colnames(fata.questions))]
+colnames(fata.wo_questions)
+
+meta_df <- fata.questions[c(2, 3)]
+meta_df <- as.data.frame(cbind(fata.wo_questions[, c(59, 63, 62, 65:68)]))
+
+feat_df <- fata.questions[c(1, 4, 7:ncol(fata.questions))]
 
 
-as.numeric(levels(fata.questions[, fac_cols[18]]))[fata.questions[, fac_cols[18]]]
