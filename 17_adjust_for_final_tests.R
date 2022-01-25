@@ -1,3 +1,7 @@
+rm(list = ls())
+
+library(ggplot2)
+library(ggbiplot)
 # NOTE TO SELF: Remember, the correct and efficient way 
 # to that thing you insist to do wrongly is
 # as.numeric(levels(f))[f]
@@ -6,56 +10,40 @@
 # Data Frame
 source("./02_analysis/02_static_responses.R")
 
-#fata.questions[fata.questions["age"] == "", "age"] <- NA
 
-# Find the factor columns
-fac_cols <- which(sapply(FUN = is.factor, fata.questions))
+# PCA with the new variables
+# -------------------- PCA
+
+#feat_df.num_omit <- na.omit(feat_df.num)
+#null_features.ind <- which(sapply(FUN=sum, feat_df.num) == 0)
+#feat_df.num_omit <- feat_df.num_omit[, -c(null_features.ind)]
+feat_df.num_o <- feat_df.num
+feat_df.num_o[is.na(feat_df.num_o)] <- 0
+pca_model <- prcomp(feat_df.num_o,
+                    scale = TRUE,
+                    center = TRUE)
+
+# How much variation in each component
+pca_model.var <- pca_model$sdev^2
+pca_model.var_per <- cumsum(pca_model.var)/sum(pca_model.var)
+
+barplot(pca_model.var_per,
+        main = "Scree Plot")
 
 
-# ------------ Refactor the factor columns
-# TODO: We are working with fata.questions right now, 
-# consider doing the same changes with fata
-ny <- c(0, 1)
-ony <- c(NA, 0, 1)
-nature <- c(NA, 3, 2, 0, 1)
-effects <- c(NA, 2, 1, 3, NA, 0)
+# A more meaningful visualisation of PCA
+pca_model.data <- data.frame(Sample = pca_model$x, 
+                                                X = pca_model$x[, 1], 
+                                                Y = pca_model$x[, 2]
+                             )
 
-levels(fata.questions[, fac_cols[1]]) <- c(NA, 0, 1, 2, 3, 4)
-levels(fata.questions[, fac_cols[2]])  <- c(NA, 0, 1, 2)
-levels(fata.questions[, fac_cols[3]])  <- ny
-levels(fata.questions[, fac_cols[4]]) <- ny
-levels(fata.questions[, fac_cols[5]]) <- ny
-levels(fata.questions[, fac_cols[6]]) <- ny
-levels(fata.questions[, fac_cols[7]]) <- ny
-levels(fata.questions[, fac_cols[8]]) <- ny
-levels(fata.questions[, fac_cols[9]]) <- nature
-levels(fata.questions[, fac_cols[10]]) <- nature
-levels(fata.questions[, fac_cols[11]]) <- nature
-levels(fata.questions[, fac_cols[12]]) <- nature
-levels(fata.questions[, fac_cols[12]]) <- nature
-levels(fata.questions[, fac_cols[13]]) <- nature
-levels(fata.questions[, fac_cols[14]]) <- nature
-levels(fata.questions[, fac_cols[15]]) <- nature
-levels(fata.questions[, fac_cols[16]]) <- ony
-levels(fata.questions[, fac_cols[17]]) <- ony
-levels(fata.questions[, fac_cols[18]]) <- effects
-levels(fata.questions[, fac_cols[19]]) <- effects
-levels(fata.questions[, fac_cols[20]]) <- effects
-levels(fata.questions[, fac_cols[21]]) <- effects
-levels(fata.questions[, fac_cols[22]]) <- effects
-levels(fata.questions[, fac_cols[23]]) <- effects
-levels(fata.questions[, fac_cols[24]]) <- effects
-levels(fata.questions[, fac_cols[25]]) <- ny
-levels(fata.questions[, fac_cols[26]]) <- ny
-levels(fata.questions[, fac_cols[27]]) <- ny
+# Visualisation of all components
+ggbiplot(pca_model)
 
-# Split META and FEATURE variables
-fata.wo_questions <- fata[, !(colnames(fata) %in% colnames(fata.questions))]
-colnames(fata.wo_questions)
+# Most important features
+loading_scores <- abs(pca_model$rotation[, 1])
+loading_scores.ranked <- sort(loading_scores, decreasing = TRUE)
+top_10_features <- loading_scores.ranked[1:10]
 
-meta_df <- fata.questions[c(2, 3)]
-meta_df <- as.data.frame(cbind(fata.wo_questions[, c(59, 63, 62, 65:68)]))
-
-feat_df <- fata.questions[c(1, 4, 7:ncol(fata.questions))]
-
+top_10_features
 
