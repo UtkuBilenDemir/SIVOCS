@@ -105,7 +105,7 @@ library(sjPlot)
 library(sjmisc)
 library(sjlabelled)
 
-setwd("/home/ubd/Nextcloud/utku_SIVOCS")
+setwd("./..")
 # Data Frame
 source("./02_analysis/02_static_responses.R")
 # colnames of the specific question groups

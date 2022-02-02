@@ -213,11 +213,11 @@ g6.df[g6.df == 99] <- NA
 ### g6.weighted_df$composite2.10 <- rescale(g6.weighted_df$composite2, c(0, 10))
 
 # Handle decimals
-is.num <- sapply(g6.weighted_df, is.numeric)
-g6.weighted_df[is.num] <- lapply(g6.weighted_df[is.num], round, 2)
-
-g6.weighted_df$composite.10.R <- round(g6.weighted_df$composite.10, 1)
-write.csv(g6.weighted_df, "g6_weigthed_df.csv")
+## is.num <- sapply(g6.weighted_df, is.numeric)
+## g6.weighted_df[is.num] <- lapply(g6.weighted_df[is.num], round, 2)
+## 
+## g6.weighted_df$composite.10.R <- round(g6.weighted_df$composite.10, 1)
+## write.csv(g6.weighted_df, "g6_weigthed_df.csv")
 
 
 #--- G, only with the ordinal variables
@@ -298,31 +298,31 @@ g1.modf.3 <- as.data.frame(cbind(g1.df[, c(1, 2, 7)],
 h2.composite <- (h2.df$scalabilityRating.deep. + h2.df$scalabilityRating.up. + h2.df$scalabilityRating.out.)/3
 
 
-#--- AN ATTEMPT FOR AN SI.COMPOSITE
-### g1.civil_composite <- round(rescale(rowMeans(g1.df_civil), c(0,10)), 2)
-
-outcome.df <- data.frame( g1.civil_composite = g1.civil_composite,
-                          g4.composite = g4.df,
-                          g6.composite = g6.weighted_df$composite.10,
-                          h2.composite = h2.composite
-                          )
-
-temp <- outcome.df
-temp[is.na(outcome.df)] <- 0
-outcome.composite <- rowMeans(temp)
+## #--- AN ATTEMPT FOR AN SI.COMPOSITE
+## g1.civil_composite <- round(rescale(rowMeans(g1.df_civil), c(0,10)), 2)
+## 
+## outcome.df <- data.frame( g1.civil_composite = g1.civil_composite,
+##                           g4.composite = g4.df,
+##                           g6.composite = g6.weighted_df$composite.10,
+##                           h2.composite = h2.composite
+##                           )
+## 
+## temp <- outcome.df
+## temp[is.na(outcome.df)] <- 0
+## outcome.composite <- rowMeans(temp)
 ### outcome.composite <- rescale(outcome.composite, c(0,10))
-outcome.composite <- round(outcome.composite, 2)
+## outcome.composite <- round(outcome.composite, 2)
 
 
-outcome.composite2 <- rowMeans(outcome.df, na.rm=TRUE)
-### outcome.composite2 <- rescale(outcome.composite2, c(0,10))
-outcome.composite2 <- round(outcome.composite2, 2)
-
-outcome.composite[is.na(outcome.composite2)] <- NA
-outcome.df <- cbind(outcome.df,
-                    outcome.composite = outcome.composite,
-                    outcome.composite2 = outcome.composite2
-                    )
+## outcome.composite2 <- rowMeans(outcome.df, na.rm=TRUE)
+## ### outcome.composite2 <- rescale(outcome.composite2, c(0,10))
+## outcome.composite2 <- round(outcome.composite2, 2)
+## 
+## outcome.composite[is.na(outcome.composite2)] <- NA
+## outcome.df <- cbind(outcome.df,
+##                     outcome.composite = outcome.composite,
+##                     outcome.composite2 = outcome.composite2
+##                     )
 ##barplot(table(outcome.composite))
 
 
@@ -481,7 +481,7 @@ likert_plot <- function(recoded_likert, h=TRUE, t=4, c = 1:3) {
 # install.packages("GGally")
 library(GGally)
 
-e12_disc <- na.omit(as.data.frame(cbind(e12.trans_df, domain=data$domain)))
-e12_disc[, 1:3] <- sapply(FUN=as.numeric,e12_disc[, 1:3])
-ggpairs(e12_disc, columns = 1:3, aes(color=domain))
-e12_disc[,1]
+## e12_disc <- na.omit(as.data.frame(cbind(e12.trans_df, domain=data$domain)))
+## e12_disc[, 1:3] <- sapply(FUN=as.numeric,e12_disc[, 1:3])
+## ggpairs(e12_disc, columns = 1:3, aes(color=domain))
+## e12_disc[,1]

@@ -118,8 +118,13 @@ library(waffle)
 library(hrbrthemes)
 library(tidyverse)
 library(scales)
+library(waffle)
+library(magrittr)
+library(hrbrthemes)
+library(ggplot2)
+library(dplyr)
 
-setwd("/home/ubd/Nextcloud/utku_SIVOCS")
+setwd("./..")
 # Data Frame
 source("./02_analysis/02_static_responses.R")
 # colnames of the specific question groups
@@ -148,24 +153,24 @@ dom_dist <- as.data.frame(tibble(
 )) 
 
 
-dom_waffle <- ggplot(dom_dist, aes(fill=domains, values=percentages*100)) +
-  geom_waffle(color = "white", size=1.125, n_rows = 10, n_cols=10) +
-  facet_wrap(~fct, ncol=2) +
-  scale_x_discrete(expand=c(0,0)) +
-  scale_y_discrete(expand=c(0,0)) +
-  scale_fill_manual(values = c("#FC4E07", "#E7B800", "#00AFBB")) + 
-  labs(fill = "Sci. Domain") +
-  
-  #ggthemes::scale_fill_tableau(name=NULL, direction = -1) +
-  coord_equal() +
-  labs(
-    title = ""
-  ) +
-  theme_ipsum_rc(grid="") +
-  theme_enhance_waffle() 
-dom_waffle
-
-ggsave(file="dom_waffle.svg", plot=dom_waffle, scale=0.5, dpi=900)
+## dom_waffle <- ggplot(dom_dist, aes(fill=domains, values=percentages*100)) +
+##   geom_waffle(color = "white", size=1.125, n_rows = 10, n_cols=10) +
+##   facet_wrap(~fct, ncol=2) +
+##   scale_x_discrete(expand=c(0,0)) +
+##   scale_y_discrete(expand=c(0,0)) +
+##   scale_fill_manual(values = c("#FC4E07", "#E7B800", "#00AFBB")) + 
+##   labs(fill = "Sci. Domain") +
+##   
+##   #ggthemes::scale_fill_tableau(name=NULL, direction = -1) +
+##   coord_equal() +
+##   labs(
+##     title = ""
+##   ) +
+##   theme_ipsum_rc(grid="") +
+##   theme_enhance_waffle() 
+## dom_waffle
+## 
+## ggsave(file="dom_waffle.svg", plot=dom_waffle, scale=0.5, dpi=900)
 ```
 
 
@@ -189,23 +194,23 @@ gen_dist <- tibble(
 ) 
 
 
-gen_waffle <- ggplot(gen_dist, aes(fill=gender, values=percentages*100)) +
-  geom_waffle(color = "white", size=1.125, n_rows = 10, n_cols=10) +
-  facet_wrap(~fct, ncol=2) +
-  scale_x_discrete(expand=c(0,0)) +
-  scale_y_discrete(expand=c(0,0)) +
-  scale_fill_manual(values=c("#43bea5", "#BB3099")) +
-  coord_equal() +
-  labs(
-    title = "",
-    fill = "Gender"
-  ) +
-  
-  theme_ipsum_rc(grid="") +
-  theme_enhance_waffle()
-
-gen_waffle
-ggsave(file="gen_waffle.svg", plot=gen_waffle, scale=0.5, dpi=900)
+## gen_waffle <- ggplot(gen_dist, aes(fill=gender, values=percentages*100)) +
+##   geom_waffle(color = "white", size=1.125, n_rows = 10, n_cols=10) +
+##   facet_wrap(~fct, ncol=2) +
+##   scale_x_discrete(expand=c(0,0)) +
+##   scale_y_discrete(expand=c(0,0)) +
+##   scale_fill_manual(values=c("#43bea5", "#BB3099")) +
+##   coord_equal() +
+##   labs(
+##     title = "",
+##     fill = "Gender"
+##   ) +
+##   
+##   theme_ipsum_rc(grid="") +
+##   theme_enhance_waffle()
+## 
+## gen_waffle
+## ggsave(file="gen_waffle.svg", plot=gen_waffle, scale=0.5, dpi=900)
 
 ```
 

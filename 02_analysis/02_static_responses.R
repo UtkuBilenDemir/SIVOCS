@@ -114,9 +114,12 @@ for (i in which(sapply(FUN = is.factor, feat_df.num))) {
 
 # Remove missing 88 99
 feat_df.num[feat_df.num >= 50] <- NA
+feat_df.num_o <- feat_df.num
+feat_df.num_o[is.na(feat_df.num_o)] <- 0
 
 # ------------ CSVs for python
 write.csv(data, "./01_data/mod_data.csv")
 write.csv(data, "./01_data/mod_fata.csv")
 write.csv(fata.questions, "./01_data/mod_question_data.csv")
 write.csv(fata.questions, "./01_data/mod_question_fata.csv")
+write.csv(feat_df.num, "./01_data/fata_num_questions.csv")
