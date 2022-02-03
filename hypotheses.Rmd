@@ -32,6 +32,9 @@ g_tick_size_side <- 12
 # B1: SI-Familiarity
 # WT: Wilcoxon
 
+# ----------- TODO
+# TODO: Find consistent colorschemes
+
 ```
 
 # Familiarity with SI and Transdisciplinarity
