@@ -67,7 +67,7 @@ likert_plot(items_likert, h=FALSE, c=c(1,3,5)) + theme( axis.text.y = element_te
 ```
 
 
-## Distribution of SI-Familiarity
+## B1: Distribution of SI-Familiarity
 
 ```{r}
 a <- as.data.frame(table(data.questions$familiarWithSI.response.))
@@ -78,6 +78,8 @@ ggplot(data=a, aes(x=Var1, y=Freq)) +
 ```
 > TODO: Description of B1
 
+
+## Dependence of SI-familiarity on scientific domains
 
 ```{r echo=FALSE}
 b1.shapiro <- shapiro.test(data$familiarWithSI.response.)
@@ -95,32 +97,12 @@ b1.pwilcox <- pairwise.wilcox.test(data$familiarWithSI.response.,
 
 ```
 
-The majority of the respondents indicated their low familiarity with SI, approximately %32 of the respondents selected the lowest level of SI familiarity (indicated with 0) and only %16 percent of the respondents selected a value equal or greater than 7. 
+The majority of the respondents indicated their low familiarity with SI, approximately %32 of the respondents selected the lowest level of SI-Familiarity (indicated with 0) and only %16 percent of the respondents selected a value equal or greater than 7. 
 
 One of the literature-driven assumptions about the SI-familiarity was that [H] *the SI-Familiarity depends on the scientific domain*. The hypothesis is motivated by the wide-spread perspective especially on the SSH fields to be more aware of the SI aspect in research. 
 
-The results of the study shows a statistically significant difference between the 3 main scientific domains in the SNF funded projects (Kruskal-Wallis [K-W] rank sum test p-value < 0.05). However, the domains Mathemics, Natural, & Engineering Sciences and Biology & Medicine are stat. not significantly different from each other ()
+The results of the study shows a statistically significant difference between the 3 main scientific domains in terms of SI-Familiarity (Kruskal-Wallis [K-W] rank sum test p-value < 0.05). However, as Figure \@ref(type:B1-boxplot) also visualises the domains Mathematics, Natural-, & Engineering Sciences and Biology & Medicine are statistically not significantly different from each other while Social Sciences and Humanities (SSH) show a stat. significant difference to both of the other domains ^[Results of the pairwise comparisons using Wilcoxon rank sum test with continuity correction with Bonferonni p-value adjustment yields a p-value greater than 0.05 for Mathematics, Natural-, & Engineering Sciences. SSH, however, associated with p-values significantly smaller than 0.05 with both of the other domains]. 
 
-as Figure \@ref(type:B1-boxplot) visualises the pairwise differences (pairwise Wilcoxon Test (WT), p-value > 0.05). However SSH Domain shows a significant 
-
-
-
-
-
-
-# B1 (NEW): Kruskal-Wallis test: SI familiarity depends on sci. domains?
-
-
-
-* Mean ranks of the groups are not the same, SI fam. depends on domain
-
-
-
----
-
-# B1: *Familiarity with SI* across scientific domains
-
-<br>
 
 ```{r B1-boxplot, echo=FALSE, fig.width=12, fig.height=4, dev='svg', fig.retina=2, fig.align='center'}
 b1domain.df <-data.frame(familiarWithSI = data$familiarWithSI.response.,
@@ -137,13 +119,164 @@ b1domain.df %>%
   scale_x_continuous(breaks = seq(0,10,2))  
 
 ```
-<br>
-<br>
 
-* *Familiarity with SI* differs across scientific domains (Kruskal-Wallis p-value < 0.05)
-* *Biology and Medicine* and *Math., Natur, and Eng. Sci.* are **not** stat. significantly different (pairwise Wilcoxon p-value > 0.05)
 
-* *Humanities and Social Sciences* are significantly different than the others (pairwise t-test with each: p < 0.05)
+
+
+
+
+
+# Actors & Networks
+
+## E1/E2: Transdisciplinary Aspects: Inter-/Transdisciplinary Involvement
+ 
+```{r E1-Involvement, fig.width=16, fig.height=5, fig.align = 'center',echo=FALSE, dev='svg'}
+
+e1.df_named <- e1.df 
+names(e1.df_named) <- c(
+  groupsInvolved.res. = "researchers from other disciplines",
+groupsInvolved.busi.   = "company/business representatives (incl. farmers)",
+groupsInvolved.civsoc.= "representatives of NGOs, advocacy or other civil society groups",
+groupsInvolved.policy.= "policy makers, public administrations, representatives from governmental agencies",
+groupsInvolved.citiz.= "individual citizens (e.g. as beneficiaries, customers, or concerned persons)",
+groupsInvolved.media.= "media representatives (traditional media, digital media (e.g. bloggers), journalists, community-led media, etc.)",
+groupsInvolved.welfare.= "representatives from welfare- or education-providing institutions (such as schools, kindergartens, hospitals, or care centres)"
+)
+
+e1_items_likert <- 
+  #round(d1.df) %>%
+  e1.df_named %>%
+  mutate_all(likert_recode2) %>%
+  likert()
+
+
+
+trans_likert <- likert_plot(e1_items_likert, h=FALSE, c=c(1,3,5)) + ggtitle("In your research processes, did you actively involve one or more of the following groups?") + theme(axis.text=element_text(size=13))
+trans_likert + theme( axis.text.y = element_text( 
+                         size=g_tick_size_side), axis.text.x = element_text(
+                         size=g_tick_size_side), axis.title=element_text(size=g_tick_size_side), legend.text=element_text(size=g_tick_size_side)) 
+```
+
+Interdisciplinary involvement is more common among the SNF funded projects, 41% of the respondents note that the involvement of academicians from other disciplines were quite central to their specific project. Transdisciplinary involvement has been measured under different categories that indicate different type of societal actors and groups in the survey. Although not as central as the interdisciplinary involvement different types of transdisciplinary engagement constitute a noteworthy part of the research projects. 
+
+
++ similar across different groups in terms of extent and depth of involvement (*marginal* / *central*)
+
+
+
+```{r E2-Nature, fig.width=16, fig.height=5, echo=FALSE, dev='svg', fig.align='center'}
+
+e2.df_named <- e2.df 
+names(e2.df_named) <- c(
+  natureOfInvolvement.res. = "researchers from other disciplines",
+natureOfInvolvement.busi.   = "company/business representatives (incl. farmers)",
+natureOfInvolvement.civsoc.= "representatives of NGOs, advocacy or other civil society groups",
+natureOfInvolvement.policy.= "policy makers, public administrations, representatives from governmental agencies",
+natureOfInvolvement.citiz.= "individual citizens (e.g. as beneficiaries, customers, or concerned persons)",
+natureOfInvolvement.media.= "media representatives (traditional media, digital media (e.g. bloggers), journalists, community-led media, etc.)",
+natureOfInvolvement.welfare.= "representatives from welfare- or education-providing institutions (such as schools, kindergartens, hospitals, or care centres)"
+)
+
+e2.df_named <- e2.df_named[, 2: ncol(e2.df_named)]
+
+
+e2_items_likert <- 
+  #round(d1.df) %>%
+  e2.df_named %>%
+  mutate_all(likert_recode4) %>%
+  likert()
+
+
+
+nature_likert <- likert_plot(e2_items_likert, h=FALSE, c = c(2:5)) + ggtitle("What was the nature of involvement of those groups?") + theme(axis.text=element_text(size=13))
+nature_likert+ theme( axis.text.y = element_text( 
+                         size=g_tick_size_side), axis.text.x = element_text(
+                         size=g_tick_size_side), axis.title=element_text(size=g_tick_size_side), legend.text=element_text(size=g_tick_size_side)) 
+
+```
+
+
+
+* Transdisciplinary involvement mostly *consultative* or *contributory* in nature.
+* *Collaborative* processes more likely in projects where *welfare-/education providing institutions* or *company/ business representatives* are relevant
+
+
+
+```{r}
+he_df <- as.data.frame(cbind(feat_df.num$groupsInvolved.citiz.,
+                             feat_df.num$familiarWithSI.response.
+  )
+)
+
+cor.test( he_df$V1, he_df$V2, method = "spearman", use = "complete.obs")
+```
+
+
+* There is a although relatively weak (~0.35) statistically significant positive correlation between SI-Familiarity and involvement of citizens in the research project.
+
+```{r E1B1-boxplot, echo=FALSE, fig.width=12, fig.height=4, dev='svg', fig.retina=2, fig.align='center'}
+
+he_df$V1 <- likert_recode2(he_df$V1)
+he_df %>% 
+  filter(!is.na(V1)) %>%
+  gather(key="V2", value="V1") %>%
+  ggplot( aes(x=V2, y=V1, fill=V1),  show.legend = FALSE) +
+    geom_boxplot() +
+  ylab(" ")+
+  theme_light() + 
+   theme(axis.text.y=element_blank())+ scale_fill_discrete(name = "Involvement of Citizens") + xlab("Familiarity with SI") + scale_fill_manual(values=c("#FC4E07", "#E7B800", "#00AFBB"), name="Involvement of Citizens")
+
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

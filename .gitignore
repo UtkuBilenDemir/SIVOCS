@@ -31,3 +31,4 @@
 *.out
 *.synctex.gz
 *.RData
+*.svg
