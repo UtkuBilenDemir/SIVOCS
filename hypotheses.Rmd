@@ -9,10 +9,12 @@ output:
 ---
 
 ```{r setup, include=FALSE}
+rm(list=ls()) 
 library(likert)
 library(dplyr)
 library(plyr)
 library(tidyverse)
+library(patchwork)
 
 source("./02_analysis/02_static_responses.R")
 # colnames of the specific question groups
@@ -123,8 +125,97 @@ b1domain.df %>%
 
 ```
 
+# Intention & Agency
+
+## D1: Motivation
+
+```{r echo=FALSE, fig.width=16, fig.height=4 , fig.align='center', dev='CairoSVG'}
 
 
+d1.df_named <- d1.df
+names(d1.df_named) <- c(
+  motivation.pheno. = "better understand a natural, technical, economic, or social phenomenon?",
+  motivation.prob. = "directly address a natural, technical, economic, or social problem?",
+  motivation.welfare. = "improve the human condition/welfare (outside academia)?"
+
+)
+d1_items_likert <- 
+  #round(d1.df) %>%
+  d1.df_named %>%
+  mutate_all(likert_recode) %>%
+  likert()
+
+mot_likert <- likert_plot(d1_items_likert, h=FALSE, c=c(1,3,5)) + ggtitle("When you designed your project, to what degree were you motivated to …")
+mot_likert + theme( axis.text.y = element_text( 
+                         size=g_tick_size_side), axis.text.x = element_text(
+                         size=g_tick_size_side), axis.title=element_text(size=g_tick_size_side), legend.text=element_text(size=g_tick_size_side)) 
+```
+
+
+```{r}
+likert_recode_new <- function(x) {
+  y <- ifelse(is.na(x), NA,
+              ifelse(x <= 3, 0,
+                     ifelse(x > 3 & x <7, 1,
+                            ifelse(x >= 7, 2, " "))))
+  
+  y <- factor(y, levels = c("0...not at all - 3", "4 - 6", "7 - 10...fully"))
+  
+  return(y)
+}
+d1.welfare_rec <- likert_recode(feat_df.num$motivation.welfare.)
+#cor(as.numeric(d1.welfare_rec), feat_df.num$impactTargetGroup.pub., use = "pairwise.complete.obs", "spearman")
+cor.test(as.numeric(d1.welfare_rec), feat_df.num$impactTargetGroup.civsoc., use = "pairwise.complete.obs", method = "spearman")
+```
+
+```{r D1G1-boxplot, echo=FALSE, fig.width=12, fig.height=4, dev='svg', fig.retina=2, fig.align='center'}
+dg_df <- as.data.frame(cbind(d1.welfare_rec,
+                             feat_df.num$impactTargetGroup.pub., 
+                             feat_df.num$impactTargetGroup.civsoc.,
+                             feat_df.num$impactTargetGroup.socgr.
+                             )
+                       )
+dg_df$d1.welfare_rec <- likert_recode(feat_df.num$motivation.welfare.)
+
+a <- dg_df[, c(1,2)] %>% 
+  filter(!is.na(d1.welfare_rec)) %>%
+  gather(key="V2", value="d1.welfare_rec") %>%
+  ggplot(aes(x=V2, y=d1.welfare_rec, fill=d1.welfare_rec),  show.legend = FALSE) +
+    geom_boxplot() +
+  ylab(" ") +
+  theme_light() +
+  theme(axis.text.y=element_blank(), legend.position = "none") +
+  scale_fill_discrete(name = "Motivation to improve human condition") + 
+  xlab("contributed to new or better services, products, processes, or ways of doing things that were targeted towards general population") + 
+  scale_fill_manual(values=c("#FC4E07", "#E7B800", "#00AFBB"), name="Motivation to improve human condition")
+
+b <- dg_df[, c(1,3)] %>% 
+  filter(!is.na(d1.welfare_rec)) %>%
+  gather(key="V3", value="d1.welfare_rec") %>%
+  ggplot(aes(x=V3, y=d1.welfare_rec, fill=d1.welfare_rec),  show.legend = FALSE) +
+    geom_boxplot() +
+  ylab(" ") +
+  theme_light() +
+  theme(axis.text.y=element_blank(), legend.position = "none") +
+  scale_fill_discrete(name = "Motivation to improve human condition") + 
+  xlab("contributed to new or better services, products, processes, or ways of doing things that were targeted towards specific social groups (e.g. women/men/non-binary, youth/elderly; migrants; or minorities/indigenous people)") + 
+  scale_fill_manual(values=c("#FC4E07", "#E7B800", "#00AFBB"), name="Motivation to improve human condition")
+
+c <- dg_df[, c(1,4)] %>% 
+  filter(!is.na(d1.welfare_rec)) %>%
+  gather(key="V4", value="d1.welfare_rec") %>%
+  ggplot(aes(x=V4, y=d1.welfare_rec, fill=d1.welfare_rec),  show.legend = FALSE) +
+    geom_boxplot() +
+  ylab(" ") +
+  theme_light() +
+  theme(axis.text.y=element_blank()) +
+  scale_fill_discrete(name = "Motivation to improve human condition") + 
+  xlab("contributed to new or better services, products, processes, or ways of doing things that were targeted towards NGOs, advocacy or other civil society groups") + 
+  scale_fill_manual(values=c("#FC4E07", "#E7B800", "#00AFBB"), name="Motivation to improve human condition")
+
+a+b+c
+
+```
 
 
 
@@ -218,7 +309,6 @@ cor.test( he_df$V1, he_df$V2, method = "spearman", use = "complete.obs")
 * There is a although relatively weak (~0.35) statistically significant positive correlation between SI-Familiarity and involvement of citizens in the research project.
 
 ```{r E1B1-boxplot, echo=FALSE, fig.width=12, fig.height=4, dev='svg', fig.retina=2, fig.align='center'}
-
 he_df$V1 <- likert_recode2(he_df$V1)
 he_df %>% 
   filter(!is.na(V1)) %>%
@@ -228,7 +318,6 @@ he_df %>%
   ylab(" ")+
   theme_light() + 
    theme(axis.text.y=element_blank())+ scale_fill_discrete(name = "Involvement of Citizens") + xlab("Familiarity with SI") + scale_fill_manual(values=c("#FC4E07", "#E7B800", "#00AFBB"), name="Involvement of Citizens")
-
 
 
 ```

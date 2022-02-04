@@ -1,10 +1,14 @@
 ---
 title: "18_last_int_meeting2"
-output: html_document
+output: 
+  html_document:
+    df_print: paged
+    self_contained: false
 ---
 
 ```{r setup, include=FALSE}
 source("./02_analysis/02_static_responses.R")
+source("./02_analysis/99_question_groups.R")
 # Load the feature importances from python script
 feature_list <- read.csv("./02_analysis/PFA_feature_importance.csv")
 
@@ -318,3 +322,105 @@ mean(f-b)
 mean(g-b)
 ```
 
+
+
+```{r}
+cor(g,b, use = "pairwise.complete.obs", method = "spearman")
+```
+
+```{r}
+si_self  <- likert_recode(feat_df.num$contribToSI.rate.)
+
+si_df <- as.data.frame(cbind(SI.self_assessment = si_self,
+                             SI.theory_driven = a,
+                             SI.efa_driven = d,
+                             SI.efa_scaled = f,
+                             SI.log_efa = g
+                             ))
+```
+
+
+```{r SI-Models, echo=FALSE, fig.width=32, fig.height=8, dev='svg', fig.retina=2, fig.align='center'}
+library(patchwork)
+library(DEGreport)
+library(dplyr)
+library(plyr)
+library(tidyverse)
+
+si_df$SI.self_assessment <- likert_recode(feat_df.num$contribToSI.rate.)
+
+acor <- cor(si_df$SI.theory_driven, feat_df$contribToSI.rate., use = "pairwise.complete.obs", method = "spearman")
+dcor <- cor(si_df$SI.efa_driven, feat_df$contribToSI.rate., use = "pairwise.complete.obs", method = "spearman")
+fcor <- cor(si_df$SI.efa_scaled, feat_df$contribToSI.rate., use = "pairwise.complete.obs", method = "spearman")
+gcor <- cor(si_df$SI.log_efa, feat_df$contribToSI.rate., use = "pairwise.complete.obs", method = "spearman")
+
+
+a <- si_df[, c(1,2)] %>% 
+  filter(!is.na(SI.self_assessment)) %>%
+  gather(key="SI.theory_driven", value="SI.self_assessment") %>%
+  ggplot(aes(x=SI.theory_driven, y=SI.self_assessment, fill=SI.self_assessment),  show.legend = FALSE) +
+    geom_boxplot() +
+  ylab(" ") +
+  theme_light() +
+  theme(axis.text.y=element_blank()) +
+  scale_fill_discrete(name = "SI Rate (self-assessment)") + 
+  xlab("Theory driven SI-Index") + 
+  scale_fill_manual(values=c("#FC4E07", "#E7B800", "#00AFBB"), name="SI Rate (self-assessment)") + 
+  geom_text( aes( x=0, y=3, label=paste0("Cor: " , round(acor, 2))),                 , 
+           color="black", 
+           size=4, fontface="bold" )
+
+
+b <- si_df[, c(1,3)] %>% 
+  filter(!is.na(SI.self_assessment)) %>%
+  gather(key="SI.efa_driven", value="SI.self_assessment") %>%
+  ggplot(aes(x=SI.efa_driven, y=SI.self_assessment, fill=SI.self_assessment),  show.legend = FALSE) +
+    geom_boxplot() +
+  ylab(" ") +
+  theme_light() +
+  theme(axis.text.y=element_blank()) +
+  scale_fill_discrete(name = "SI Rate (self-assessment)") + 
+  xlab("EFA driven SI-Index") + 
+  scale_fill_manual(values=c("#FC4E07", "#E7B800", "#00AFBB"), name="SI Rate (self-assessment)") +
+  geom_cor(method = "kendall", ypos = 1e5)+ 
+  geom_text( aes( x=0, y=3, label=paste0("Cor: " , round(dcor, 2))),                 , 
+           color="black", 
+           size=4, fontface="bold" )
+
+
+
+c <- si_df[, c(1,4)] %>% 
+  filter(!is.na(SI.self_assessment)) %>%
+  gather(key="SI.efa_scaled", value="SI.self_assessment") %>%
+  ggplot(aes(x=SI.efa_scaled, y=SI.self_assessment, fill=SI.self_assessment),  show.legend = FALSE) +
+    geom_boxplot() +
+  ylab(" ") +
+  theme_light() +
+  theme(axis.text.y=element_blank()) +
+  scale_fill_discrete(name = "SI Rate (self-assessment)") + 
+  xlab("EFA driven and scaled SI-Index") + 
+  scale_fill_manual(values=c("#FC4E07", "#E7B800", "#00AFBB"), name="SI Rate (self-assessment)")+ 
+  geom_text( aes( x=0, y=3, label=paste0("Cor: " , round(fcor, 2))),                 , 
+           color="black", 
+           size=4, fontface="bold" )
+
+
+d <- si_df[, c(1,5)] %>% 
+  filter(!is.na(SI.self_assessment)) %>%
+  gather(key="SI.log_efa", value="SI.self_assessment") %>%
+  ggplot(aes(x=SI.log_efa, y=SI.self_assessment, fill=SI.self_assessment),  show.legend = FALSE) +
+    geom_boxplot() +
+  ylab(" ") +
+  theme_light() +
+  theme(axis.text.y=element_blank()) +
+  scale_fill_discrete(name = "SI Rate (self-assessment)") + 
+  xlab("Solely PFA based log. scaled SI-Index") + 
+  scale_fill_manual(values=c("#FC4E07", "#E7B800", "#00AFBB"), name="SI Rate (self-assessment)")+ 
+  geom_text( aes( x=0, y=3, label=paste0("Cor: " , round(gcor, 2))),                 , 
+           color="black", 
+           size=4, fontface="bold" )
+
+
+a + b + c + d
+
+```
