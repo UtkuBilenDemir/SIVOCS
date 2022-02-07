@@ -19,4 +19,3 @@ b1domain.df %>%
   theme_light() + 
   theme(axis.text.y=element_blank())+ scale_fill_discrete(name = "Domain") + xlab("Familiarity with SI") + scale_fill_manual(values=c("#FC4E07", "#E7B800", "#00AFBB"), name="Domain") + 
   scale_x_continuous(breaks = seq(0,10,2))  
-
