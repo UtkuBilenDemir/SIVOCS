@@ -4,8 +4,8 @@ output:
   html_document:
     df_print: paged
     self_contained: false
-  word_document: default
   pdf_document: default
+  word_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -15,6 +15,7 @@ library(dplyr)
 library(plyr)
 library(tidyverse)
 library(patchwork)
+library(psych)
 
 source("./02_analysis/02_static_responses.R")
 # colnames of the specific question groups
@@ -49,11 +50,54 @@ corr_boxplot <- function(df, V1, V2 ) {
   
   return(out_plot)
 }
+
+
+col_div <- c("#d53e4f",
+             "#fc8d59",
+             "#fee08b",
+             "#e6f598",
+             "#99d594",
+             "#3288bd")
+
+# col_seq <- col_div[(length(col_div) - 2):length(col_div)]
+
+# col_seq <- c("#d1e5f0",
+# "#4393c3",
+# "#053061")
+
+# 10 Color sequential
+#67001f
+#b2182b
+#d6604d
+#f4a582
+#fddbc7
+#d1e5f0
+#92c5de
+#4393c3
+#2166ac
+#053061
+
+col_seq <- c("#f4a582",
+"#92c5de",
+"#2166ac")
+
+col_seq4 <- c("#b2182b",
+              "#f4a582",
+              "#92c5de",
+              "#2166ac")
+
+
+col_bar <- "#4393c3"
+col_bar2 <- "#b2182b"
+
 ```
 
 # Familiarity with SI and Transdisciplinarity
 
-```{r echo=FALSE, fig.align='center', fig.height=4, fig.retina=2, fig.width=12, message=FALSE, warning=FALSE, dev='svg', include=TRUE}
+<!-- TODO: Describe the importance --> 
+<!-- TODO: Mention SI as the abbr. of social innocation--> 
+
+```{r FamTrans, echo=FALSE, fig.align='center', fig.height=4, fig.retina=2, fig.width=12, message=FALSE, warning=FALSE, dev='svg', include=TRUE}
 
 a1b1c2 <- as.data.frame(cbind(
   data[, a1.colnames],
@@ -85,11 +129,14 @@ likert_plot(items_likert, h=FALSE, c=c(1,3,5)) + theme( axis.text.y = element_te
 
 ## A1: Experience with transdisciplinary Research
 
-46% of the respondents note their high level of transdisciplinary experience. 
+<!-- TODO: Informative paragraph about transdisciplinary methods (Literature research, reflections from the research team) -->
+<!-- TODO: Decide if we should name the hypotheses explicitly in their own paragraphs bullet-point wise -->
+The majority of the survey respondents are somewhat experienced in transdisciplinary research approaches, only 26% of the respondents rated their transdisciplinary experience lower than or equal to 3 on a scale of 1 - 10. Close to half of all survey respondents (46%) note their especially high levels of experience in transdisciplinary methods.
+Transdisciplinarity is not a condition for SI, however, it is usually an important cornerstone in the setting of socially innovative outcomes. Transdisciplinary experience of the researchers does not directly implicate higher chances for social innovation in the research project but (H) *we assume that it is often in relation with not (purely) academic motivation to conduct research*. 
 
-We assume transdisciplinary experience often correlates with getting motivated by goals that are not purely academic. This definition includes motivation to *directly address a natural, technical, economic, or social problem?* and to *improve the human condition/welfare*.
 
-```{r A1-boxplot, echo=FALSE, fig.width=24, fig.height=8, dev='svg', fig.retina=2, fig.align='center'}
+
+```{r A1-boxplot, echo=FALSE, fig.width=10, fig.height=3, dev='svg', fig.retina=2, fig.align='center'}
 ad_df <- as.data.frame(cbind(
   a1 = feat_df.num$transdisciplinaryExp.rate.,
   d12 = feat_df.num$motivation.prob.,
@@ -109,37 +156,55 @@ a11_boxplot <- ad_df[, c(1,2)] %>%
     geom_boxplot() +
   ylab(" ") +
   theme_light() +
-  theme(axis.text.y=element_blank()) +
-  xlab("Motivation to better understand a phenomenon") + 
-  scale_fill_manual(values=c("#FC4E07", "#E7B800", "#00AFBB"), name="Transdisciplinary Experience")
+  xlab("Motivation to address a non-academic problem") + 
+  # scale_fill_manual(values=c("#FC4E07", "#E7B800", "#00AFBB"), 
+  # scale_fill_manual(values=col_seq[(length(col_seq) -2):length(col_seq) ], 
+  scale_fill_manual(values=col_seq, 
+                    name="Transdisciplinary Experience") +
+
+  theme(axis.text.y=element_blank(), legend.position = "none") +
+
+  scale_x_continuous(breaks = seq(0,10,2))  
 
 
 a12_boxplot <- ad_df[, c(1,3)] %>% 
   filter(!is.na(a1)) %>%
   gather(key="d13", value="a1") %>%
-  ggplot(aes(x=d13, y=a1, fill=a1),  show.legend = FALSE) +
-    geom_boxplot() +
+  ggplot(aes(x=d13, y=a1, fill=a1)) +
+  geom_boxplot() +
   ylab(" ") +
   theme_light() +
   theme(axis.text.y=element_blank()) +
   xlab("Motivation to improve human condition") + 
-  scale_fill_manual(values=c("#FC4E07", "#E7B800", "#00AFBB"), name="Transdisciplinary Experience")
+  scale_fill_manual(values=col_seq, name="Transdisciplinary Experience") +
+  scale_x_continuous(breaks = seq(0,10,2)) +
+  # Reverse the legend
+  guides(fill = guide_legend(reverse = TRUE))
 
 a11_boxplot + a12_boxplot
 
 ```
 
+```{r }
+corr.test(feat_df.num$transdisciplinaryExp.rate., ad_df$d13, use = "pairwise.complete.obs", method = "spearman")
+```
+
+
+The survey questions *motivation to directly address a natural, technical, economic, or social problem* and to improve the human condition/welfare are directed to the measure non- or only partially academic motivation. The analysis of the relation between the rate of transdisciplinary experience and the motivation to address a (non-academic) problem (see Figure 2) does not yield any significant correlation between the variables (correlation coefficient rho  ~0.01), to be motivated to address the natural, technical, economic, or social problem directly does not seem to be getting higher with higher rates of transdisciplinary experience. The motivation to improve the human condition is on the other hand correlating relatively stronger with transdisciplinary experience, although a statistically significant relation (p-value < 0.05 ) there is only a weak positive correlation  (rho ~0.33). The motivation to improve human welfare/condition is getting only slightly higher with higher transdisciplinary experience.
 
 <!--- TODO: Display A2/A3 descriptively --->
 
 
 ## B1: Distribution of SI-Familiarity
 
-```{r}
+```{r B1_bar, echo=FALSE, fig.width=8, fig.height=4, dev='svg', fig.retina=2, fig.align='center'}
 a <- as.data.frame(table(data.questions$familiarWithSI.response.))
 
 ggplot(data=a, aes(x=Var1, y=Freq)) +
-  geom_bar(stat="identity")
+  theme_light() +
+  geom_bar(stat="identity", fill = col_bar) +
+  xlab("Familiarity with SI") +
+  ylab("Count") 
 
 ```
 > TODO: Description of B1
@@ -163,14 +228,11 @@ b1.pwilcox <- pairwise.wilcox.test(data$familiarWithSI.response.,
 
 ```
 
-The majority of the respondents indicated their low familiarity with SI, approximately %32 of the respondents selected the lowest level of SI-Familiarity (indicated with 0) and only %16 percent of the respondents selected a value equal or greater than 7. 
-
-One of the literature-driven assumptions about the SI-familiarity was that [H] *the SI-Familiarity depends on the scientific domain*. The hypothesis is motivated by the wide-spread perspective especially on the SSH fields to be more aware of the SI aspect in research. 
-
-The results of the study shows a statistically significant difference between the 3 main scientific domains in terms of SI-Familiarity (Kruskal-Wallis [K-W] rank sum test p-value < 0.05). However, as Figure \@ref(type:B1-boxplot) also visualises the domains Mathematics, Natural-, & Engineering Sciences and Biology & Medicine are statistically not significantly different from each other while Social Sciences and Humanities (SSH) show a stat. significant difference to both of the other domains ^[Results of the pairwise comparisons using Wilcoxon rank sum test with continuity correction with Bonferonni p-value adjustment yields a p-value greater than 0.05 for Mathematics, Natural-, & Engineering Sciences. SSH, however, associated with p-values significantly smaller than 0.05 with both of the other domains]. 
+Social innovation is a relatively less known concept among the survey respondents. The majority of the respondents indicated their low familiarity with SI, approximately %32 of the respondents selected the lowest level of SI-Familiarity (indicated with 0) and only 16% of the respondents selected a value equal or greater than 7 on a scale between 0 to 10. 
+One of the literature-driven assumptions about SI-familiarity was that [H] *the SI-Familiarity depends on the scientific domain*. Considering the survey results are strongly skewed towards low familiarity rates, a possibly significant difference between the main scientific domains is an especially important aspect towards an understanding of SI in research.
 
 
-```{r B1-boxplot, echo=FALSE, fig.width=12, fig.height=4, dev='svg', fig.retina=2, fig.align='center'}
+```{r B1-boxplot, echo=FALSE, fig.width=10, fig.height=3, dev='svg', fig.retina=2, fig.align='center'}
 b1domain.df <-data.frame(familiarWithSI = data$familiarWithSI.response.,
                          domain =  data$domain)
 
@@ -186,15 +248,17 @@ b1domain.df %>%
 
 ```
 
+The analysis of the survey results yields a statistically significant dependence of the SI-familiarity to the scientific domains (Kruskal-Wallis [K-W] rank sum test p-value < 0.05). However, as Figure 4 also visualises, the domains Mathematics, Natural -, & Engineering Sciences and Biology & Medicine are statistically not significantly differ from each other while Social Sciences and Humanities (SSH) show a stat. significant difference to both of the other domains. ^[Results of the pairwise comparisons using Wilcoxon rank sum test with continuity correction with Bonferonni p-value adjustment yields a p-value greater than 0.05 for Mathematics, Natural-, & Engineering Sciences. SSH, however, associated with p-values significantly smaller than 0.05 with both of the other domains]. 
+
 # Intention & Agency
 
 ## D1: Motivation
 
-```{r echo=FALSE, fig.width=16, fig.height=4 , fig.align='center', dev='CairoSVG'}
+```{r D1-likert, echo=FALSE, fig.width=12, fig.height=4 , fig.retina=2, fig.align='center', dev='CairoSVG'}
 d1.df_named <- d1.df
 names(d1.df_named) <- c(
-  motivation.pheno. = "better understand a natural, technical, economic, or social phenomenon?",
-  motivation.prob. = "directly address a natural, technical, economic, or social problem?",
+  motivation.pheno. = "understand a natural, tech., econ., or social phenomenon?",
+  motivation.prob. = "address a natural, tech., econ., or social problem?",
   motivation.welfare. = "improve the human condition/welfare (outside academia)?"
 
 )
@@ -223,11 +287,15 @@ likert_recode_new <- function(x) {
   return(y)
 }
 d1.welfare_rec <- likert_recode(feat_df.num$motivation.welfare.)
+d1.phenome_rec <- likert_recode(feat_df.num$motivation.pheno.)
+d1.problem_rec <- likert_recode(feat_df.num$motivation.prob.)
 #cor(as.numeric(d1.welfare_rec), feat_df.num$impactTargetGroup.pub., use = "pairwise.complete.obs", "spearman")
-cor.test(as.numeric(d1.welfare_rec), feat_df.num$impactTargetGroup.civsoc., use = "pairwise.complete.obs", method = "spearman")
+cor.test(as.numeric(d1.welfare_rec), feat_df.num$impactTargetGroup.socgr., use = "pairwise.complete.obs", method = "spearman")
+
+
 ```
 
-```{r D1G1-boxplot, echo=FALSE, fig.width=12, fig.height=4, dev='svg', fig.retina=2, fig.align='center'}
+```{r D1G1-boxplot, echo=FALSE, fig.width=10, fig.height=3, dev='svg', fig.retina=2, fig.align='center'}
 dg_df <- as.data.frame(cbind(d1.welfare_rec,
                              feat_df.num$impactTargetGroup.pub., 
                              feat_df.num$impactTargetGroup.civsoc.,
@@ -245,8 +313,8 @@ a <- dg_df[, c(1,2)] %>%
   theme_light() +
   theme(axis.text.y=element_blank(), legend.position = "none") +
   scale_fill_discrete(name = "Motivation to improve human condition") + 
-  xlab("contributed to new or better services, products, processes, or ways of doing things that were targeted towards general population") + 
-  scale_fill_manual(values=c("#FC4E07", "#E7B800", "#00AFBB"), name="Motivation to improve human condition")
+  xlab("general population") + 
+  scale_fill_manual(values=col_seq, name="Motivation to improve human condition")
 
 b <- dg_df[, c(1,3)] %>% 
   filter(!is.na(d1.welfare_rec)) %>%
@@ -257,8 +325,8 @@ b <- dg_df[, c(1,3)] %>%
   theme_light() +
   theme(axis.text.y=element_blank(), legend.position = "none") +
   scale_fill_discrete(name = "Motivation to improve human condition") + 
-  xlab("contributed to new or better services, products, processes, or ways of doing things that were targeted towards specific social groups (e.g. women/men/non-binary, youth/elderly; migrants; or minorities/indigenous people)") + 
-  scale_fill_manual(values=c("#FC4E07", "#E7B800", "#00AFBB"), name="Motivation to improve human condition")
+  xlab("specific social groups") + 
+  scale_fill_manual(values=col_seq, name="Motivation to improve human condition")
 
 c <- dg_df[, c(1,4)] %>% 
   filter(!is.na(d1.welfare_rec)) %>%
@@ -269,11 +337,27 @@ c <- dg_df[, c(1,4)] %>%
   theme_light() +
   theme(axis.text.y=element_blank()) +
   scale_fill_discrete(name = "Motivation to improve human condition") + 
-  xlab("contributed to new or better services, products, processes, or ways of doing things that were targeted towards NGOs, advocacy or other civil society groups") + 
-  scale_fill_manual(values=c("#FC4E07", "#E7B800", "#00AFBB"), name="Motivation to improve human condition")
+  xlab("NGOs, advocacy or civil soc. groups") + 
+  scale_fill_manual(values=col_seq, name="Mot. to imp. human cond.") +
+
+  guides(fill = guide_legend(reverse = TRUE))
 
 a+b+c
 
+```
+```{r}
+dg_all_df <- as.data.frame(cbind(d1.welfare_rec,
+                                 d1.phenome_rec,
+                                 d1.problem_rec,
+                             feat_df.num$impactTargetGroup.pub., 
+                             feat_df.num$impactTargetGroup.civsoc.,
+                             feat_df.num$impactTargetGroup.socgr.,
+                             feat_df.num$impactTargetGroup.acad.,
+                             feat_df.num$impactTargetGroup.policy.,
+                             feat_df.num$impactTargetGroup.busi.
+                             )
+                       )
+corr.test(dg_all_df)
 ```
 
 
@@ -281,24 +365,36 @@ a+b+c
 
 ###### *Addressing a specific problem* ... 
 
-```{r, echo=FALSE, fig.height=5}
+```{r D2-bar, echo=FALSE, fig.width=8, fig.height=4, dev='svg', fig.retina=2, fig.align='center'}
 data$benefitForNonAcademy[is.na(data$benefitForNonAcademy)] <- 0 
 data$benefitForNonAcademy <- factor(data$benefitForNonAcademy, exclude=NA)
 
 benef <- as.data.frame(table(data$benefitForNonAcademy))
 benef$Var1 <- c( "No", "To a minor extent", "To a major extent")
 
-g <- ggplot(benef, aes(x=Var1, y=Freq))
+g <- ggplot(benef, aes(x=factor(Var1, levels = c("No", "To a minor extent", "To a major extent")) , y=Freq))
 # Number of cars in each class:
+benef$Var1
 
 g + 
-  geom_col(fill="#D32F49") + 
+  geom_col(fill=col_bar2
+           ,width=0.7
+           ) + 
   theme_light() +
    theme( axis.text.y = element_text( 
-                         size=g_tick_size_side), axis.text.x = element_text(
-                         size=g_tick_size_side), axis.title=element_text(size=g_tick_size_side), legend.text=element_text(size=g_tick_size_side)) + geom_text(aes(label=Freq), vjust=1.6, color="white", size=5) +
+                         size=g_tick_size_side), 
+          axis.text.x = element_text(
+                         size=g_tick_size_side),
+          axis.title=element_text(size=g_tick_size_side),
+          legend.text=element_text(size=g_tick_size_side),
+          plot.subtitle = element_text(size = 9)) + 
+  geom_text(aes(label=Freq), vjust=1.6, color="white", size=5) +
 scale_x_discrete("") + 
-  scale_y_continuous("count") 
+  scale_y_continuous("count") + 
+  labs(
+    #title = "Effect of Vitamin C on Tooth Growth",
+       subtitle = "Have you deliberately designed your project so that it might generate an immediate and intended benefit for the general 
+       population or a specific non-academic target group (e.g. specific social, policy, or business actors)?")
   
 ```
 
@@ -309,7 +405,7 @@ Our hypotheses derived from the literature research includes 2 main assumptions:
 * (h_1) The rate of non-academic impulse for research differs between scientific fields.
 
 
-```{r D2-boxplot, echo=FALSE, fig.width=12, fig.height=4, dev='svg', fig.retina=2, fig.align='center'}
+```{r D2-boxplot, echo=FALSE, fig.width=10, fig.height=3, dev='svg', fig.retina=2, fig.align='center'}
 d2domain.df <-data.frame(benefitForNonAcademy = feat_df.num$benefitForNonAcademy,
                          domain =  data$domain)
 
@@ -339,15 +435,6 @@ d2.pwilcox <- pairwise.wilcox.test(data$benefitForNonAcademy,
                                    correct = T,
                                    p.adjust="bonferroni" )
 
-```
-
-The deliberative approach to benefit for non-academic society shows statistically significant difference between different domains (Kruskal-Wallis Test p-value < 0.05), however while there is a stat. significant difference between SSH and Physical Sciences as well as between Bology & Medicine and Physical Sciences, there is no stat. difference between SSH and Biology & Medicine.  
-
-* (h_2) Impulses from non-academic world correlates with the nature of involvement of societal actors in the project.
-
-The nature of involvement of specific groups indicate how far the involvement of those were in the project (for a detailed analysis of the variable see *Nature of Involvement* under *Actors & Networks*), including the options *No*, *To a minor extent* and *To a major extent*. 
-
-```{r D2E2-boxplot, echo=FALSE, fig.width=12, fig.height=4, dev='svg', fig.retina=2, fig.align='center'}
 d2domain.df <- as.data.frame(cbind(d2domain.df,
       citiz = feat_df.num$natureOfInvolvement.citiz.,
       civsoc = feat_df.num$natureOfInvolvement.civsoc.,
@@ -360,6 +447,16 @@ d2domain.df$benefitForNonAcademy <- likert_recode2(d2domain.df$benefitForNonAcad
 # d2domain.df$civsoc <- likert_recode3(d2domain.df$civsoc)
 # d2domain.df$welfare <- likert_recode3(d2domain.df$welfare)
 
+```
+
+The deliberative approach to benefit for non-academic society shows statistically significant difference between different domains (Kruskal-Wallis Test p-value < 0.05), however while there is a stat. significant difference between SSH and Physical Sciences as well as between Bology & Medicine and Physical Sciences, there is no stat. difference between SSH and Biology & Medicine.  
+
+* (h_2) Impulses from non-academic world correlates with the nature of involvement of societal actors in the project.
+
+The nature of involvement of specific groups indicate how far the involvement of those were in the project (for a detailed analysis of the variable see *Nature of Involvement* under *Actors & Networks*), including the options *No*, *To a minor extent* and *To a major extent*. 
+
+```{r D2E2-boxplot, echo=FALSE, fig.width=10, fig.height=4, dev='svg', fig.retina=2, fig.align='center'}
+
 a <- d2domain.df[, c(1,3)] %>% 
   filter(!is.na(benefitForNonAcademy)) %>%
   filter(!is.na(citiz)) %>%
@@ -368,17 +465,11 @@ a <- d2domain.df[, c(1,3)] %>%
     geom_boxplot() +
   ylab(" ") +
   theme_light() +
-  theme( legend.position = "none") +
+  theme( axis.text.y=element_blank(), legend.position = "none", axis.text.x = element_text(angle = 45, , hjust = 1)) +
   scale_fill_discrete(name = "Aiming for a non-academic benefit") + 
-  xlab("Nature of Involvement of Citizens") + 
-  scale_fill_manual(values=c("#FC4E07", "#E7B800", "#00AFBB"), name="Aiming for a non-academic benefit") + 
-  coord_flip() +
-  # geom_dotplot(binaxis='y', 
-  #                  stackdir = "centerwhole", 
-  #                  binwidth = 1/20,
-  #                  dotsize = 1,
-  #                  aes(fill = benefitForNonAcademy)
-  # ) + 
+  xlab("Nat. of Inv. (citizens)") + 
+  scale_fill_manual(values=col_seq, name="Aiming for a non-academic benefit") + 
+  # coord_flip() +
   scale_x_discrete(limits = c("No Involvement",
   "Contributory",
   "Collaboratively",
@@ -393,27 +484,40 @@ b <- d2domain.df[, c(1,4)] %>%
   ggplot(aes(x=civsoc, y=benefitForNonAcademy, fill=benefitForNonAcademy),  show.legend = FALSE) +
     geom_boxplot() +
   ylab(" ") +
-  coord_flip() +
+  theme(axis.text.y=element_blank()) +
+  # coord_flip() +
   theme_light() +
-  theme(axis.text.y=element_blank(), legend.position = "none") +
+  theme(axis.text.y=element_blank(), legend.position = "none", axis.text.x = element_text(angle = 45, , hjust = 1)) +
   scale_fill_discrete(name = "Aiming for a non-academic benefit") + 
-  xlab("Nature of Involvement of Civil Society Organisations, NGOs") + 
-  scale_fill_manual(values=c("#FC4E07", "#E7B800", "#00AFBB"), name="Aiming for a non-academic benefit")
+  xlab("Nat. of Inv. (civ. soc. orgs, NGOs)") + 
+  scale_fill_manual(values=col_seq, name="Aiming for a non-academic benefit") +
+  scale_x_discrete(limits = c("No Involvement",
+  "Contributory",
+  "Collaboratively",
+  "Co-created"
+  )) 
 
 
 c <- d2domain.df[, c(1,5)] %>% 
   filter(!is.na(benefitForNonAcademy)) %>%
   filter(!is.na(welfare)) %>%
   gather(key="welfare", value="benefitForNonAcademy") %>%
-  ggplot(aes(x=welfare, y=benefitForNonAcademy, fill=benefitForNonAcademy),  show.legend = FALSE) +
+  ggplot(aes(x=welfare, y=benefitForNonAcademy, fill=benefitForNonAcademy)) +
     geom_boxplot() +
   ylab(" ") +
-  coord_flip() +
+  theme(axis.text.y=element_blank()) +
+  # coord_flip() +
   theme_light() +
-  theme(axis.text.y=element_blank(), legend.position = "none") +
+  theme(axis.text.y=element_blank(), axis.text.x = element_text(angle = 45, hjust = 1)) +
   scale_fill_discrete(name = "Aiming for a non-academic benefit") + 
-  xlab("Nature of Involvement of representatives of welfare -, education institutions") + 
-  scale_fill_manual(values=c("#FC4E07", "#E7B800", "#00AFBB"), name="Aiming for a non-academic benefit")
+  xlab("Nat. of Inv. (welfare -, edu. inst.)") + 
+  scale_fill_manual(values=col_seq, name="Benefit for non-academy") +
+  scale_x_discrete(limits = c("No Involvement",
+  "Contributory",
+  "Collaboratively",
+  "Co-created"
+  )) +
+  guides(fill = guide_legend(reverse = TRUE))
 
 a+b+c
 ```
@@ -424,7 +528,7 @@ Directly aiming to benefit society expected to correlate relatively higher with 
 
 ## D3: Direct benefit for the general population or a specific non-academic group
 
-```{r echo=FALSE, fig.height=5}
+```{r D3-bar, echo=FALSE, fig.width=8, fig.height=4, dev='svg', fig.retina=2, fig.align='center'}
 d3.df_colsum <- as.data.frame(colSums(d3.df))
 rownames(d3.df_colsum) <- c("societal",
 "economic",
@@ -434,7 +538,7 @@ rownames(d3.df_colsum) <- c("societal",
 
 g <- ggplot(d3.df_colsum, aes(x=rownames(d3.df_colsum), y=`colSums(d3.df)`))
 # Number of cars in each class:
-g + geom_col(fill="#338BBE") + 
+g + geom_col(fill=col_bar2) + 
   theme_light() + theme(axis.text.x = element_text()) + 
   scale_x_discrete("") + 
   scale_y_continuous("count") + geom_text(aes(label=`colSums(d3.df)`), vjust=1.6, color="white", size=5) + theme( axis.text.y = element_text( 
@@ -451,17 +555,17 @@ g + geom_col(fill="#338BBE") +
 
 ## E1/E2: Transdisciplinary Aspects: Inter-/Transdisciplinary Involvement
  
-```{r E1-Involvement, fig.width=16, fig.height=5, fig.align = 'center',echo=FALSE, dev='svg'}
+```{r E1-Involvement, echo=FALSE, fig.width=12, fig.height=6 , fig.retina=2, fig.align='center', dev='CairoSVG'}
 
 e1.df_named <- e1.df 
 names(e1.df_named) <- c(
-  groupsInvolved.res. = "researchers from other disciplines",
-groupsInvolved.busi.   = "company/business representatives (incl. farmers)",
-groupsInvolved.civsoc.= "representatives of NGOs, advocacy or other civil society groups",
-groupsInvolved.policy.= "policy makers, public administrations, representatives from governmental agencies",
-groupsInvolved.citiz.= "individual citizens (e.g. as beneficiaries, customers, or concerned persons)",
-groupsInvolved.media.= "media representatives (traditional media, digital media (e.g. bloggers), journalists, community-led media, etc.)",
-groupsInvolved.welfare.= "representatives from welfare- or education-providing institutions (such as schools, kindergartens, hospitals, or care centres)"
+  groupsInvolved.res. =  "researchers from other disciplines",
+groupsInvolved.busi.   = "company/business represent.",
+groupsInvolved.civsoc.=  "represent. of NGOs, advocacy or civ. soc. gr.",
+groupsInvolved.policy.=  "policy makers, public admin., represent. from gov.",
+groupsInvolved.citiz.=   "individual citizens",
+groupsInvolved.media.=   "media represent.(traditional media, digital media)",
+groupsInvolved.welfare.= "represent. from welfare- or education-providing inst."
 )
 
 e1_items_likert <- 
@@ -485,17 +589,17 @@ Interdisciplinary involvement is more common among the SNF funded projects, 41% 
 
 
 
-```{r E2-Nature, fig.width=16, fig.height=5, echo=FALSE, dev='svg', fig.align='center'}
+```{r E2-Nature, echo=FALSE, fig.width=12, fig.height=6 , fig.retina=2, fig.align='center',  dev='CairoSVG'}
 
 e2.df_named <- e2.df 
 names(e2.df_named) <- c(
-  natureOfInvolvement.res. = "researchers from other disciplines",
-natureOfInvolvement.busi.   = "company/business representatives (incl. farmers)",
-natureOfInvolvement.civsoc.= "representatives of NGOs, advocacy or other civil society groups",
-natureOfInvolvement.policy.= "policy makers, public administrations, representatives from governmental agencies",
-natureOfInvolvement.citiz.= "individual citizens (e.g. as beneficiaries, customers, or concerned persons)",
-natureOfInvolvement.media.= "media representatives (traditional media, digital media (e.g. bloggers), journalists, community-led media, etc.)",
-natureOfInvolvement.welfare.= "representatives from welfare- or education-providing institutions (such as schools, kindergartens, hospitals, or care centres)"
+  natureOfInvolvement.res. =  "researchers from other disciplines",
+natureOfInvolvement.busi.   = "company/business represent.",
+natureOfInvolvement.civsoc.=  "represent. of NGOs, advocacy or civ. soc. gr.",
+natureOfInvolvement.policy.=  "policy makers, public admin., represent. from gov.",
+natureOfInvolvement.citiz.=   "individual citizens",
+natureOfInvolvement.media.=   "media represent.(traditional media, digital media)",
+natureOfInvolvement.welfare.= "represent. from welfare- or education-providing inst."
 )
 
 e2.df_named <- e2.df_named[, 2: ncol(e2.df_named)]
@@ -535,7 +639,7 @@ cor.test( he_df$V1, he_df$V2, method = "spearman", use = "complete.obs")
 
 * There is a although relatively weak (~0.35) statistically significant positive correlation between SI-Familiarity and involvement of citizens in the research project.
 
-```{r E1B1-boxplot, echo=FALSE, fig.width=12, fig.height=4, dev='svg', fig.retina=2, fig.align='center'}
+```{r E1B1-boxplot, echo=FALSE, fig.width=10, fig.height=3, dev='svg', fig.retina=2, fig.align='center'}
 he_df$V1 <- likert_recode2(he_df$V1)
 he_df %>% 
   filter(!is.na(V1)) %>%
@@ -543,31 +647,41 @@ he_df %>%
   ggplot( aes(x=V2, y=V1, fill=V1),  show.legend = FALSE) +
     geom_boxplot() +
   ylab(" ")+
+  scale_x_continuous(breaks = seq(0,10,2)) +
   theme_light() + 
-   theme(axis.text.y=element_blank())+ scale_fill_discrete(name = "Involvement of Citizens") + xlab("Familiarity with SI") + scale_fill_manual(values=c("#FC4E07", "#E7B800", "#00AFBB"), name="Involvement of Citizens")
+   theme(axis.text.y=element_blank()) +
+  scale_fill_discrete(name = "Involvement of Citizens") +
+  xlab("Familiarity with SI") +
+  scale_fill_manual(values=col_seq, name="Involvement of Citizens")+
+  guides(fill = guide_legend(reverse = TRUE))
+
 
 
 ```
 
 
+```{r}
+cor.test(feat_df.num$groupsInvolved.citiz., he_df$V2, use = "pairwise.complete.obs", method = "spearman")
+```
+
 
 The type of involvement of the societal actors is also important to analyse the SI-relevant characteristics of the projects. Transdisciplinary approaches are often applied to capitalize on the ability of multiplicity of non-academic actors to address a specific issue. Therefore; we expect with the higher levels of involvement of societal actors a transdisciplinary project to,  
-H_1:  explore issues previously not (widely) known in society, and secondly,
-H_2: also aim to design/offer an up-/out-/deep-scalable solution.
+* H_1:  explore issues previously not (widely) known in society, and secondly,
 
 
-```{r E2G1-boxplot, echo=FALSE, fig.width=12, fig.height=4, dev='svg', fig.retina=2, fig.align='center'}
+```{r E2G1-boxplot, echo=FALSE, fig.width=10, fig.height=4, dev='svg', fig.retina=2, fig.align='center'}
 e2domain.df <- as.data.frame(cbind(
       unknown =feat_df.num$Impactstatements.unknown.,
-      citiz = e2.df_named$`individual citizens (e.g. as beneficiaries, customers, or concerned persons)`,
-      civsoc = e2.df_named$`representatives of NGOs, advocacy or other civil society groups`,
-      welfare = e2.df_named$`representatives from welfare- or education-providing institutions (such as schools, kindergartens, hospitals, or care centres)`
+      citiz = e2.df_named$`individual citizens`,
+      civsoc = e2.df_named$`represent. of NGOs, advocacy or civ. soc. gr.`,
+      welfare = e2.df_named$`represent. from welfare- or education-providing inst.`
 ))
 
-# d2domain.df$benefitForNonAcademy <- likert_recode2(d2domain.df$benefitForNonAcademy)
 e2domain.df$citiz <- likert_recode4(e2domain.df$citiz)
 e2domain.df$civsoc <- likert_recode4(e2domain.df$civsoc)
 e2domain.df$welfare <- likert_recode4(e2domain.df$welfare)
+
+likert_recode4(feat_df.num$natureOfInvolvement.citiz.)
 
 a <- e2domain.df[, c(1,2)] %>% 
   filter(!is.na(unknown)) %>%
@@ -576,25 +690,14 @@ a <- e2domain.df[, c(1,2)] %>%
   ggplot(aes(x=unknown, y=citiz, fill=citiz),  show.legend = FALSE) +
     geom_boxplot() +
   ylab(" ") +
+  scale_x_continuous(breaks = seq(0,10,2)) +
   theme_light() +
-  theme( legend.position = "none") +
-  scale_fill_discrete(name = "Nature of involvement (citizens)") + 
-  xlab("Adressed an previously unknown issue") + 
-  scale_fill_manual(values=c("#FC4E07", "#E7B800", "#00AFBB", "#00AFBB"), name="Nature of involvement (citizens)") + 
-  coord_flip() +
-  # geom_dotplot(binaxis='y', 
-  #                  stackdir = "centerwhole", 
-  #                  binwidth = 1/20,
-  #                  dotsize = 1,
-  #                  aes(fill = benefitForNonAcademy)
-  # ) + 
-  scale_y_discrete(limits = c(
-  "Consultative",
-  "Contributory",
-  "Collaboratively",
-  "Co-created"
-  )) 
-
+  theme( legend.position = "none", axis.text.x=element_blank()) +
+  xlab("Adressed a previously unknown issue") + 
+  ylab("Individual citizens") +
+  scale_fill_manual(values=col_seq4
+                    ) + 
+  coord_flip() 
 
 b <- e2domain.df[, c(1,3)] %>% 
   filter(!is.na(unknown)) %>%
@@ -602,19 +705,13 @@ b <- e2domain.df[, c(1,3)] %>%
   gather(key="unknown", value="civsoc") %>%
   ggplot(aes(x=unknown, y=civsoc, fill=civsoc),  show.legend = FALSE) +
     geom_boxplot() +
-  ylab(" ") +
+  xlab("Adressed a previously unknown issue") +
+  scale_x_continuous(breaks = seq(0,10,2)) +
   theme_light() +
-  theme( legend.position = "none") +
-  scale_fill_discrete(name = "Nature of involvement (civil soc. orgs & NGOs)") + 
-  xlab("Adressed an previously unknown issue") + 
-  scale_fill_manual(values=c("#FC4E07", "#E7B800", "#00AFBB", "#00AFBB"), name="Nature of involvement (civil soc. orgs & NGOs)") + 
-  coord_flip() +
-  scale_y_discrete(limits = c(
-  "Consultative",
-  "Contributory",
-  "Collaboratively",
-  "Co-created"
-  )) 
+  theme( legend.position = "none", axis.text.x = element_blank()) +
+  ylab("Civ. society organisations, NGOs") +
+  scale_fill_manual(values=col_seq4, name="Civil soc. orgs & NGOs") + 
+  coord_flip() 
 
 
 c <- e2domain.df[, c(1,4)] %>% 
@@ -623,19 +720,15 @@ c <- e2domain.df[, c(1,4)] %>%
   gather(key="unknown", value="welfare") %>%
   ggplot(aes(x=unknown, y=welfare, fill=welfare),  show.legend = FALSE) +
     geom_boxplot() +
-  ylab(" ") +
+  xlab("Adressed a previously unknown issue") +
+  scale_x_continuous(breaks = seq(0,10,2)) +
   theme_light() +
-  theme( legend.position = "none") +
-  scale_fill_discrete(name = "Nature of involvement (representatives of welfare-, education orgs)") + 
-  xlab("Adressed an previously unknown issue") + 
-  scale_fill_manual(values=c("#FC4E07", "#E7B800", "#00AFBB", "#00AFBB"), name="Nature of involvement (representatives of welfare-, education orgs)") + 
+  theme(axis.text.x = element_blank()) +
+  ylab("Welfare -, education organisations") +
+  scale_fill_manual(values=col_seq4) + 
   coord_flip() +
-  scale_y_discrete(limits = c(
-  "Consultative",
-  "Contributory",
-  "Collaboratively",
-  "Co-created"
-  )) 
+  guides(fill=guide_legend(title="Nature of Involvement", reverse = TRUE)) 
+
 
 a+b+c
 ```
@@ -643,7 +736,253 @@ a+b+c
 
 
 ```{r}
-cor.test(as.numeric(e2domain.df$welfare), e2domain.df$unknown, use = "pairwise.complete.obs", method = "spearman")
+cor.test(as.numeric(feat_df.num$natureOfInvolvement.welfare.), e2domain.df$unknown, use = "pairwise.complete.obs", method = "spearman")
+```
+
+
+
+* H_2: also aim to design/offer an up-/out-/deep-scalable solution.
+
+The Survey question about scalability initially included 3 different categories, namely up-, out- and deep scalability. However after applying survey wide factor analysis it is decided to compile the scalability sub-variables into one single variable because of how similar information (similarity in explained variances) each of the variables deliver. 
+
+```{r E2H2-boxplot, echo=FALSE, fig.width=10, fig.height=4, dev='svg', fig.retina=2, fig.align='center'}
+e2domain.df <- as.data.frame(cbind(
+      scalability = round(h2.composite, 2),
+      citiz = e2.df_named$`individual citizens`,
+      civsoc = e2.df_named$`represent. of NGOs, advocacy or civ. soc. gr.`,
+      welfare = e2.df_named$`represent. from welfare- or education-providing inst.`
+))
+
+# d2domain.df$benefitForNonAcademy <- likert_recode2(d2domain.df$benefitForNonAcademy)
+e2domain.df$citiz <- likert_recode4(e2domain.df$citiz)
+e2domain.df$civsoc <- likert_recode4(e2domain.df$civsoc)
+e2domain.df$welfare <- likert_recode4(e2domain.df$welfare)
+
+a <- e2domain.df[, c(1,2)] %>% 
+  filter(!is.na(scalability)) %>%
+  filter(!is.na(citiz)) %>%
+  gather(key="scalability", value="citiz") %>%
+  ggplot(aes(x=scalability, y=citiz, fill=citiz),  show.legend = FALSE) +
+    geom_boxplot() +
+  ylab(" ") +
+  theme_light() +
+  theme(axis.text.x = element_blank(), legend.position = "none") +
+  scale_x_continuous(breaks = seq(0,10,2)) +
+  scale_fill_discrete(name = "Individual citizens") + 
+  xlab("Rate of scalability") + 
+  ylab("Level of involvement (ind. citizens)") + 
+  scale_fill_manual(values=col_seq4) + 
+  coord_flip() +
+  guides(fill=guide_legend(title="Nature of Involvement", reverse = TRUE)) 
+
+
+b <- e2domain.df[, c(1,3)] %>% 
+  filter(!is.na(scalability)) %>%
+  filter(!is.na(civsoc)) %>%
+  gather(key="scalability", value="civsoc") %>%
+  ggplot(aes(x=scalability, y=civsoc, fill=civsoc),  show.legend = FALSE) +
+    geom_boxplot() +
+  ylab(" ") +
+  theme_light() +
+  theme(axis.text.x = element_blank(), legend.position = "none") +
+  scale_x_continuous(breaks = seq(0,10,2)) +
+  # scale_fill_discrete(name = "Civil soc. orgs & NGOs") + 
+  xlab("Rate of scalability") + 
+  ylab("Civil soc. orgs & NGOs") + 
+  scale_fill_manual(values=col_seq4, name="Nature of involvement (civil soc. orgs & NGOs)") + 
+  coord_flip() +
+  guides(fill=guide_legend(title="Nature of Involvement", reverse = TRUE)) 
+
+c <- e2domain.df[, c(1,4)] %>% 
+  filter(!is.na(scalability)) %>%
+  filter(!is.na(welfare)) %>%
+  gather(key="scalability", value="welfare") %>%
+  ggplot(aes(x=scalability, y=welfare, fill=welfare),  show.legend = FALSE) +
+    geom_boxplot() +
+  ylab(" ") +
+  theme_light() +
+  theme(axis.text.x = element_blank()) +
+  scale_x_continuous(breaks = seq(0,10,2)) +
+  xlab("Rate of scalability") + 
+  ylab("Welfare -, education organisations") + 
+  scale_fill_manual(values = col_seq4) + 
+  coord_flip() +
+  guides(fill=guide_legend(title="Nature of Involvement", reverse = TRUE)) 
+
+a+b+c
+```
+
+
+
+
+```{r}
+# TEST the correlations here
+cor.test(as.numeric(feat_df.num$groupsInvolved.citiz.), feat_df.num$Impactstatements.emanc., use = "pairwise.complete.obs", method = "spearman")
+```
+
+```{r}
+feat_df.num$Impactstatements.emanc.
+```
+
+```{r E1H2-boxplot, echo=FALSE, fig.width=10, fig.height=4, dev='svg', fig.retina=2, fig.align='center'}
+e1domain.df <- as.data.frame(cbind(
+      citiz = feat_df.num$groupsInvolved.citiz.,
+      scalability = round(h2.composite, 2),
+      understandi = feat_df.num$Impactstatements.understanding.,
+      emancipatio = feat_df.num$Impactstatements.emanc.
+))
+
+e1domain.df$citiz <- likert_recode2(e1domain.df$citiz)
+
+a <- e1domain.df[, c(1,2)] %>% 
+  filter(!is.na(scalability)) %>%
+  filter(!is.na(citiz)) %>%
+  gather(key="scalability", value="citiz") %>%
+  ggplot(aes(x=scalability, y=citiz, fill=citiz),  show.legend = FALSE) +
+    geom_boxplot() +
+  ylab(" ") +
+  theme_light() +
+  theme(axis.text.y = element_blank(), legend.position = "none") +
+  scale_x_continuous(breaks = seq(0,10,2)) +
+  scale_fill_discrete(name = "Individual citizens") + 
+  xlab("Rate of scalability") + 
+  ylab("Level of involvement (ind. citizens)") + 
+  scale_fill_manual(values=col_seq) + 
+  guides(fill=guide_legend(title="Nature of Involvement", reverse = TRUE)) 
+
+b <- e1domain.df[, c(1,3)] %>% 
+  filter(!is.na(understandi)) %>%
+  filter(!is.na(citiz)) %>%
+  gather(key="understandi", value="citiz") %>%
+  ggplot(aes(x=understandi, y=citiz, fill=citiz),  show.legend = FALSE) +
+    geom_boxplot() +
+  ylab(" ") +
+  theme_light() +
+  theme(axis.text.y = element_blank(), legend.position = "none") +
+  scale_x_continuous(breaks = seq(0,10,2)) +
+  scale_fill_discrete(name = "Individual citizens") + 
+  xlab("Generated deeper understanding") + 
+  ylab(" ") + 
+  scale_fill_manual(values=col_seq) + 
+  guides(fill=guide_legend(title="Nature of Involvement", reverse = TRUE)) 
+
+c <- e1domain.df[, c(1,4)] %>% 
+  filter(!is.na(emancipatio)) %>%
+  filter(!is.na(citiz)) %>%
+  gather(key="emancipatio", value="citiz") %>%
+  ggplot(aes(x=emancipatio, y=citiz, fill=citiz),  show.legend = FALSE) +
+    geom_boxplot() +
+  ylab(" ") +
+  theme_light() +
+  theme(axis.text.y = element_blank()) +
+  scale_x_continuous(breaks = seq(0,10,2)) +
+  scale_fill_discrete(name = "Individual citizens") + 
+  xlab("Emancipatory impact on involved groups") + 
+  ylab(" ") + 
+  scale_fill_manual(values=col_seq) + 
+  guides(fill=guide_legend(title="Level of Involvement", reverse = TRUE)) 
+
+a+b+c
+```
+
+```{r}
+# TEST the correlations here
+cor.test(as.numeric(e1domain.df$citiz), e1domain.df$emancipatio, use = "pairwise.complete.obs", method = "spearman")
+
+```
+
+
+# Transdisciplinary Aspects: Target Group Goals
+
+##### *Your project has..*
+
+```{r E3_bar, echo=FALSE, fig.width=12, fig.height=4, dev='svg', fig.retina=2, fig.align='center'}
+
+library(data.table)
+
+den_df <- as.data.frame(sapply(FUN=table, e3.df))
+
+denden_df <- transpose(as.data.frame(sapply(FUN=table, e3.df)))
+denden_df$Statement <- colnames(den_df) 
+
+dene_df <- as.data.frame(cbind( c(denden_df$V1, denden_df$V2), c(denden_df$Statement, denden_df$Statement), c(rep("True", length(denden_df$Statement)), rep("False", length(denden_df$Statement)))))
+
+dene_df$V1 <-  as.numeric(dene_df$V1)
+
+ggplot(dene_df, aes(fill=V3, y=V1, x=V2)) + 
+  geom_bar(position="stack", stat="identity" ) + coord_flip() + theme_light() +
+  scale_x_discrete("", labels = c( 
+   "targeted a group of people with specific needs",
+   "included disadvantaged or marginalised people",
+	  "worked towards improving people’s lives.",
+	  "aimed at empowering people",
+	  "enabled diversity and exchange of different perspectives") ) +
+  scale_y_continuous("Count")+
+  theme(text = element_text(size=13)) +  scale_fill_manual(values = c("#D32F49", "#338BBE"), name = "") + theme( axis.text.y = element_text( 
+                         size=g_tick_size_side), axis.text.x = element_text(
+                         size=g_tick_size_side), axis.title=element_text(size=g_tick_size_side), legend.text=element_text(size=g_tick_size_side)) +
+  geom_text(aes(label=V1),size = 5, position = position_stack(vjust = 0.5), color="white")
+
+
+```
+
+* *Empowering people* most frequently selected (170) category among goals for target group
+* *Enabling diversity and exchange of different perspectives* second most freqeuntly selected (151)
+* *Worked towards improving people lives* least selected category (167)
+
+
+
+Our literature driven assumption on the target group goals is that (H) higher levels of SI-Familiarity correlates with the focus on marginalised social groups as well as social groups in need.
+
+```{r E3B1-boxplot, echo=FALSE, fig.width=12, fig.height=4, dev='svg', fig.retina=2, fig.align='center'}
+e3domain.df <- as.data.frame(cbind(
+      sifam = feat_df.num$familiarWithSI.response.,
+      socneeds = feat_df.num$targetGroupsGoals.socneeds.,
+      socmargi = feat_df.num$targetGroupsGoals.socgroups.
+))
+
+
+# d2domain.df$benefitForNonAcademy <- likert_recode2(d2domain.df$benefitForNonAcademy)
+e3domain.df$socneeds <- factor(e3domain.df$socneeds, labels = c("False", "True"))
+e3domain.df$socmargi <- factor(e3domain.df$socmargi, labels = c("False", "True"))
+
+a <- e3domain.df[, c(1,2)] %>% 
+  filter(!is.na(sifam)) %>%
+  filter(!is.na(socneeds)) %>%
+  gather(key="sifam", value="socneeds") %>%
+  ggplot(aes(x=sifam, y=socneeds, fill=socneeds),  show.legend = FALSE) +
+    geom_boxplot() +
+  ylab(" ") +
+  theme_light() +
+  theme( legend.position = "none") +
+  # scale_fill_discrete(name = "Nature of involvement (socneeds)") + 
+  xlab("SI-Familiarity") + 
+  # ylab("Level of involvement (ind. citizens)") + 
+  # scale_fill_manual(values=c("#FC4E07", "#00AFBB"), name="Nature of involvement (citizens)") + 
+  coord_flip() 
+  
+
+b <- e3domain.df[, c(1,3)] %>% 
+  filter(!is.na(sifam)) %>%
+  filter(!is.na(socmargi)) %>%
+  gather(key="sifam", value="socmargi") %>%
+  ggplot(aes(x=sifam, y=socmargi, fill=socmargi),  show.legend = FALSE) +
+    geom_boxplot() +
+  ylab(" ") +
+  theme_light() +
+  theme( legend.position = "none") +
+  scale_fill_discrete(name = "Nature of involvement (civil soc. orgs & NGOs)") + 
+  xlab("SI-Familiarity") + 
+  # ylab("Level of involvement (civ. society organisations, NGOs)") + 
+  # scale_fill_manual(values=c("#FC4E07", "#E7B800", "#00AFBB", "#00AFBB"), name="Nature of involvement (citizens)") + 
+  coord_flip() 
+
+a+b
+```
+
+```{r}
+# Do non-param relation tests instead
+cor.test(as.numeric(e3domain.df$socmargi), e2domain.df$scalability, use = "pairwise.complete.obs", method = "spearman")
 ```
 
 
@@ -653,46 +992,644 @@ cor.test(as.numeric(e2domain.df$welfare), e2domain.df$unknown, use = "pairwise.c
 
 
 
+# [TBE]
+
+
+
+## F1: Regulatory Framework: Open Science Concepts
+
+###### Norms, requirements, practices applicable to research projects
+
+
+```{r F1_bar, fig.width=12, fig.height=4, dev='svg', fig.retina=2, fig.align='center'}
+library(data.table)
+
+f1_df <- as.data.frame(sapply(FUN=table, f1.df))
+
+f1den_df <- transpose(as.data.frame(sapply(FUN=table, f1.df)))
+f1den_df$concepts <- colnames(f1_df) 
+
+f1dene_df <- as.data.frame(cbind( c(f1den_df$V2,f1den_df$V1), c(f1den_df$concepts, f1den_df$concepts), c(rep("Yes", length(f1den_df$concepts)), rep("No", length(f1den_df$concepts)))))
+
+f1dene_df$V1 <- as.numeric(f1dene_df$V1)
+ggplot(f1dene_df, aes(fill=V3, y=V1, x=V2)) + 
+    geom_bar(position="stack", stat="identity") + coord_flip() + theme_light()  +
+  scale_x_discrete("", labels = c( 
+	 concepts.pub. =  "open access (publications)", 
+   concepts.data. = "open access (research data)",
+   	concepts.code. = "open source (code)",
+   concepts.infra.="open/shared infrastructure",
+	  concepts.review.= "open peer review "
+	 ) ) +
+  scale_y_continuous("count")+
+  theme(text = element_text(size=13)) +  scale_fill_manual(values = c("#D32F49", "#338BBE"), name = "") + theme( axis.text.y = element_text( 
+                         size=g_tick_size_side), axis.text.x = element_text(
+                         size=g_tick_size_side), axis.title=element_text(size=g_tick_size_side), legend.text=element_text(size=g_tick_size_side)) +
+  geom_text(aes(label=V1),size = 5, position = position_stack(vjust = 0.5), color="white") +
+labs(
+    #title = "Effect of Vitamin C on Tooth Growth",
+       subtitle = "Did one or more of the following concepts (norms, requirements, practices) apply to your research project?")
+  
+  
+
+```
+* *Open access to publications* most frequently selected category (326 times),
+* followed by *open access to data* (234 times)
+
+
+```{r}
+os <- feat_df.num$concepts.code. + 
+  feat_df.num$concepts.data. +
+  feat_df.num$concepts.infra. +
+  feat_df.num$concepts.pub. +
+  feat_df.num$concepts.review.
+
+
+```
+
+
+```{r F1A1, echo=FALSE, fig.width=10, fig.height=3, dev='svg', fig.retina=2, fig.align='center'}
+
+f1a1 <- as.data.frame(cbind(
+  feat_df.num$transdisciplinaryExp.rate.,
+  os
+))
+# TODO: Interpret the correlations
+cor(feat_df.num$transdisciplinaryExp.rate., os, method = "spearman", use = "pairwise.complete.obs")
+
+f1a1$V1 <- likert_recode(f1a1$V1)
+
+f1a1_boxplot <- f1a1 %>% 
+  filter(!is.na(V1)) %>%
+  gather(key="V1", value="os") %>%
+  ggplot(aes(x=os, y=V1, fill=V1),  show.legend = FALSE) +
+    geom_boxplot() +
+  ylab(" ") +
+  theme_light() +
+  xlab("Number of different open science practices") + 
+  # scale_fill_manual(values=c("#FC4E07", "#E7B800", "#00AFBB"), 
+  # scale_fill_manual(values=col_seq[(length(col_seq) -2):length(col_seq) ], 
+  scale_fill_manual(values=col_seq, 
+                    name="Transdisciplinary Experience") +
+
+  theme(axis.text.y=element_blank()) 
+
+  # scale_x_continuous(breaks = seq(0,10,2))  
+
+
+f1a1_boxplot 
+
+```
+
+
+## F2: Regulatory Framework: Gender Dimension & Support for Policy-Making
+
+
+
+###### Explicit consideration of gender in research
+
+```{r gender_bar, echo=FALSE, fig.width=10, fig.height=3, dev='svg', fig.retina=2, fig.align='center'}
+f2.df <- as.data.frame(table(data$concepts2))
+f2.df <- f2.df[2:3,]
+g <- ggplot(f2.df, aes(x=Var1, y=Freq))
+# Number of cars in each class:
+g + geom_col(fill="#D32F49")+
+  scale_x_discrete("", labels = c("No", "Yes")) +
+  scale_y_continuous("count") + 
+  theme_minimal()+ geom_text(aes(label=Freq), vjust=1.6, color="white", size=5) + theme( axis.text.y = element_text( 
+                         size=g_tick_size_side), axis.text.x = element_text(
+                         size=g_tick_size_side), axis.title=element_text(size=g_tick_size_side), legend.text=element_text(size=g_tick_size_side)) 
+```
+* Vast majority of participants (275) stated *gender* was no explicit consideration in their project
+
+
+## F3: Regulatory Framework: Gender Dimension & Support for Policy-Making
+
+###### Aim: support of evidence-based policy-making
+```{r evi_bar, echo=FALSE, fig.width=10, fig.height=3, dev='svg', fig.retina=2, fig.align='center'}
+f3.df <- as.data.frame(table(data$concepts3))
+f3.df <- f3.df[2:3,]
+g <- ggplot(f3.df, aes(x=Var1, y=Freq))
+# Number of cars in each class:
+g + geom_col(fill= "#338BBE") +
+  scale_x_discrete("", labels = c("No", "Yes")) +
+  scale_y_continuous("count") + 
+  theme_minimal()+ geom_text(aes(label=Freq), vjust=1.6, color="white", size=5) + theme( axis.text.y = element_text( 
+                         size=g_tick_size_side), axis.text.x = element_text(
+                         size=g_tick_size_side), axis.title=element_text(size=g_tick_size_side), legend.text=element_text(size=g_tick_size_side)) 
+```
+* ~ a third of projects aimed at supporting evidence-based policy-making
+
+* H: The underlying assumption is that projects with a social innovation inclination may want to have an impact on policymaking as social innovation is associated with willingness to create change. Since there are other ways to create change than through policy-making, answering no to this question does not mean that the project is not socially innovative. However, a yes answer gives an indication of whether the project is leaning towards social innovation. 
+
+
+<!-- TODO: This sounds garbage-->
+We assume that there is a relationship between the aim to evidence-based policy making and the benefitial outcomes of the research 
+
+
+# Outcome Orientation
+
+## G1: Direct Contribution
+
+.right[.small[N = 360]]
+
+```{r G1_bar, echo=FALSE, fig.width=12, fig.height=6 , fig.retina=2, fig.align='center',  dev='CairoSVG'}
+g1.df_named <- g1.df
+names(g1.df_named) <- 
+  c(
+    impactTargetGroup.pub. = "the general population",
+    impactTargetGroup.busi.= "businesses",
+    impactTargetGroup.socgr. = "specific social groups",
+    impactTargetGroup.welfare. = "welfare- and educational inst.",
+    impactTargetGroup.civsoc. = "NGOs, advocacy or civil soc. groups",
+    impactTargetGroup.policy. = "policy-making, public admin., gov. org.",
+    impactTargetGroup.acad. = "academia"
+  )
+g1.df_named <- g1.df_named[, 1:(ncol(g1.df_named)-1)]
+
+
+g1_items_likert <- 
+  #round(d1.df) %>%
+  g1.df_named %>%
+  mutate_all(likert_recode) %>%
+  likert()
+
+outcome_likert <- likert_plot(g1_items_likert, h=FALSE, c=c(1,3,5)) + ggtitle("To what degree has your project contributed to new/better services, products, processes towards...") 
+
+outcome_likert+ theme(axis.text=element_text(size=13)) + theme( axis.text.y = element_text( 
+                         size=g_tick_size_side), axis.text.x = element_text(
+                         size=g_tick_size_side), axis.title=element_text(size=g_tick_size_side), legend.text=element_text(size=g_tick_size_side)) 
+```
+
+
+
+* A tiny minority directly contributed to *new or better services, products, or processes* for civil society organisations
+* However, 18 % of respondents stated to have strongly contributed to benefit the general population
+
+
+
+
+H: We assume social innovation to be outcome-oriented. This means that social innovation projects usually end with a tangible or non-tangible output. This could, for example, be a new product, a service or a process.
+
+**We assume that the inclusion of each societal group plays a psoitive role in the outcomes of that specific group**
+
+```{r, echo=FALSE, fig.width=12, fig.height=4, dev='svg', fig.retina=2, fig.align='center'}
+# A correlation matrix of G1 and E1
+g1.df
+e1.df
+corm <- corr.test(e1.df,g1.df, use = "pairwise.complete.obs", method = "spearman")
+corm$r
+corr.p(corm$r, corm$n)
+
+```
+
+```{r}
+
+library(ggheatmap)
+e11.df <- e1.df[, 2:ncol(e1.df) ]
+g11.df <- g1.df[, 1:ncol(g1.df)-1]
+
+e11.df <- e11.df[, c(4, 1, 2, 6, 3 )]
+g11.df <- g11.df[, c(1:2,5,4, 6 )]
+
+eg_df <- as.data.frame(cbind(e11.df, g11.df))
+
+a <- eg_df[, c(1,6)] %>% 
+  filter(!is.na(groupsInvolved.citiz.)) %>%
+  filter(!is.na(impactTargetGroup.pub.)) %>%
+  gather(key="groupsInvolved.citiz.", value="impactTargetGroup.pub.") %>%
+  ggplot(aes(x=groupsInvolved.citiz., y=impactTargetGroup.pub., fill=impactTargetGroup.pub.),  show.legend = FALSE) +
+    geom_boxplot() +
+  ylab(" ") +
+  theme_light() +
+  theme(axis.text.y = element_blank(), legend.position = "none") +
+  scale_x_continuous(breaks = seq(0,10,2)) +
+  scale_fill_discrete(name = "Individual citizens") + 
+  xlab("Rate of scalability") + 
+  ylab("Level of involvement (ind. citizens)") + 
+  scale_fill_manual(values=col_seq) + 
+  guides(fill=guide_legend(title="Nature of Involvement", reverse = TRUE)) 
+
+
+## cormat <- round(cor(eg_df, use = "pairwise.complete.obs", method = "spearman" ),2)
+## library(reshape2)
+## # Get upper triangle of the correlation matrix
+##   get_upper_tri <- function(cormat){
+##     cormat[lower.tri(cormat)]<- NA
+##     return(cormat)
+##   }
+##   
+## upper_tri <- get_upper_tri(cormat)
+## upper_tri  
+## melted_cormat <- melt(upper_tri, na.rm = TRUE)
+## 
+## ggheatmap <- ggplot(melted_cormat, aes(Var2, Var1, fill = value))+
+##  geom_tile(color = "white")+
+##  scale_fill_gradient2(low = "blue", high = "red", mid = "white", 
+##    midpoint = 0, limit = c(-1,1), space = "Lab", 
+##     name="Pearson\nCorrelation") +
+##   theme_minimal()+ # minimal theme
+##  theme(axis.text.x = element_text(angle = 45, vjust = 1, 
+##     size = 12, hjust = 1))+
+##  coord_fixed()
+## # Print the heatmap
+## print(ggheatmap)
+## 
+## 
+## ggheatmap + 
+## geom_text(data = melted_cormat, aes(Var1, Var2, label = value), color = "black", size = 4) +
+## theme(
+##   axis.title.x = element_blank(),
+##   axis.title.y = element_blank(),
+##   panel.grid.major = element_blank(),
+##   panel.border = element_blank(),
+##   panel.background = element_blank(),
+##   axis.ticks = element_blank(),
+##   legend.justification = c(1, 0),
+##   legend.position = c(0.6, 0.7),
+##   legend.direction = "horizontal")+
+##   guides(fill = guide_colorbar(barwidth = 7, barheight = 1,
+##                 title.position = "top", title.hjust = 0.5))
+## 
+## library(ggcorrplot)
+## ggcorrplot(cormat, type = "lower", lab = T,
+##    outline.col = "white",
+##    ggtheme = ggplot2::theme_light,
+##    colors = c("#6D9EC1", "white", "#E46726"))
+
+```
+
+
+## G2: Intended Effects
+
+###### Intended short- or long-term change benefiting specific target groups or the general population:
+
+```{r G2_bar, echo=FALSE, fig.width=12, fig.height=4, dev='svg', fig.retina=2, fig.align='center'}
+
+den_df <- as.data.frame(sapply(FUN=table, g2.df[, 1:ncol(g2.df)-1]))
+rownames(den_df)[1] <- "NA"
+den_df <- den_df[c(2:4,6), ]
+
+den2_df <- transpose(den_df)
+den2_df$change <- colnames(den_df)
+
+den3_df <- as.data.frame(cbind(
+  Count = c(den2_df$V1, den2_df$V2, den2_df$V3, den2_df$V4), 
+  target_group = rep(den2_df$change, 4),
+  change = rep(rownames(den_df),  each=7)
+))
+
+den3_df$Count <- as.numeric(den3_df$Count)
+den3_df <- den3_df[!den3_df$target_group == "kindOfChange.acad.",]
+rownames(den3_df) <- 1:nrow(den3_df)
+den3_df <- den3_df[c(19:24, 7:12, 1:6, 13:18) ,]
+den3_df$change <- factor(den3_df$change, levels = c("beh", "att", "awar", "und" ))
+
+ggplot(den3_df,
+       aes(fill = change,
+           y = Count,
+           x = target_group)
+       ) + 
+    geom_bar(position = "stack",
+             stat = "identity"
+             ) + 
+  coord_flip() + 
+  theme_minimal() +
+  scale_x_discrete("", labels = c( 
+    kindOfChange.pub.			= "the general population",
+	  kindOfChange.busi.		=	"businesses",
+	  kindOfChange.socgr.		= "specific social groups",
+	  kindOfChange.welfare.	=	"welfare, education inst.",	
+    kindOfChange.civsoc.	=	"NGOs, civil soc. groups",	
+	  kindOfChange.policy.	=	"policy-making, public admin."
+	  # kindOfChange.acad.	  = "academia" # Academia or no academia?
+	 )) +
+  theme(axis.text.y = element_text(size = g_tick_size_main),
+        axis.text.x = element_text(size = g_tick_size_side),
+        legend.text = element_text(size = g_tick_size_side)
+        )  +
+  scale_fill_manual(labels = c("behaviour",
+                               "attitude",
+                               "awareness",
+                               "understanding"
+                              ), 
+                    # values = c("#43bea5",
+                    #            "#E7B800",
+                    #            "#00AFBB",
+                    #            "#FC4E07" )
+                    values = c("#f4a582",
+                             "#92c5de",
+                             "#4393c3",
+                             "#2166ac")[4:1]
+                    ) +  
+  geom_text(aes(label = Count),
+            size = 5, 
+            position = position_stack(vjust = 0.5),
+            color = "white"
+            ) + 
+labs(
+    #title = "Effect of Vitamin C on Tooth Growth",
+       subtitle = "Intended short- or long-term change benefiting specific target groups or the general population:")
+
+
+```
+
+* Improving the *understanding* in the general population as well as raising the *awareness* by far the most frequently selected category (79 and 50 times)
+* *Changing behaviour* most frequently stated for policy-makers/public administrators
 
 
 
 
 
+```{r G2E2, echo=FALSE, dev='svg', fig.retina=2, fig.align='center'}
+library(ggcorrplot)
+corr.test(feat_df.num$natureOfInvolvement.citiz., feat_df.num$kindOfChange.pub.)
+
+nat_change <- as.data.frame(cbind(
+  "Citizens (NoI)" = feat_df.num$natureOfInvolvement.citiz.,
+  "Civil Soc. (NoI)" = feat_df.num$natureOfInvolvement.civsoc.,
+  "Welfare Org. (NoI)" = feat_df.num$natureOfInvolvement.welfare., 
+  "Policy Mak. (NoI)" = feat_df.num$natureOfInvolvement.policy., 
+  "Citizens (KoC)" = feat_df.num$kindOfChange.pub.,
+  "Civil Soc. (KoC)" =feat_df.num$kindOfChange.civsoc.,
+  "Welfare Org. (KoC)" =feat_df.num$kindOfChange.welfare.,
+  "Policy Mak. (KoC)" =feat_df.num$kindOfChange.policy.
+                                  )
+)
+corr <- round(cor(nat_change, use = "pairwise.complete.obs"), 2)
+                  
+ggcorrplot(corr, type = "lower", lab = TRUE,
+   outline.col = "white",
+   ggtheme = ggplot2::theme_light,
+   colors = c(col_seq[3], "white", col_seq[1]))
+```
+
+
+
+
+## G4 & G5: Uptake by Decision-Makers
+
+###### *To what extent were project results taken up by policy-making and/or public administration and/or governmental agencies?*
+
+```{r G4_bar, echo=FALSE, fig.height=4}
+g4.df <- as.data.frame(g4.df
+)
+
+g4_freq.df <-  g4.df %>%
+  mutate_all(likert_recode) %>%
+  table() %>%
+  as.data.frame()
+
+## g4_items_likert <- 
+##   #round(d1.df) %>%
+##   g4.df %>%
+##   mutate_all(likert_recode) %>%
+##   likert(grouping = data$domain)
+##  
+## likert_plot(g4_items_likert, h=FALSE)
+
+g <- ggplot(g4_freq.df, aes(x=., y=Freq))
+# Number of cars in each class:
+g + geom_col(fill="#338BBE")+
+  #scale_x_discrete("", labels = c("No", "Yes")) +
+  scale_y_continuous("count") + 
+  theme_minimal()+ geom_text(aes(label=Freq), vjust=1.6, color="white", size=5) + theme( axis.text.y = element_text( 
+                         size=g_tick_size_side), axis.text.x = element_text(
+                         size=g_tick_size_side), axis.title=element_text(size=g_tick_size_side), legend.text=element_text(size=g_tick_size_side)) +
+  labs(subtitle = "To what extent were project results taken up 
+       by policy-making and/or public administration and/or governmental agencies?")
+
+
+```
+
+*  ~ 20 % rated the *uptake of the project results by decision-makers* moderate to high
+
+
+###### In what way were those results taken up by policy-making and/or public administration and/or governmental agencies?
+
+
+
+```{r G5_bar, echo=FALSE, fig.height=4}
+
+g5_freq.df <- g5.df[, 1:ncol(g5.df)-1]
+g5_freq.df <- as.data.frame(sapply(FUN=table, g5_freq.df))
+g5_freq.df <- g5_freq.df[2,]
+g5_freq.df2 <- as.data.frame(transpose(g5_freq.df))
+g5_freq.df2$changed <- colnames(g5_freq.df)
+
+g <- ggplot(g5_freq.df2, aes(x=changed, y=V1))
+# Number of cars in each class:
+g + geom_col(fill="#D32F49")+
+  #scale_x_discrete("", labels = c("No", "Yes")) +
+  scale_y_continuous("count") + 
+  scale_x_discrete("", labels = c("Changed policy (measures)", 
+"Changed agenda-setting", 
+"Changed regulation or law")) + 
+  theme_minimal()+ geom_text(aes(label=V1), vjust=1.6, color="white", size=5) + theme( axis.text.y = element_text( 
+                         size=g_tick_size_side), axis.text.x = element_text(
+                         size=g_tick_size_side), axis.title=element_text(size=g_tick_size_side), legend.text=element_text(size=g_tick_size_side)) +
+  labs(subtitle = "In what way were those results taken up by 
+       policy-making and/or public administration and/or governmental agencies?")
+ 
+```
+
+* 9 projects claimed to have influenced *specific laws or regulations*
+* 53 projects stated to have changed a *policy or agenda*
+
+
+```{r G5E2, echo=FALSE, fig.width=10, fig.height=3, dev='svg', fig.retina=2, fig.align='center'}
+
+g5e2 <- as.data.frame(cbind(
+  feat_df.num$natureOfInvolvement.policy.,
+  feat_df.num$adoptByPolicyHow.SQ001.
+))
+# TODO: Interpret the correlations
+cor(feat_df.num$transdisciplinaryExp.rate., os, method = "spearman", use = "pairwise.complete.obs")
+
+f1a1$V1 <- likert_recode(f1a1$V1)
+
+f1a1_boxplot <- f1a1 %>% 
+  filter(!is.na(V1)) %>%
+  gather(key="V1", value="os") %>%
+  ggplot(aes(x=os, y=V1, fill=V1),  show.legend = FALSE) +
+    geom_boxplot() +
+  ylab(" ") +
+  theme_light() +
+  xlab("Number of different open science practices") + 
+  # scale_fill_manual(values=c("#FC4E07", "#E7B800", "#00AFBB"), 
+  # scale_fill_manual(values=col_seq[(length(col_seq) -2):length(col_seq) ], 
+  scale_fill_manual(values=col_seq, 
+                    name="Transdisciplinary Experience") +
+
+  theme(axis.text.y=element_blank()) 
+
+  # scale_x_continuous(breaks = seq(0,10,2))  
+
+
+f1a1_boxplot 
+
+```
+
+## G6: Impact Statements
+
+
+```{r G6_bar, echo=FALSE, fig.width=12, fig.height=6 , fig.retina=2, fig.align='center',  dev='CairoSVG'}
+g6.df_named <- g6.df
+names(g6.df_named) <- 
+  c(
+    Impactstatements.capab. = "The targeted groups have likely gained capabilities to tackle similar issues.",
+    Impactstatements.emanc. = "The project played an emancipatory role",
+    Impactstatements.understanding. = "The project generated a better understanding of a  social issue.",
+    Impactstatements.mitig. = "The project contributed to the mitigation of a social issue.",        
+    Impactstatements.unknown. = "The project results addressed an issue that was not (widely) known before.",       
+    Impactstatements.unaddressed. = "The scrutinised issue was not (widely) addressed in academia before."  
+  )
+
+g6_items_likert <- 
+  #round(d1.df) %>%
+  g6.df_named %>%
+  mutate_all(likert_recode) %>%
+  likert()
+
+outcome_likert <- likert_plot(g6_items_likert, h=FALSE, c = c(1,3,5)) + ggtitle("To what extent do the following statements apply to your project?") 
+
+outcome_likert + theme( axis.text.y = element_text( 
+                         size=g_tick_size_side), axis.text.x = element_text(
+                         size=g_tick_size_side), axis.title=element_text(size=g_tick_size_side), legend.text=element_text(size=g_tick_size_side)) 
+
+```
+
+
+* Academic dimension most frequently chosen,
+* followed by *issues not widely known in society* and *generate a deeper understanding of a specific social issues*.
+
+```{r G6D1-boxplot, echo=FALSE, fig.width=10, fig.height=3, dev='svg', fig.retina=2, fig.align='center'}
+gd_df <- as.data.frame(cbind(d1.welfare_rec,
+                             feat_df.num$Impactstatements.understanding.,
+                             feat_df.num$Impactstatements.capab.,
+                             feat_df.num$Impactstatements.emanc.
+                             )
+                       )
+gd_df$d1.welfare_rec <- likert_recode(feat_df.num$motivation.welfare.)
+
+a <- dg_df[, c(1,2)] %>% 
+  filter(!is.na(d1.welfare_rec)) %>%
+  gather(key="V2", value="d1.welfare_rec") %>%
+  ggplot(aes(x=V2, y=d1.welfare_rec, fill=d1.welfare_rec),  show.legend = FALSE) +
+    geom_boxplot() +
+  ylab(" ") +
+  theme_light() +
+  theme(axis.text.y=element_blank(), legend.position = "none") +
+  scale_fill_discrete(name = "The project generated a better understanding of a social issue") + 
+  xlab("Created a better understanding...") + 
+  scale_fill_manual(values=col_seq, name="Motivation to improve human condition")
+
+b <- gd_df[, c(1,3)] %>% 
+  filter(!is.na(d1.welfare_rec)) %>%
+  gather(key="V3", value="d1.welfare_rec") %>%
+  ggplot(aes(x=V3, y=d1.welfare_rec, fill=d1.welfare_rec),  show.legend = FALSE) +
+    geom_boxplot() +
+  ylab(" ") +
+  theme_light() +
+  theme(axis.text.y=element_blank(), legend.position = "none") +
+  scale_fill_discrete(name = "Motivation to improve human condition") + 
+  xlab("Generated capabilities for the inv. group") + 
+  scale_fill_manual(values=col_seq, name="Motivation to improve human condition")
+
+c <- gd_df[, c(1,4)] %>% 
+  filter(!is.na(d1.welfare_rec)) %>%
+  gather(key="V4", value="d1.welfare_rec") %>%
+  ggplot(aes(x=V4, y=d1.welfare_rec, fill=d1.welfare_rec),  show.legend = FALSE) +
+    geom_boxplot() +
+  ylab(" ") +
+  theme_light() +
+  theme(axis.text.y=element_blank()) +
+  scale_fill_discrete(name = "Motivation to improve human condition") + 
+  xlab("Played an emancipatory role") + 
+  scale_fill_manual(values=col_seq, name="Mot. to imp. human cond.") +
+
+  guides(fill = guide_legend(reverse = TRUE))
+
+a+b+c
+
+```
+
+```{r}
+# corr.test(gd_df, use = "pairwise.complete.obs", method = "spearman")
+```
+
+
+
+# Dissemination and Exploitation
+
+# H1: Dissemination Channels
+
+```{r H1_bar, echo=FALSE, fig.width=10, fig.height=4, dev='svg', fig.retina=2, fig.align='center'}
+
+
+h11.df <- h1.df[,1:(ncol(h1.df)-1)]
+h12.df <- h11.df[,c(1:2, 4:9, 11)]
+h1den_df <- transpose(as.data.frame(sapply(FUN=table, h12.df)))
+h1den_df$diss <- colnames(h12.df) 
+
+h1den_df <- h1den_df[, 2:3]
+h1den_df$V2 <- as.numeric(h1den_df$V2)
+  
+g <- ggplot(h1den_df, aes(x=reorder(diss, V2), y=V2))
+# Number of cars in each class:
+g + geom_col(fill="#D32F49")+
+  #scale_x_discrete("", labels = c("No", "Yes")) +
+  scale_y_continuous("count") + 
+  scale_x_discrete("", labels = c(
+    dissChannels.peer.	= "Peer reviewed journal publication",
+    dissChannels.mono.	= "Monography, contribution to a book",
+  	dissChannels.conf.	= "Conference proceeding",
+    dissChannels.policy. = "Policy brief(s)",	
+  	dissChannels.trad.	= "Traditional media (TV/radio/print/etc.)",	
+  	dissChannels.prof.	= "Professional journals/magazines targeting practitioners",
+  	dissChannels.web.		=	"Own institutional or project website/blog",
+  	dissChannels.socmed. = "Social media",
+    dissChannels.events. = "Targeted events for (non-academic) practitioners",
+    dissChannels.platf. = "Online platforms (other than social media channels)"
+  )) + 
+  theme_minimal()+ geom_text(aes(label=V2), hjust=1.6, color="white", size=5) + theme( axis.text.y = element_text( 
+                         size=g_tick_size_side), axis.text.x = element_text(
+                         size=g_tick_size_side), axis.title=element_text(size=g_tick_size_side), legend.text=element_text(size=g_tick_size_side)) + coord_flip()
+ 
+```
+* Unsurprisingly, the vast majority published in peer-reviewed journals
+* Policy briefs were rated lowest but 110 projects stated to have organised events for non-academic practitioners 
 
 
 
 
 
+# H2: Dissemination and Exploitation: Scalability
 
 
+```{r H2_bar, echo=FALSE, fig.width=10, fig.height=4, fig.retina=2, dev = "svg", fig.align='center'}
+h2.df_named <- h2.df
+names(h2.df_named) <- c(
+scalabilityRating.up. = "Scaling-up",
+scalabilityRating.out. ="Scaling-out",
+scalabilityRating.deep. =  "Scaling-deep"
+)
 
+h2_items_likert <- 
+  #round(d1.df) %>%
+  h2.df_named %>%
+  mutate_all(likert_recode) %>%
+  likert()
 
+outcome_likert <- likert_plot(h2_items_likert, h=FALSE, c = c(1,3,5)) + ggtitle("How would you assess in the long term the scalability of the results generated by your project?") 
 
+outcome_likert + theme( axis.text.y = element_text( 
+                         size=g_tick_size_side), axis.text.x = element_text(
+                         size=g_tick_size_side), axis.title=element_text(size=g_tick_size_side), legend.text=element_text(size=g_tick_size_side)) 
 
+```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+* 69 % of the respondents were confident of the scaling-up potential of the project results
 
 
 

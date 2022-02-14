@@ -424,3 +424,27 @@ d <- si_df[, c(1,5)] %>%
 a + b + c + d
 
 ```
+
+
+```{r, echo=FALSE, fig.width=10, fig.height=4, dev='svg', fig.retina=2, fig.align='center'}
+col_seq <- c("#f4a582",
+"#92c5de",
+"#2166ac")
+
+a <- si_df[, c(1,2)] %>% 
+  filter(!is.na(SI.self_assessment)) %>%
+  gather(key="SI.theory_driven", value="SI.self_assessment") %>%
+  ggplot(aes(x=SI.theory_driven, y=SI.self_assessment, fill=SI.self_assessment),  show.legend = FALSE) +
+    geom_boxplot() +
+  ylab(" ") +
+  theme_light() +
+  theme(axis.text.y=element_blank()) +
+  scale_fill_discrete(name = "SI Rate (self-assessment)") + 
+  xlab("Theory driven SI-Index") + 
+  scale_fill_manual(values=col_seq, name="SI Rate (self-assessment)") + 
+guides(fill=guide_legend(reverse = TRUE))
+
+a
+
+```
+

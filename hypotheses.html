@@ -172,49 +172,63 @@ pre code {
 
 <div id="familiarity-with-si-and-transdisciplinarity" class="section level1">
 <h1>Familiarity with SI and Transdisciplinarity</h1>
-<p><img src="hypotheses_files/figure-html/unnamed-chunk-1-1.svg" width="1152" style="display: block; margin: auto;" /></p>
+<!-- TODO: Describe the importance -->
+<!-- TODO: Mention SI as the abbr. of social innocation-->
+<p><img src="hypotheses_files/figure-html/FamTrans-1.svg" width="1152" style="display: block; margin: auto;" /></p>
 <div id="a1-experience-with-transdisciplinary-research" class="section level2">
 <h2>A1: Experience with transdisciplinary Research</h2>
-<p>46% of the respondents note their high level of transdisciplinary experience.</p>
-<p>We assume transdisciplinary experience often correlates with getting motivated by goals that are not purely academic. This definition includes motivation to <em>directly address a natural, technical, economic, or social problem?</em> and to <em>improve the human condition/welfare</em>.</p>
+<!-- TODO: Informative paragraph about transdisciplinary methods (Literature research, reflections from the research team) -->
+<!-- TODO: Decide if we should name the hypotheses explicitly in their own paragraphs bullet-point wise -->
+<p>The majority of the survey respondents are somewhat experienced in transdisciplinary research approaches, only 26% of the respondents rated their transdisciplinary experience lower than or equal to 3 on a scale of 1 - 10. Close to half of all survey respondents (46%) note their especially high levels of experience in transdisciplinary methods. Transdisciplinarity is not a condition for SI, however, it is usually an important cornerstone in the setting of socially innovative outcomes. Transdisciplinary experience of the researchers does not directly implicate higher chances for social innovation in the research project but (H) <em>we assume that it is often in relation with not (purely) academic motivation to conduct research</em>.</p>
 <pre><code>## [1] 0.3266561</code></pre>
 <pre><code>## [1] 0.01175996</code></pre>
 <pre><code>## Warning: Removed 5 rows containing non-finite values (stat_boxplot).</code></pre>
 <pre><code>## Warning: Removed 6 rows containing non-finite values (stat_boxplot).</code></pre>
-<p><img src="hypotheses_files/figure-html/A1-boxplot-1.svg" width="2304" style="display: block; margin: auto;" /></p>
+<p><img src="hypotheses_files/figure-html/A1-boxplot-1.svg" width="960" style="display: block; margin: auto;" /></p>
+<pre><code>## Call:corr.test(x = feat_df.num$transdisciplinaryExp.rate., y = ad_df$d13, 
+##     use = &quot;pairwise.complete.obs&quot;, method = &quot;spearman&quot;)
+## Correlation matrix 
+## [1] 0.33
+## Sample Size 
+## [1] 346
+## These are the unadjusted probability values.
+##   The probability values  adjusted for multiple tests are in the p.adj object. 
+## [1] 0
+## 
+##  To see confidence intervals of the correlations, print with the short=FALSE option</code></pre>
+<p>The survey questions <em>motivation to directly address a natural, technical, economic, or social problem</em> and to improve the human condition/welfare are directed to the measure non- or only partially academic motivation. The analysis of the relation between the rate of transdisciplinary experience and the motivation to address a (non-academic) problem (see Figure 2) does not yield any significant correlation between the variables (correlation coefficient rho ~0.01), to be motivated to address the natural, technical, economic, or social problem directly does not seem to be getting higher with higher rates of transdisciplinary experience. The motivation to improve the human condition is on the other hand correlating relatively stronger with transdisciplinary experience, although a statistically significant relation (p-value &lt; 0.05 ) there is only a weak positive correlation (rho ~0.33). The motivation to improve human welfare/condition is getting only slightly higher with higher transdisciplinary experience.</p>
 <!--- TODO: Display A2/A3 descriptively --->
 </div>
 <div id="b1-distribution-of-si-familiarity" class="section level2">
 <h2>B1: Distribution of SI-Familiarity</h2>
-<p><img src="hypotheses_files/figure-html/unnamed-chunk-2-1.svg" width="672" /> &gt; TODO: Description of B1</p>
+<p><img src="hypotheses_files/figure-html/B1_bar-1.svg" width="768" style="display: block; margin: auto;" /> &gt; TODO: Description of B1</p>
 </div>
 <div id="dependence-of-si-familiarity-on-scientific-domains" class="section level2">
 <h2>Dependence of SI-familiarity on scientific domains</h2>
-<p>The majority of the respondents indicated their low familiarity with SI, approximately %32 of the respondents selected the lowest level of SI-Familiarity (indicated with 0) and only %16 percent of the respondents selected a value equal or greater than 7.</p>
-<p>One of the literature-driven assumptions about the SI-familiarity was that [H] <em>the SI-Familiarity depends on the scientific domain</em>. The hypothesis is motivated by the wide-spread perspective especially on the SSH fields to be more aware of the SI aspect in research.</p>
-<p>The results of the study shows a statistically significant difference between the 3 main scientific domains in terms of SI-Familiarity (Kruskal-Wallis [K-W] rank sum test p-value &lt; 0.05). However, as Figure @ref(type:B1-boxplot) also visualises the domains Mathematics, Natural-, &amp; Engineering Sciences and Biology &amp; Medicine are statistically not significantly different from each other while Social Sciences and Humanities (SSH) show a stat. significant difference to both of the other domains <a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>.</p>
+<p>Social innovation is a relatively less known concept among the survey respondents. The majority of the respondents indicated their low familiarity with SI, approximately %32 of the respondents selected the lowest level of SI-Familiarity (indicated with 0) and only 16% of the respondents selected a value equal or greater than 7 on a scale between 0 to 10. One of the literature-driven assumptions about SI-familiarity was that [H] <em>the SI-Familiarity depends on the scientific domain</em>. Considering the survey results are strongly skewed towards low familiarity rates, a possibly significant difference between the main scientific domains is an especially important aspect towards an understanding of SI in research.</p>
 <pre><code>## Scale for &#39;fill&#39; is already present. Adding another scale for &#39;fill&#39;, which
 ## will replace the existing scale.</code></pre>
 <pre><code>## Warning: Removed 1 rows containing non-finite values (stat_boxplot).</code></pre>
-<p><img src="hypotheses_files/figure-html/B1-boxplot-1.svg" width="1152" style="display: block; margin: auto;" /></p>
+<p><img src="hypotheses_files/figure-html/B1-boxplot-1.svg" width="960" style="display: block; margin: auto;" /></p>
+<p>The analysis of the survey results yields a statistically significant dependence of the SI-familiarity to the scientific domains (Kruskal-Wallis [K-W] rank sum test p-value &lt; 0.05). However, as Figure 4 also visualises, the domains Mathematics, Natural -, &amp; Engineering Sciences and Biology &amp; Medicine are statistically not significantly differ from each other while Social Sciences and Humanities (SSH) show a stat. significant difference to both of the other domains. <a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>.</p>
 </div>
 </div>
 <div id="intention-agency" class="section level1">
 <h1>Intention &amp; Agency</h1>
 <div id="d1-motivation" class="section level2">
 <h2>D1: Motivation</h2>
-<p><img src="hypotheses_files/figure-html/unnamed-chunk-4-1.svg" width="1536" style="display: block; margin: auto;" /></p>
+<p><img src="hypotheses_files/figure-html/D1-likert-1.svg" width="1152" style="display: block; margin: auto;" /></p>
 <pre><code>## Warning in cor.test.default(as.numeric(d1.welfare_rec),
-## feat_df.num$impactTargetGroup.civsoc., : Cannot compute exact p-value with ties</code></pre>
+## feat_df.num$impactTargetGroup.socgr., : Cannot compute exact p-value with ties</code></pre>
 <pre><code>## 
 ##  Spearman&#39;s rank correlation rho
 ## 
-## data:  as.numeric(d1.welfare_rec) and feat_df.num$impactTargetGroup.civsoc.
-## S = 4545122, p-value = 1.73e-09
+## data:  as.numeric(d1.welfare_rec) and feat_df.num$impactTargetGroup.socgr.
+## S = 4705538, p-value = 2.735e-10
 ## alternative hypothesis: true rho is not equal to 0
 ## sample estimates:
 ##       rho 
-## 0.3182547</code></pre>
+## 0.3300748</code></pre>
 <pre><code>## Scale for &#39;fill&#39; is already present. Adding another scale for &#39;fill&#39;, which
 ## will replace the existing scale.
 ## Scale for &#39;fill&#39; is already present. Adding another scale for &#39;fill&#39;, which
@@ -224,13 +238,80 @@ pre code {
 <pre><code>## Warning: Removed 5 rows containing non-finite values (stat_boxplot).</code></pre>
 <pre><code>## Warning: Removed 13 rows containing non-finite values (stat_boxplot).</code></pre>
 <pre><code>## Warning: Removed 7 rows containing non-finite values (stat_boxplot).</code></pre>
-<p><img src="hypotheses_files/figure-html/D1G1-boxplot-1.svg" width="1152" style="display: block; margin: auto;" /></p>
+<p><img src="hypotheses_files/figure-html/D1G1-boxplot-1.svg" width="960" style="display: block; margin: auto;" /></p>
+<pre><code>## Call:corr.test(x = dg_all_df)
+## Correlation matrix 
+##                d1.welfare_rec d1.phenome_rec d1.problem_rec   V4   V5   V6   V7
+## d1.welfare_rec           1.00           0.12           0.33 0.50 0.31 0.34 0.01
+## d1.phenome_rec           0.12           1.00           0.45 0.05 0.12 0.12 0.12
+## d1.problem_rec           0.33           0.45           1.00 0.18 0.10 0.10 0.13
+## V4                       0.50           0.05           0.18 1.00 0.32 0.38 0.32
+## V5                       0.31           0.12           0.10 0.32 1.00 0.51 0.10
+## V6                       0.34           0.12           0.10 0.38 0.51 1.00 0.07
+## V7                       0.01           0.12           0.13 0.32 0.10 0.07 1.00
+## V8                       0.36           0.15           0.13 0.49 0.54 0.34 0.22
+## V9                       0.24           0.00           0.17 0.51 0.15 0.10 0.28
+##                  V8   V9
+## d1.welfare_rec 0.36 0.24
+## d1.phenome_rec 0.15 0.00
+## d1.problem_rec 0.13 0.17
+## V4             0.49 0.51
+## V5             0.54 0.15
+## V6             0.34 0.10
+## V7             0.22 0.28
+## V8             1.00 0.32
+## V9             0.32 1.00
+## Sample Size 
+##                d1.welfare_rec d1.phenome_rec d1.problem_rec  V4  V5  V6  V7  V8
+## d1.welfare_rec            355            354            352 350 342 348 351 348
+## d1.phenome_rec            354            360            353 354 347 353 356 353
+## d1.problem_rec            352            353            354 348 343 348 350 347
+## V4                        350            354            348 355 344 350 354 350
+## V5                        342            347            343 344 347 347 347 346
+## V6                        348            353            348 350 347 353 353 350
+## V7                        351            356            350 354 347 353 357 353
+## V8                        348            353            347 350 346 350 353 354
+## V9                        346            352            346 349 345 350 351 348
+##                 V9
+## d1.welfare_rec 346
+## d1.phenome_rec 352
+## d1.problem_rec 346
+## V4             349
+## V5             345
+## V6             350
+## V7             351
+## V8             348
+## V9             352
+## Probability values (Entries above the diagonal are adjusted for multiple tests.) 
+##                d1.welfare_rec d1.phenome_rec d1.problem_rec   V4   V5   V6   V7
+## d1.welfare_rec           0.00           0.29           0.00 0.00 0.00 0.00 1.00
+## d1.phenome_rec           0.03           0.00           0.00 0.98 0.29 0.29 0.23
+## d1.problem_rec           0.00           0.00           0.00 0.01 0.43 0.43 0.19
+## V4                       0.00           0.33           0.00 0.00 0.00 0.00 0.00
+## V5                       0.00           0.03           0.06 0.00 0.00 0.00 0.43
+## V6                       0.00           0.03           0.06 0.00 0.00 0.00 0.69
+## V7                       0.92           0.02           0.01 0.00 0.06 0.17 0.00
+## V8                       0.00           0.01           0.02 0.00 0.00 0.00 0.00
+## V9                       0.00           0.94           0.00 0.00 0.00 0.05 0.00
+##                  V8   V9
+## d1.welfare_rec 0.00 0.00
+## d1.phenome_rec 0.08 1.00
+## d1.problem_rec 0.20 0.02
+## V4             0.00 0.00
+## V5             0.00 0.08
+## V6             0.00 0.43
+## V7             0.00 0.00
+## V8             0.00 0.00
+## V9             0.00 0.00
+## 
+##  To see confidence intervals of the correlations, print with the short=FALSE option</code></pre>
 </div>
 <div id="d2-intention-agency-impulses-from-the-non-academic-world" class="section level2">
 <h2>D2: Intention &amp; Agency – Impulses from the Non-academic World</h2>
 <div id="addressing-a-specific-problem" class="section level6">
 <h6><em>Addressing a specific problem</em> …</h6>
-<p><img src="hypotheses_files/figure-html/unnamed-chunk-6-1.svg" width="672" /></p>
+<pre><code>## [1] &quot;No&quot;                &quot;To a minor extent&quot; &quot;To a major extent&quot;</code></pre>
+<p><img src="hypotheses_files/figure-html/D2-bar-1.svg" width="768" style="display: block; margin: auto;" /></p>
 <!-- TODO: Describe D2 -->
 <p>Our hypotheses derived from the literature research includes 2 main assumptions:</p>
 <ul>
@@ -239,12 +320,7 @@ pre code {
 <pre><code>## Scale for &#39;fill&#39; is already present. Adding another scale for &#39;fill&#39;, which
 ## will replace the existing scale.</code></pre>
 <pre><code>## Warning: Removed 1 rows containing non-finite values (stat_boxplot).</code></pre>
-<p><img src="hypotheses_files/figure-html/D2-boxplot-1.svg" width="1152" style="display: block; margin: auto;" /></p>
-<p>The deliberative approach to benefit for non-academic society shows statistically significant difference between different domains (Kruskal-Wallis Test p-value &lt; 0.05), however while there is a stat. significant difference between SSH and Physical Sciences as well as between Bology &amp; Medicine and Physical Sciences, there is no stat. difference between SSH and Biology &amp; Medicine.</p>
-<ul>
-<li>(h_2) Impulses from non-academic world correlates with the nature of involvement of societal actors in the project.</li>
-</ul>
-<p>The nature of involvement of specific groups indicate how far the involvement of those were in the project (for a detailed analysis of the variable see <em>Nature of Involvement</em> under <em>Actors &amp; Networks</em>), including the options <em>No</em>, <em>To a minor extent</em> and <em>To a major extent</em>.</p>
+<p><img src="hypotheses_files/figure-html/D2-boxplot-1.svg" width="960" style="display: block; margin: auto;" /></p>
 <pre><code>##   [1] &quot;&quot;      &quot;&quot;      &quot;&quot;      &quot;cons&quot;  &quot;&quot;      &quot;&quot;      &quot;&quot;      &quot;&quot;      &quot;&quot;     
 ##  [10] &quot;&quot;      &quot;&quot;      &quot;&quot;      &quot;&quot;      &quot;&quot;      &quot;&quot;      &quot;&quot;      &quot;&quot;      &quot;cocr&quot; 
 ##  [19] &quot;&quot;      &quot;&quot;      &quot;&quot;      &quot;&quot;      &quot;&quot;      &quot;&quot;      &quot;&quot;      &quot;&quot;      &quot;&quot;     
@@ -286,13 +362,18 @@ pre code {
 ## [343] &quot;&quot;      &quot;cons&quot;  &quot;&quot;      &quot;cons&quot;  &quot;&quot;      &quot;&quot;      &quot;&quot;      &quot;&quot;      &quot;&quot;     
 ## [352] &quot;&quot;      &quot;&quot;      &quot;&quot;      &quot;&quot;      &quot;&quot;      &quot;colla&quot; &quot;cocr&quot;  &quot;contr&quot; &quot;&quot;     
 ## [361] &quot;&quot;</code></pre>
+<p>The deliberative approach to benefit for non-academic society shows statistically significant difference between different domains (Kruskal-Wallis Test p-value &lt; 0.05), however while there is a stat. significant difference between SSH and Physical Sciences as well as between Bology &amp; Medicine and Physical Sciences, there is no stat. difference between SSH and Biology &amp; Medicine.</p>
+<ul>
+<li>(h_2) Impulses from non-academic world correlates with the nature of involvement of societal actors in the project.</li>
+</ul>
+<p>The nature of involvement of specific groups indicate how far the involvement of those were in the project (for a detailed analysis of the variable see <em>Nature of Involvement</em> under <em>Actors &amp; Networks</em>), including the options <em>No</em>, <em>To a minor extent</em> and <em>To a major extent</em>.</p>
 <pre><code>## Scale for &#39;fill&#39; is already present. Adding another scale for &#39;fill&#39;, which
 ## will replace the existing scale.
 ## Scale for &#39;fill&#39; is already present. Adding another scale for &#39;fill&#39;, which
 ## will replace the existing scale.
 ## Scale for &#39;fill&#39; is already present. Adding another scale for &#39;fill&#39;, which
 ## will replace the existing scale.</code></pre>
-<p><img src="hypotheses_files/figure-html/D2E2-boxplot-1.svg" width="1152" style="display: block; margin: auto;" /></p>
+<p><img src="hypotheses_files/figure-html/D2E2-boxplot-1.svg" width="960" style="display: block; margin: auto;" /></p>
 <pre><code>## Warning in cor.test.default(as.numeric(d2domain.df$benefitForNonAcademy), :
 ## Cannot compute exact p-value with ties</code></pre>
 <pre><code>## 
@@ -309,19 +390,19 @@ pre code {
 </div>
 <div id="d3-direct-benefit-for-the-general-population-or-a-specific-non-academic-group" class="section level2">
 <h2>D3: Direct benefit for the general population or a specific non-academic group</h2>
-<p><img src="hypotheses_files/figure-html/unnamed-chunk-9-1.svg" width="672" /></p>
+<p><img src="hypotheses_files/figure-html/D3-bar-1.svg" width="768" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="actors-networks" class="section level1">
 <h1>Actors &amp; Networks</h1>
 <div id="e1e2-transdisciplinary-aspects-inter-transdisciplinary-involvement" class="section level2">
 <h2>E1/E2: Transdisciplinary Aspects: Inter-/Transdisciplinary Involvement</h2>
-<p><img src="hypotheses_files/figure-html/E1-Involvement-1.svg" width="1536" style="display: block; margin: auto;" /></p>
+<p><img src="hypotheses_files/figure-html/E1-Involvement-1.svg" width="1152" style="display: block; margin: auto;" /></p>
 <p>Interdisciplinary involvement is more common among the SNF funded projects, 41% of the respondents note that the involvement of academicians from other disciplines were quite central to their specific project. Transdisciplinary involvement has been measured under different categories that indicate different type of societal actors and groups in the survey. Although not as central as the interdisciplinary involvement different types of transdisciplinary engagement constitute a noteworthy part of the research projects.</p>
 <ul>
 <li>similar across different groups in terms of extent and depth of involvement (<em>marginal</em> / <em>central</em>)</li>
 </ul>
-<p><img src="hypotheses_files/figure-html/E2-Nature-1.svg" width="1536" style="display: block; margin: auto;" /></p>
+<p><img src="hypotheses_files/figure-html/E2-Nature-1.svg" width="1152" style="display: block; margin: auto;" /></p>
 <ul>
 <li>Transdisciplinary involvement mostly <em>consultative</em> or <em>contributory</em> in nature.</li>
 <li><em>Collaborative</em> processes more likely in projects where <em>welfare-/education providing institutions</em> or <em>company/ business representatives</em> are relevant</li>
@@ -343,29 +424,479 @@ pre code {
 <pre><code>## Scale for &#39;fill&#39; is already present. Adding another scale for &#39;fill&#39;, which
 ## will replace the existing scale.</code></pre>
 <pre><code>## Warning: Removed 1 rows containing non-finite values (stat_boxplot).</code></pre>
-<p><img src="hypotheses_files/figure-html/E1B1-boxplot-1.svg" width="1152" style="display: block; margin: auto;" /></p>
+<p><img src="hypotheses_files/figure-html/E1B1-boxplot-1.svg" width="960" style="display: block; margin: auto;" /></p>
+<pre><code>## Warning in cor.test.default(feat_df.num$groupsInvolved.citiz., he_df$V2, :
+## Cannot compute exact p-value with ties</code></pre>
+<pre><code>## 
+##  Spearman&#39;s rank correlation rho
+## 
+## data:  feat_df.num$groupsInvolved.citiz. and he_df$V2
+## S = 4652968, p-value = 3.338e-12
+## alternative hypothesis: true rho is not equal to 0
+## sample estimates:
+##       rho 
+## 0.3598867</code></pre>
 <p>The type of involvement of the societal actors is also important to analyse the SI-relevant characteristics of the projects. Transdisciplinary approaches are often applied to capitalize on the ability of multiplicity of non-academic actors to address a specific issue. Therefore; we expect with the higher levels of involvement of societal actors a transdisciplinary project to,<br />
-H_1: explore issues previously not (widely) known in society, and secondly, H_2: also aim to design/offer an up-/out-/deep-scalable solution.</p>
+* H_1: explore issues previously not (widely) known in society, and secondly,</p>
+<pre><code>##   [1] &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;           
+##   [5] &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;           
+##   [9] &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;           
+##  [13] &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;           
+##  [17] &lt;NA&gt;            Collaboratively &lt;NA&gt;            &lt;NA&gt;           
+##  [21] &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;           
+##  [25] &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;           
+##  [29] Contributory    &lt;NA&gt;            &lt;NA&gt;            Consultative   
+##  [33] &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;           
+##  [37] &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;           
+##  [41] &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;           
+##  [45] &lt;NA&gt;            Collaboratively &lt;NA&gt;            &lt;NA&gt;           
+##  [49] &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;           
+##  [53] Consultative    &lt;NA&gt;            Contributory    Consultative   
+##  [57] &lt;NA&gt;            &lt;NA&gt;            Contributory    &lt;NA&gt;           
+##  [61] &lt;NA&gt;            &lt;NA&gt;            Consultative    &lt;NA&gt;           
+##  [65] &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;           
+##  [69] &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;           
+##  [73] &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;            Consultative   
+##  [77] &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;           
+##  [81] &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;           
+##  [85] &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;           
+##  [89] &lt;NA&gt;            Consultative    &lt;NA&gt;            &lt;NA&gt;           
+##  [93] &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;           
+##  [97] &lt;NA&gt;            Consultative    &lt;NA&gt;            &lt;NA&gt;           
+## [101] &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;           
+## [105] &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;            Consultative   
+## [109] &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;           
+## [113] &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;           
+## [117] &lt;NA&gt;            &lt;NA&gt;            Collaboratively &lt;NA&gt;           
+## [121] &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;           
+## [125] &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;            Collaboratively
+## [129] &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;           
+## [133] &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;           
+## [137] &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;           
+## [141] &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;           
+## [145] &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;           
+## [149] &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;           
+## [153] &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;           
+## [157] &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;           
+## [161] &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;           
+## [165] &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;           
+## [169] &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;            Consultative   
+## [173] &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;           
+## [177] &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;           
+## [181] &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;           
+## [185] &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;           
+## [189] &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;           
+## [193] &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;           
+## [197] &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;            Consultative   
+## [201] &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;           
+## [205] &lt;NA&gt;            Consultative    &lt;NA&gt;            &lt;NA&gt;           
+## [209] &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;           
+## [213] &lt;NA&gt;            Consultative    Contributory    &lt;NA&gt;           
+## [217] &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;           
+## [221] &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;            Consultative   
+## [225] &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;           
+## [229] Contributory    Consultative    &lt;NA&gt;            &lt;NA&gt;           
+## [233] &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;           
+## [237] &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;            Consultative   
+## [241] &lt;NA&gt;            Consultative    &lt;NA&gt;            &lt;NA&gt;           
+## [245] &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;           
+## [249] Collaboratively &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;           
+## [253] Consultative    &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;           
+## [257] Consultative    &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;           
+## [261] Consultative    &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;           
+## [265] &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;           
+## [269] Consultative    &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;           
+## [273] &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;           
+## [277] &lt;NA&gt;            Collaboratively &lt;NA&gt;            &lt;NA&gt;           
+## [281] &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;           
+## [285] &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;            Consultative   
+## [289] &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;           
+## [293] &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;           
+## [297] &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;           
+## [301] &lt;NA&gt;            Consultative    &lt;NA&gt;            &lt;NA&gt;           
+## [305] &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;           
+## [309] &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;           
+## [313] &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;           
+## [317] &lt;NA&gt;            &lt;NA&gt;            Contributory    &lt;NA&gt;           
+## [321] &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;           
+## [325] &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;           
+## [329] &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;           
+## [333] &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;            Consultative   
+## [337] Collaboratively Consultative    &lt;NA&gt;            &lt;NA&gt;           
+## [341] Consultative    &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;           
+## [345] &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;           
+## [349] &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;           
+## [353] &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;            &lt;NA&gt;           
+## [357] Contributory    Collaboratively Consultative    &lt;NA&gt;           
+## [361] &lt;NA&gt;           
+## Levels: Consultative Contributory Collaboratively Co-created</code></pre>
+<p><img src="hypotheses_files/figure-html/E2G1-boxplot-1.svg" width="960" style="display: block; margin: auto;" /></p>
+<pre><code>## Warning in
+## cor.test.default(as.numeric(feat_df.num$natureOfInvolvement.welfare.), : Cannot
+## compute exact p-value with ties</code></pre>
+<pre><code>## 
+##  Spearman&#39;s rank correlation rho
+## 
+## data:  as.numeric(feat_df.num$natureOfInvolvement.welfare.) and e2domain.df$unknown
+## S = 28807, p-value = 0.06437
+## alternative hypothesis: true rho is not equal to 0
+## sample estimates:
+##      rho 
+## 0.238323</code></pre>
+<ul>
+<li>H_2: also aim to design/offer an up-/out-/deep-scalable solution.</li>
+</ul>
+<p>The Survey question about scalability initially included 3 different categories, namely up-, out- and deep scalability. However after applying survey wide factor analysis it is decided to compile the scalability sub-variables into one single variable because of how similar information (similarity in explained variances) each of the variables deliver.</p>
+<pre><code>## Scale for &#39;fill&#39; is already present. Adding another scale for &#39;fill&#39;, which
+## will replace the existing scale.</code></pre>
+<p><img src="hypotheses_files/figure-html/E2H2-boxplot-1.svg" width="960" style="display: block; margin: auto;" /></p>
+<pre><code>## Warning in cor.test.default(as.numeric(feat_df.num$groupsInvolved.citiz.), :
+## Cannot compute exact p-value with ties</code></pre>
+<pre><code>## 
+##  Spearman&#39;s rank correlation rho
+## 
+## data:  as.numeric(feat_df.num$groupsInvolved.citiz.) and feat_df.num$Impactstatements.emanc.
+## S = 1814824, p-value = 2.588e-13
+## alternative hypothesis: true rho is not equal to 0
+## sample estimates:
+##       rho 
+## 0.4279183</code></pre>
+<pre><code>##   [1] NA  0  0  0 NA NA  0  0  2  0 NA  5  2 NA  0  0 NA  2  4  0 10  0  2 NA  0
+##  [26]  0  0  0 10  7  0  0  0 NA  0  8  0  3 NA  1  0  0  1  4  0  4 NA  2  0  0
+##  [51]  0 NA  5 NA  2  0  0  0  5 NA NA NA  0  0  1  1 NA  3 NA  0  0  5  2  2  6
+##  [76] NA  0  7 NA  2  0  1 NA NA NA  0  0 NA NA  8  5 NA  3  0  0  0  1  2  0  5
+## [101]  0  7  0  7  2  0  4  3  3  6  0  5  0  6  1  0  4 NA  3  2  0  2 NA  0 NA
+## [126]  0  0  8  0  0 NA  0  7 NA  0 NA  1  0  0 NA NA  2  0 10  5  6 NA  0  0  0
+## [151]  3 NA  0 NA  0  0 NA NA  0  3 NA NA  4  0  0  7  0  0  0  2 NA  0  3  4  0
+## [176]  1 NA NA  0  3  0  9  0 NA  0  0  0  0 NA  0  2  6  7  4  3  0  0 NA  0  0
+## [201]  0  1  0  0 NA  0  0  1  2  0  0  1  0  5  9  0 NA  4  1  0  0  0  5  0  0
+## [226]  0  2  0  5 NA  0  6  0  2 NA  0  9  8  0  9  0  6  2  0  2  2  0  0 10  2
+## [251]  0  3  9  1  8  4  8 NA NA NA  5  1  1  2 NA  0  0  0  3  0 NA  1 NA  1 NA
+## [276]  0  0  9  0  0  5  1  0 NA 10  0 NA  3  0 NA  0 NA  2 NA NA NA  0  0  0 NA
+## [301]  0  0  0  0  0  3 NA NA  0  0  7 NA  0  3  0  0  7  3  5  1  1 NA NA  6 NA
+## [326] NA  3  0 NA  2 NA NA  3 NA NA  4 10  1 NA  0  3 NA  0 NA  0 NA NA  0 NA  0
+## [351] NA NA NA  0  6 NA NA  5  7  0  0</code></pre>
 <pre><code>## Scale for &#39;fill&#39; is already present. Adding another scale for &#39;fill&#39;, which
 ## will replace the existing scale.
 ## Scale for &#39;fill&#39; is already present. Adding another scale for &#39;fill&#39;, which
 ## will replace the existing scale.
 ## Scale for &#39;fill&#39; is already present. Adding another scale for &#39;fill&#39;, which
 ## will replace the existing scale.</code></pre>
-<p><img src="hypotheses_files/figure-html/E2G1-boxplot-1.svg" width="1152" style="display: block; margin: auto;" /></p>
-<pre><code>## Warning in cor.test.default(as.numeric(e2domain.df$welfare),
-## e2domain.df$unknown, : Cannot compute exact p-value with ties</code></pre>
+<p><img src="hypotheses_files/figure-html/E1H2-boxplot-1.svg" width="960" style="display: block; margin: auto;" /></p>
+<pre><code>## Warning in cor.test.default(as.numeric(e1domain.df$citiz),
+## e1domain.df$emancipatio, : Cannot compute exact p-value with ties</code></pre>
 <pre><code>## 
 ##  Spearman&#39;s rank correlation rho
 ## 
-## data:  as.numeric(e2domain.df$welfare) and e2domain.df$unknown
-## S = 28807, p-value = 0.06437
+## data:  as.numeric(e1domain.df$citiz) and e1domain.df$emancipatio
+## S = 1814824, p-value = 2.588e-13
 ## alternative hypothesis: true rho is not equal to 0
 ## sample estimates:
-##      rho 
-## 0.238323</code></pre>
-<hr />
+##       rho 
+## 0.4279183</code></pre>
 </div>
+</div>
+<div id="transdisciplinary-aspects-target-group-goals" class="section level1">
+<h1>Transdisciplinary Aspects: Target Group Goals</h1>
+<div id="your-project-has.." class="section level5">
+<h5><em>Your project has..</em></h5>
+<pre><code>## 
+## Attaching package: &#39;data.table&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:purrr&#39;:
+## 
+##     transpose</code></pre>
+<pre><code>## The following objects are masked from &#39;package:dplyr&#39;:
+## 
+##     between, first, last</code></pre>
+<p><img src="hypotheses_files/figure-html/E3_bar-1.svg" width="1152" style="display: block; margin: auto;" /></p>
+<ul>
+<li><em>Empowering people</em> most frequently selected (170) category among goals for target group</li>
+<li><em>Enabling diversity and exchange of different perspectives</em> second most freqeuntly selected (151)</li>
+<li><em>Worked towards improving people lives</em> least selected category (167)</li>
+</ul>
+<p>Our literature driven assumption on the target group goals is that (H) higher levels of SI-Familiarity correlates with the focus on marginalised social groups as well as social groups in need.</p>
+<p><img src="hypotheses_files/figure-html/E3B1-boxplot-1.svg" width="1152" style="display: block; margin: auto;" /></p>
+<pre><code>## Warning in cor.test.default(as.numeric(e3domain.df$socmargi),
+## e2domain.df$scalability, : Cannot compute exact p-value with ties</code></pre>
+<pre><code>## 
+##  Spearman&#39;s rank correlation rho
+## 
+## data:  as.numeric(e3domain.df$socmargi) and e2domain.df$scalability
+## S = 135282, p-value = 0.1061
+## alternative hypothesis: true rho is not equal to 0
+## sample estimates:
+##       rho 
+## 0.1633748</code></pre>
+</div>
+</div>
+<div id="tbe" class="section level1">
+<h1>[TBE]</h1>
+<div id="f1-regulatory-framework-open-science-concepts" class="section level2">
+<h2>F1: Regulatory Framework: Open Science Concepts</h2>
+<div id="norms-requirements-practices-applicable-to-research-projects" class="section level6">
+<h6>Norms, requirements, practices applicable to research projects</h6>
+<p><img src="hypotheses_files/figure-html/F1_bar-1.svg" width="1152" style="display: block; margin: auto;" /> * <em>Open access to publications</em> most frequently selected category (326 times), * followed by <em>open access to data</em> (234 times)</p>
+<pre><code>## [1] 0.06924939</code></pre>
+<pre><code>## Warning: Removed 17 rows containing non-finite values (stat_boxplot).</code></pre>
+<p><img src="hypotheses_files/figure-html/F1A1-1.svg" width="960" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="f2-regulatory-framework-gender-dimension-support-for-policy-making" class="section level2">
+<h2>F2: Regulatory Framework: Gender Dimension &amp; Support for Policy-Making</h2>
+<div id="explicit-consideration-of-gender-in-research" class="section level6">
+<h6>Explicit consideration of gender in research</h6>
+<p><img src="hypotheses_files/figure-html/gender_bar-1.svg" width="960" style="display: block; margin: auto;" /> * Vast majority of participants (275) stated <em>gender</em> was no explicit consideration in their project</p>
+</div>
+</div>
+<div id="f3-regulatory-framework-gender-dimension-support-for-policy-making" class="section level2">
+<h2>F3: Regulatory Framework: Gender Dimension &amp; Support for Policy-Making</h2>
+<div id="aim-support-of-evidence-based-policy-making" class="section level6">
+<h6>Aim: support of evidence-based policy-making</h6>
+<p><img src="hypotheses_files/figure-html/evi_bar-1.svg" width="960" style="display: block; margin: auto;" /> * ~ a third of projects aimed at supporting evidence-based policy-making</p>
+<ul>
+<li>H: The underlying assumption is that projects with a social innovation inclination may want to have an impact on policymaking as social innovation is associated with willingness to create change. Since there are other ways to create change than through policy-making, answering no to this question does not mean that the project is not socially innovative. However, a yes answer gives an indication of whether the project is leaning towards social innovation.</li>
+</ul>
+<!-- TODO: This sounds garbage-->
+<p>We assume that there is a relationship between the aim to evidence-based policy making and the benefitial outcomes of the research</p>
+</div>
+</div>
+</div>
+<div id="outcome-orientation" class="section level1">
+<h1>Outcome Orientation</h1>
+<div id="g1-direct-contribution" class="section level2">
+<h2>G1: Direct Contribution</h2>
+<p>.right[.small[N = 360]]</p>
+<p><img src="hypotheses_files/figure-html/G1_bar-1.svg" width="1152" style="display: block; margin: auto;" /></p>
+<ul>
+<li>A tiny minority directly contributed to <em>new or better services, products, or processes</em> for civil society organisations</li>
+<li>However, 18 % of respondents stated to have strongly contributed to benefit the general population</li>
+</ul>
+<p>H: We assume social innovation to be outcome-oriented. This means that social innovation projects usually end with a tangible or non-tangible output. This could, for example, be a new product, a service or a process.</p>
+<p><strong>We assume that the inclusion of each societal group plays a psoitive role in the outcomes of that specific group</strong></p>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["impactTargetGroup.pub."],"name":[1],"type":["int"],"align":["right"]},{"label":["impactTargetGroup.busi."],"name":[2],"type":["int"],"align":["right"]},{"label":["impactTargetGroup.socgr."],"name":[3],"type":["int"],"align":["right"]},{"label":["impactTargetGroup.welfare."],"name":[4],"type":["int"],"align":["right"]},{"label":["impactTargetGroup.civsoc."],"name":[5],"type":["int"],"align":["right"]},{"label":["impactTargetGroup.policy."],"name":[6],"type":["int"],"align":["right"]},{"label":["impactTargetGroup.acad."],"name":[7],"type":["int"],"align":["right"]}],"data":[{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"10"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"7"},{"1":"1","2":"5","3":"0","4":"0","5":"0","6":"0","7":"8"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"10"},{"1":"5","2":"0","3":"0","4":"0","5":"0","6":"0","7":"10"},{"1":"2","2":"0","3":"3","4":"4","5":"0","6":"2","7":"7"},{"1":"2","2":"2","3":"1","4":"1","5":"1","6":"1","7":"8"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"4","2":"5","3":"2","4":"4","5":"1","6":"1","7":"6"},{"1":"6","2":"7","3":"0","4":"0","5":"0","6":"0","7":"9"},{"1":"NA","2":"NA","3":"NA","4":"NA","5":"NA","6":"NA","7":"NA"},{"1":"2","2":"2","3":"5","4":"0","5":"0","6":"0","7":"5"},{"1":"5","2":"3","3":"3","4":"3","5":"3","6":"2","7":"8"},{"1":"7","2":"7","3":"0","4":"0","5":"0","6":"7","7":"8"},{"1":"2","2":"0","3":"1","4":"0","5":"0","6":"1","7":"7"},{"1":"5","2":"1","3":"1","4":"1","5":"1","6":"7","7":"5"},{"1":"2","2":"2","3":"2","4":"2","5":"2","6":"2","7":"10"},{"1":"4","2":"8","3":"2","4":"2","5":"2","6":"2","7":"8"},{"1":"4","2":"2","3":"0","4":"0","5":"0","6":"7","7":"10"},{"1":"3","2":"0","3":"0","4":"0","5":"0","6":"3","7":"7"},{"1":"5","2":"10","3":"0","4":"3","5":"0","6":"0","7":"10"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"2","2":"5","3":"0","4":"0","5":"5","6":"7","7":"9"},{"1":"1","2":"0","3":"0","4":"0","5":"0","6":"1","7":"3"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"9"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"1"},{"1":"4","2":"2","3":"0","4":"0","5":"0","6":"0","7":"10"},{"1":"2","2":"1","3":"0","4":"0","5":"0","6":"0","7":"7"},{"1":"10","2":"0","3":"10","4":"3","5":"6","6":"3","7":"8"},{"1":"0","2":"0","3":"0","4":"10","5":"0","6":"0","7":"2"},{"1":"3","2":"0","3":"3","4":"3","5":"0","6":"0","7":"10"},{"1":"5","2":"0","3":"0","4":"0","5":"0","6":"0","7":"10"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"7"},{"1":"2","2":"1","3":"5","4":"3","5":"1","6":"1","7":"5"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"5"},{"1":"2","2":"1","3":"10","4":"8","5":"8","6":"7","7":"7"},{"1":"3","2":"2","3":"0","4":"0","5":"4","6":"3","7":"7"},{"1":"5","2":"0","3":"0","4":"8","5":"0","6":"0","7":"8"},{"1":"6","2":"0","3":"1","4":"6","5":"0","6":"0","7":"8"},{"1":"6","2":"1","3":"1","4":"1","5":"0","6":"0","7":"8"},{"1":"3","2":"0","3":"0","4":"0","5":"0","6":"0","7":"10"},{"1":"1","2":"0","3":"0","4":"1","5":"0","6":"1","7":"3"},{"1":"0","2":"0","3":"0","4":"0","5":"6","6":"4","7":"7"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"5","7":"5"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"5"},{"1":"8","2":"0","3":"5","4":"5","5":"5","6":"8","7":"10"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"5"},{"1":"2","2":"0","3":"10","4":"0","5":"2","6":"5","7":"0"},{"1":"3","2":"1","3":"0","4":"0","5":"0","6":"0","7":"1"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"1","2":"5","3":"0","4":"0","5":"0","6":"0","7":"1"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"10"},{"1":"4","2":"0","3":"4","4":"5","5":"0","6":"0","7":"6"},{"1":"8","2":"3","3":"0","4":"0","5":"0","6":"0","7":"5"},{"1":"5","2":"0","3":"5","4":"1","5":"0","6":"0","7":"9"},{"1":"2","2":"1","3":"1","4":"1","5":"1","6":"1","7":"8"},{"1":"3","2":"3","3":"0","4":"0","5":"0","6":"0","7":"10"},{"1":"3","2":"0","3":"0","4":"0","5":"7","6":"3","7":"10"},{"1":"6","2":"5","3":"7","4":"1","5":"7","6":"6","7":"8"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"10"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"2","7":"10"},{"1":"5","2":"0","3":"5","4":"0","5":"5","6":"5","7":"10"},{"1":"2","2":"2","3":"1","4":"1","5":"7","6":"7","7":"8"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"1","7":"9"},{"1":"1","2":"0","3":"1","4":"0","5":"0","6":"0","7":"5"},{"1":"5","2":"5","3":"0","4":"0","5":"0","6":"5","7":"8"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"7"},{"1":"7","2":"2","3":"5","4":"6","5":"5","6":"7","7":"8"},{"1":"2","2":"2","3":"2","4":"2","5":"2","6":"2","7":"7"},{"1":"4","2":"3","3":"0","4":"0","5":"3","6":"3","7":"9"},{"1":"3","2":"4","3":"2","4":"3","5":"2","6":"NA","7":"7"},{"1":"2","2":"3","3":"1","4":"2","5":"1","6":"7","7":"8"},{"1":"0","2":"0","3":"4","4":"0","5":"0","6":"0","7":"6"},{"1":"5","2":"3","3":"7","4":"0","5":"0","6":"0","7":"10"},{"1":"2","2":"0","3":"7","4":"0","5":"7","6":"3","7":"7"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"1","2":"1","3":"0","4":"0","5":"0","6":"0","7":"7"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"8"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"10"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"5"},{"1":"0","2":"5","3":"0","4":"0","5":"0","6":"0","7":"10"},{"1":"2","2":"0","3":"0","4":"2","5":"0","6":"0","7":"10"},{"1":"1","2":"0","3":"0","4":"0","5":"0","6":"0","7":"10"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"2"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"10"},{"1":"2","2":"3","3":"0","4":"0","5":"0","6":"8","7":"8"},{"1":"5","2":"2","3":"0","4":"0","5":"0","6":"6","7":"10"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"7"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"10"},{"1":"7","2":"3","3":"8","4":"1","5":"1","6":"2","7":"4"},{"1":"0","2":"0","3":"0","4":"8","5":"3","6":"4","7":"8"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"3"},{"1":"3","2":"1","3":"4","4":"3","5":"4","6":"4","7":"5"},{"1":"4","2":"0","3":"3","4":"5","5":"0","6":"0","7":"2"},{"1":"5","2":"2","3":"0","4":"0","5":"0","6":"0","7":"5"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"10"},{"1":"1","2":"0","3":"8","4":"8","5":"9","6":"4","7":"8"},{"1":"10","2":"10","3":"1","4":"2","5":"1","6":"1","7":"10"},{"1":"0","2":"1","3":"0","4":"0","5":"0","6":"0","7":"8"},{"1":"7","2":"0","3":"7","4":"8","5":"2","6":"8","7":"9"},{"1":"2","2":"0","3":"2","4":"0","5":"2","6":"2","7":"2"},{"1":"5","2":"7","3":"0","4":"6","5":"0","6":"0","7":"7"},{"1":"1","2":"1","3":"0","4":"6","5":"1","6":"0","7":"10"},{"1":"0","2":"2","3":"0","4":"0","5":"0","6":"0","7":"7"},{"1":"0","2":"0","3":"10","4":"0","5":"0","6":"7","7":"10"},{"1":"0","2":"0","3":"0","4":"3","5":"NA","6":"0","7":"7"},{"1":"5","2":"0","3":"6","4":"6","5":"4","6":"0","7":"6"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"8"},{"1":"0","2":"0","3":"0","4":"2","5":"NA","6":"8","7":"5"},{"1":"3","2":"NA","3":"NA","4":"NA","5":"NA","6":"NA","7":"8"},{"1":"2","2":"3","3":"0","4":"0","5":"0","6":"8","7":"10"},{"1":"7","2":"6","3":"7","4":"7","5":"7","6":"8","7":"7"},{"1":"2","2":"1","3":"2","4":"0","5":"0","6":"1","7":"8"},{"1":"6","2":"7","3":"8","4":"7","5":"0","6":"0","7":"10"},{"1":"8","2":"10","3":"0","4":"0","5":"0","6":"0","7":"10"},{"1":"1","2":"0","3":"0","4":"0","5":"0","6":"1","7":"2"},{"1":"0","2":"0","3":"0","4":"5","5":"0","6":"3","7":"10"},{"1":"1","2":"0","3":"1","4":"0","5":"NA","6":"1","7":"8"},{"1":"3","2":"NA","3":"NA","4":"3","5":"NA","6":"3","7":"3"},{"1":"10","2":"8","3":"7","4":"7","5":"10","6":"10","7":"10"},{"1":"6","2":"5","3":"0","4":"0","5":"0","6":"0","7":"6"},{"1":"6","2":"3","3":"2","4":"0","5":"3","6":"6","7":"9"},{"1":"0","2":"0","3":"0","4":"1","5":"0","6":"0","7":"3"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"10"},{"1":"NA","2":"0","3":"0","4":"5","5":"0","6":"0","7":"10"},{"1":"1","2":"0","3":"0","4":"0","5":"0","6":"6","7":"9"},{"1":"4","2":"2","3":"9","4":"3","5":"2","6":"2","7":"7"},{"1":"5","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"7"},{"1":"6","2":"8","3":"0","4":"0","5":"6","6":"8","7":"10"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"8"},{"1":"0","2":"0","3":"0","4":"4","5":"0","6":"3","7":"5"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"8"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"5","2":"5","3":"10","4":"0","5":"0","6":"0","7":"4"},{"1":"3","2":"0","3":"2","4":"3","5":"0","6":"0","7":"5"},{"1":"0","2":"0","3":"1","4":"3","5":"0","6":"2","7":"5"},{"1":"8","2":"8","3":"0","4":"0","5":"0","6":"10","7":"10"},{"1":"5","2":"2","3":"1","4":"1","5":"1","6":"3","7":"8"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"10"},{"1":"3","2":"3","3":"7","4":"1","5":"3","6":"2","7":"7"},{"1":"0","2":"1","3":"0","4":"0","5":"0","6":"1","7":"6"},{"1":"5","2":"0","3":"2","4":"0","5":"6","6":"0","7":"10"},{"1":"7","2":"3","3":"3","4":"3","5":"3","6":"7","7":"7"},{"1":"7","2":"9","3":"0","4":"0","5":"0","6":"7","7":"10"},{"1":"8","2":"2","3":"0","4":"10","5":"0","6":"0","7":"7"},{"1":"3","2":"5","3":"0","4":"0","5":"3","6":"8","7":"10"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"10"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"3","7":"6"},{"1":"1","2":"5","3":"0","4":"0","5":"5","6":"7","7":"10"},{"1":"0","2":"2","3":"0","4":"0","5":"0","6":"0","7":"10"},{"1":"0","2":"1","3":"0","4":"0","5":"0","6":"0","7":"10"},{"1":"3","2":"3","3":"3","4":"3","5":"3","6":"3","7":"6"},{"1":"7","2":"0","3":"0","4":"0","5":"0","6":"5","7":"7"},{"1":"2","2":"2","3":"0","4":"3","5":"0","6":"1","7":"10"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"4"},{"1":"0","2":"4","3":"0","4":"0","5":"0","6":"0","7":"10"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"7","2":"8","3":"0","4":"0","5":"8","6":"9","7":"9"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"7"},{"1":"5","2":"0","3":"0","4":"2","5":"0","6":"0","7":"9"},{"1":"6","2":"9","3":"2","4":"2","5":"3","6":"5","7":"7"},{"1":"3","2":"0","3":"0","4":"3","5":"2","6":"4","7":"5"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"7"},{"1":"5","2":"0","3":"10","4":"10","5":"10","6":"10","7":"10"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"9"},{"1":"1","2":"0","3":"0","4":"0","5":"0","6":"0","7":"10"},{"1":"2","2":"3","3":"1","4":"0","5":"0","6":"0","7":"4"},{"1":"8","2":"0","3":"0","4":"0","5":"2","6":"10","7":"9"},{"1":"2","2":"2","3":"2","4":"4","5":"0","6":"1","7":"4"},{"1":"5","2":"2","3":"0","4":"7","5":"0","6":"0","7":"10"},{"1":"5","2":"0","3":"0","4":"5","5":"0","6":"0","7":"5"},{"1":"4","2":"0","3":"0","4":"0","5":"4","6":"8","7":"5"},{"1":"8","2":"0","3":"0","4":"3","5":"0","6":"7","7":"9"},{"1":"2","2":"2","3":"2","4":"2","5":"2","6":"2","7":"9"},{"1":"3","2":"2","3":"0","4":"0","5":"0","6":"2","7":"10"},{"1":"5","2":"2","3":"2","4":"2","5":"2","6":"2","7":"6"},{"1":"7","2":"4","3":"2","4":"10","5":"0","6":"0","7":"9"},{"1":"8","2":"0","3":"0","4":"0","5":"0","6":"0","7":"7"},{"1":"2","2":"2","3":"0","4":"1","5":"0","6":"0","7":"7"},{"1":"9","2":"9","3":"8","4":"9","5":"2","6":"3","7":"10"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"2","2":"3","3":"1","4":"1","5":"1","6":"1","7":"10"},{"1":"0","2":"0","3":"0","4":"0","5":"1","6":"0","7":"0"},{"1":"1","2":"0","3":"0","4":"1","5":"0","6":"0","7":"9"},{"1":"10","2":"10","3":"0","4":"10","5":"0","6":"10","7":"10"},{"1":"3","2":"8","3":"0","4":"9","5":"3","6":"4","7":"10"},{"1":"0","2":"4","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"2","2":"0","3":"0","4":"0","5":"0","6":"0","7":"8"},{"1":"4","2":"3","3":"4","4":"1","5":"4","6":"5","7":"9"},{"1":"2","2":"0","3":"0","4":"3","5":"3","6":"3","7":"5"},{"1":"5","2":"5","3":"1","4":"1","5":"1","6":"7","7":"9"},{"1":"5","2":"9","3":"1","4":"1","5":"1","6":"3","7":"10"},{"1":"3","2":"9","3":"0","4":"3","5":"0","6":"10","7":"10"},{"1":"5","2":"0","3":"0","4":"0","5":"0","6":"0","7":"9"},{"1":"6","2":"4","3":"0","4":"0","5":"0","6":"1","7":"7"},{"1":"4","2":"1","3":"0","4":"0","5":"0","6":"8","7":"0"},{"1":"3","2":"3","3":"0","4":"0","5":"0","6":"0","7":"10"},{"1":"9","2":"5","3":"0","4":"4","5":"0","6":"0","7":"10"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"8","2":"3","3":"8","4":"9","5":"0","6":"8","7":"9"},{"1":"3","2":"1","3":"3","4":"0","5":"0","6":"0","7":"3"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"8"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"7"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"10"},{"1":"7","2":"0","3":"0","4":"0","5":"0","6":"0","7":"8"},{"1":"6","2":"1","3":"1","4":"6","5":"1","6":"3","7":"9"},{"1":"9","2":"5","3":"6","4":"7","5":"3","6":"2","7":"8"},{"1":"5","2":"4","3":"3","4":"5","5":"2","6":"2","7":"9"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"0","2":"0","3":"0","4":"5","5":"0","6":"5","7":"7"},{"1":"7","2":"3","3":"3","4":"4","5":"1","6":"1","7":"6"},{"1":"10","2":"4","3":"7","4":"9","5":"0","6":"4","7":"10"},{"1":"8","2":"8","3":"6","4":"7","5":"0","6":"9","7":"9"},{"1":"10","2":"5","3":"0","4":"0","5":"0","6":"0","7":"10"},{"1":"0","2":"0","3":"0","4":"1","5":"0","6":"0","7":"9"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"1","2":"1","3":"1","4":"1","5":"1","6":"1","7":"8"},{"1":"0","2":"0","3":"0","4":"1","5":"0","6":"0","7":"8"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"10"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"NA","2":"0","3":"5","4":"5","5":"0","6":"2","7":"8"},{"1":"3","2":"0","3":"1","4":"0","5":"2","6":"0","7":"8"},{"1":"1","2":"3","3":"0","4":"0","5":"0","6":"0","7":"10"},{"1":"5","2":"5","3":"0","4":"0","5":"0","6":"3","7":"10"},{"1":"2","2":"2","3":"2","4":"1","5":"0","6":"5","7":"10"},{"1":"0","2":"2","3":"0","4":"0","5":"0","6":"0","7":"10"},{"1":"NA","2":"NA","3":"NA","4":"NA","5":"NA","6":"5","7":"NA"},{"1":"7","2":"7","3":"0","4":"7","5":"5","6":"5","7":"10"},{"1":"7","2":"7","3":"0","4":"7","5":"0","6":"0","7":"7"},{"1":"3","2":"0","3":"5","4":"5","5":"5","6":"5","7":"8"},{"1":"0","2":"7","3":"0","4":"0","5":"0","6":"0","7":"5"},{"1":"0","2":"0","3":"0","4":"2","5":"0","6":"0","7":"3"},{"1":"NA","2":"3","3":"0","4":"5","5":"1","6":"5","7":"10"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"6","7":"8"},{"1":"8","2":"8","3":"NA","4":"8","5":"NA","6":"10","7":"10"},{"1":"1","2":"1","3":"1","4":"0","5":"10","6":"10","7":"10"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"6"},{"1":"8","2":"1","3":"5","4":"2","5":"2","6":"5","7":"7"},{"1":"1","2":"0","3":"1","4":"0","5":"0","6":"2","7":"3"},{"1":"6","2":"0","3":"6","4":"1","5":"0","6":"8","7":"8"},{"1":"0","2":"0","3":"2","4":"2","5":"0","6":"0","7":"2"},{"1":"7","2":"5","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"8","2":"2","3":"2","4":"1","5":"1","6":"1","7":"8"},{"1":"1","2":"3","3":"0","4":"0","5":"1","6":"3","7":"10"},{"1":"0","2":"0","3":"1","4":"4","5":"0","6":"0","7":"10"},{"1":"2","2":"NA","3":"0","4":"0","5":"0","6":"0","7":"8"},{"1":"10","2":"5","3":"0","4":"10","5":"0","6":"10","7":"10"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"1","7":"4"},{"1":"10","2":"10","3":"0","4":"0","5":"0","6":"0","7":"8"},{"1":"3","2":"4","3":"6","4":"1","5":"0","6":"0","7":"6"},{"1":"8","2":"2","3":"9","4":"10","5":"7","6":"7","7":"10"},{"1":"5","2":"0","3":"5","4":"2","5":"10","6":"0","7":"0"},{"1":"5","2":"0","3":"9","4":"8","5":"0","6":"8","7":"9"},{"1":"6","2":"0","3":"6","4":"6","5":"3","6":"3","7":"8"},{"1":"6","2":"2","3":"7","4":"8","5":"7","6":"9","7":"9"},{"1":"3","2":"3","3":"0","4":"4","5":"0","6":"0","7":"7"},{"1":"5","2":"7","3":"0","4":"6","5":"0","6":"0","7":"10"},{"1":"1","2":"3","3":"0","4":"1","5":"0","6":"0","7":"4"},{"1":"6","2":"0","3":"8","4":"7","5":"0","6":"2","7":"10"},{"1":"3","2":"1","3":"6","4":"4","5":"1","6":"2","7":"10"},{"1":"8","2":"1","3":"1","4":"7","5":"1","6":"8","7":"8"},{"1":"7","2":"3","3":"1","4":"1","5":"1","6":"1","7":"7"},{"1":"NA","2":"NA","3":"NA","4":"NA","5":"NA","6":"NA","7":"NA"},{"1":"0","2":"1","3":"0","4":"0","5":"0","6":"0","7":"10"},{"1":"10","2":"10","3":"0","4":"0","5":"0","6":"10","7":"10"},{"1":"3","2":"0","3":"0","4":"4","5":"0","6":"0","7":"10"},{"1":"0","2":"0","3":"3","4":"4","5":"0","6":"0","7":"4"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"7"},{"1":"1","2":"1","3":"1","4":"1","5":"1","6":"1","7":"7"},{"1":"1","2":"0","3":"2","4":"0","5":"0","6":"0","7":"6"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"2","2":"3","3":"0","4":"0","5":"0","6":"0","7":"10"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"5"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"9","2":"9","3":"10","4":"10","5":"9","6":"8","7":"9"},{"1":"2","2":"8","3":"0","4":"0","5":"0","6":"0","7":"10"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"10"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"8"},{"1":"0","2":"0","3":"8","4":"0","5":"2","6":"2","7":"7"},{"1":"5","2":"5","3":"0","4":"0","5":"0","6":"0","7":"7"},{"1":"5","2":"NA","3":"NA","4":"NA","5":"NA","6":"5","7":"8"},{"1":"10","2":"0","3":"0","4":"9","5":"10","6":"9","7":"6"},{"1":"0","2":"6","3":"0","4":"0","5":"0","6":"0","7":"10"},{"1":"2","2":"0","3":"0","4":"0","5":"0","6":"3","7":"8"},{"1":"10","2":"10","3":"8","4":"8","5":"3","6":"7","7":"9"},{"1":"0","2":"2","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"0","2":"10","3":"0","4":"0","5":"0","6":"0","7":"10"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"10"},{"1":"7","2":"4","3":"7","4":"2","5":"NA","6":"NA","7":"10"},{"1":"6","2":"7","3":"0","4":"0","5":"3","6":"4","7":"7"},{"1":"1","2":"1","3":"0","4":"0","5":"0","6":"0","7":"5"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"10"},{"1":"8","2":"0","3":"0","4":"7","5":"0","6":"7","7":"8"},{"1":"10","2":"10","3":"0","4":"0","5":"1","6":"10","7":"10"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"10"},{"1":"10","2":"0","3":"0","4":"1","5":"0","6":"0","7":"10"},{"1":"8","2":"0","3":"0","4":"0","5":"5","6":"8","7":"8"},{"1":"4","2":"1","3":"0","4":"0","5":"0","6":"0","7":"9"},{"1":"6","2":"8","3":"1","4":"1","5":"1","6":"2","7":"8"},{"1":"0","2":"10","3":"0","4":"0","5":"0","6":"0","7":"5"},{"1":"8","2":"0","3":"4","4":"0","5":"0","6":"0","7":"10"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"5"},{"1":"6","2":"4","3":"2","4":"6","5":"NA","6":"NA","7":"8"},{"1":"3","2":"5","3":"0","4":"0","5":"0","6":"0","7":"10"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"10"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"5"},{"1":"8","2":"1","3":"0","4":"0","5":"0","6":"0","7":"10"},{"1":"9","2":"2","3":"8","4":"8","5":"8","6":"9","7":"9"},{"1":"10","2":"10","3":"0","4":"10","5":"0","6":"10","7":"10"},{"1":"8","2":"2","3":"0","4":"8","5":"0","6":"4","7":"8"},{"1":"4","2":"0","3":"4","4":"4","5":"0","6":"0","7":"8"},{"1":"2","2":"1","3":"2","4":"2","5":"2","6":"7","7":"6"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"10"},{"1":"3","2":"5","3":"3","4":"2","5":"0","6":"0","7":"8"},{"1":"4","2":"4","3":"0","4":"0","5":"0","6":"0","7":"8"},{"1":"0","2":"0","3":"0","4":"8","5":"0","6":"8","7":"0"},{"1":"4","2":"0","3":"4","4":"4","5":"0","6":"0","7":"4"},{"1":"3","2":"1","3":"6","4":"3","5":"3","6":"7","7":"9"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"10"},{"1":"5","2":"0","3":"0","4":"0","5":"0","6":"0","7":"10"},{"1":"2","2":"2","3":"4","4":"0","5":"4","6":"4","7":"0"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"2","2":"0","3":"1","4":"0","5":"0","6":"1","7":"9"},{"1":"6","2":"6","3":"2","4":"0","5":"0","6":"6","7":"9"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"2"},{"1":"10","2":"4","3":"2","4":"6","5":"5","6":"5","7":"10"},{"1":"3","2":"2","3":"0","4":"1","5":"2","6":"8","7":"8"},{"1":"5","2":"0","3":"2","4":"8","5":"0","6":"7","7":"9"},{"1":"1","2":"3","3":"3","4":"1","5":"4","6":"0","7":"9"},{"1":"5","2":"NA","3":"5","4":"0","5":"NA","6":"0","7":"4"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"9"},{"1":"6","2":"6","3":"0","4":"0","5":"0","6":"0","7":"8"},{"1":"7","2":"0","3":"6","4":"8","5":"0","6":"3","7":"10"},{"1":"10","2":"8","3":"9","4":"9","5":"9","6":"10","7":"9"},{"1":"3","2":"0","3":"0","4":"0","5":"0","6":"4","7":"7"},{"1":"8","2":"5","3":"5","4":"2","5":"2","6":"2","7":"10"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"10"},{"1":"7","2":"2","3":"7","4":"7","5":"2","6":"8","7":"6"},{"1":"3","2":"0","3":"0","4":"0","5":"0","6":"3","7":"10"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"8","2":"2","3":"NA","4":"NA","5":"NA","6":"NA","7":"NA"},{"1":"7","2":"1","3":"3","4":"3","5":"1","6":"2","7":"10"},{"1":"6","2":"1","3":"0","4":"6","5":"0","6":"1","7":"9"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"7"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"8"},{"1":"5","2":"0","3":"0","4":"0","5":"0","6":"2","7":"10"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"7","2":"4","3":"0","4":"5","5":"0","6":"1","7":"9"},{"1":"1","2":"0","3":"0","4":"3","5":"0","6":"0","7":"0"},{"1":"0","2":"5","3":"0","4":"0","5":"0","6":"0","7":"10"},{"1":"5","2":"0","3":"1","4":"2","5":"2","6":"7","7":"7"},{"1":"10","2":"10","3":"8","4":"2","5":"7","6":"7","7":"9"},{"1":"5","2":"1","3":"0","4":"7","5":"0","6":"5","7":"8"},{"1":"2","2":"5","3":"1","4":"7","5":"0","6":"0","7":"7"},{"1":"2","2":"NA","3":"6","4":"NA","5":"7","6":"5","7":"2"},{"1":"2","2":"0","3":"5","4":"0","5":"5","6":"5","7":"8"},{"1":"0","2":"2","3":"0","4":"0","5":"0","6":"0","7":"5"},{"1":"5","2":"10","3":"0","4":"0","5":"0","6":"5","7":"10"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["groupsInvolved.res."],"name":[1],"type":["int"],"align":["right"]},{"label":["groupsInvolved.busi."],"name":[2],"type":["int"],"align":["right"]},{"label":["groupsInvolved.civsoc."],"name":[3],"type":["int"],"align":["right"]},{"label":["groupsInvolved.policy."],"name":[4],"type":["int"],"align":["right"]},{"label":["groupsInvolved.citiz."],"name":[5],"type":["int"],"align":["right"]},{"label":["groupsInvolved.media."],"name":[6],"type":["int"],"align":["right"]},{"label":["groupsInvolved.welfare."],"name":[7],"type":["int"],"align":["right"]}],"data":[{"1":"2","2":"1","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"2","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"2","2":"2","3":"0","4":"0","5":"0","6":"1","7":"0"},{"1":"2","2":"0","3":"0","4":"0","5":"1","6":"1","7":"1"},{"1":"1","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"1","2":"0","3":"0","4":"1","5":"0","6":"1","7":"1"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"2","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"1","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"1","2":"1","3":"0","4":"0","5":"0","6":"1","7":"0"},{"1":"1","2":"1","3":"0","4":"1","5":"0","6":"1","7":"1"},{"1":"0","2":"1","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"2","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"2","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"1","2":"0","3":"0","4":"2","5":"0","6":"1","7":"0"},{"1":"2","2":"1","3":"0","4":"0","5":"0","6":"2","7":"0"},{"1":"2","2":"2","3":"2","4":"1","5":"2","6":"0","7":"1"},{"1":"2","2":"0","3":"0","4":"1","5":"0","6":"1","7":"0"},{"1":"1","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"2","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"1","2":"0","3":"0","4":"1","5":"0","6":"0","7":"0"},{"1":"1","2":"0","3":"0","4":"1","5":"0","6":"1","7":"1"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"1","2":"0","3":"0","4":"0","5":"0","6":"1","7":"0"},{"1":"2","2":"1","3":"2","4":"1","5":"2","6":"2","7":"0"},{"1":"2","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"1","2":"0","3":"0","4":"0","5":"1","6":"1","7":"1"},{"1":"1","2":"NA","3":"NA","4":"1","5":"2","6":"1","7":"0"},{"1":"1","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"1","2":"0","3":"0","4":"0","5":"0","6":"1","7":"0"},{"1":"2","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"2","2":"0","3":"2","4":"1","5":"2","6":"0","7":"2"},{"1":"1","2":"0","3":"0","4":"0","5":"0","6":"1","7":"0"},{"1":"2","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"2","2":"0","3":"0","4":"0","5":"1","6":"0","7":"0"},{"1":"2","2":"0","3":"0","4":"0","5":"0","6":"1","7":"1"},{"1":"1","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"1","2":"0","3":"0","4":"1","5":"0","6":"1","7":"0"},{"1":"1","2":"NA","3":"2","4":"2","5":"NA","6":"NA","7":"NA"},{"1":"1","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"2","2":"0","3":"1","4":"2","5":"2","6":"2","7":"2"},{"1":"1","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"1","2":"NA","3":"1","4":"2","5":"NA","6":"NA","7":"NA"},{"1":"1","2":"0","3":"0","4":"0","5":"0","6":"0","7":"1"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"1","2":"1","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"2","2":"2","3":"0","4":"0","5":"1","6":"1","7":"0"},{"1":"1","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"2","2":"0","3":"0","4":"0","5":"1","6":"0","7":"0"},{"1":"1","2":"0","3":"0","4":"0","5":"2","6":"0","7":"0"},{"1":"2","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"2","2":"0","3":"0","4":"0","5":"0","6":"1","7":"0"},{"1":"2","2":"1","3":"1","4":"1","5":"2","6":"0","7":"1"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"2","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"2","2":"1","3":"1","4":"1","5":"2","6":"1","7":"0"},{"1":"2","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"1","2":"0","3":"0","4":"0","5":"1","6":"0","7":"1"},{"1":"1","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"1","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"2","2":"0","3":"0","4":"1","5":"1","6":"1","7":"1"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"1","2":"1","3":"1","4":"0","5":"1","6":"0","7":"0"},{"1":"1","2":"1","3":"0","4":"0","5":"0","6":"1","7":"0"},{"1":"1","2":"1","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"1","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"1","2":"0","3":"1","4":"0","5":"0","6":"1","7":"0"},{"1":"1","2":"1","3":"2","4":"0","5":"1","6":"0","7":"0"},{"1":"1","2":"1","3":"0","4":"0","5":"0","6":"0","7":"1"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"2","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"2","2":"0","3":"0","4":"0","5":"0","6":"1","7":"0"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"1","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"1","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"2","2":"0","3":"0","4":"0","5":"0","6":"1","7":"1"},{"1":"0","2":"0","3":"0","4":"1","5":"0","6":"1","7":"0"},{"1":"2","2":"0","3":"0","4":"0","5":"1","6":"1","7":"0"},{"1":"1","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"2","2":"1","3":"0","4":"0","5":"2","6":"0","7":"1"},{"1":"1","2":"0","3":"1","4":"1","5":"0","6":"0","7":"2"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"1","2":"0","3":"2","4":"2","5":"0","6":"0","7":"1"},{"1":"1","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"2","2":"1","3":"0","4":"0","5":"0","6":"1","7":"1"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"1","2":"NA","3":"2","4":"1","5":"2","6":"1","7":"2"},{"1":"2","2":"2","3":"0","4":"0","5":"2","6":"0","7":"2"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"1","2":"0","3":"0","4":"2","5":"0","6":"2","7":"2"},{"1":"1","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"2","2":"2","3":"NA","4":"0","5":"0","6":"0","7":"0"},{"1":"2","2":"0","3":"0","4":"0","5":"0","6":"1","7":"0"},{"1":"2","2":"0","3":"0","4":"1","5":"0","6":"1","7":"0"},{"1":"1","2":"0","3":"0","4":"2","5":"0","6":"0","7":"0"},{"1":"2","2":"0","3":"0","4":"0","5":"2","6":"1","7":"0"},{"1":"2","2":"0","3":"1","4":"0","5":"1","6":"1","7":"2"},{"1":"2","2":"0","3":"0","4":"0","5":"2","6":"0","7":"0"},{"1":"0","2":"0","3":"1","4":"2","5":"0","6":"0","7":"0"},{"1":"2","2":"NA","3":"NA","4":"NA","5":"NA","6":"NA","7":"NA"},{"1":"2","2":"0","3":"0","4":"1","5":"0","6":"1","7":"0"},{"1":"2","2":"1","3":"2","4":"2","5":"1","6":"2","7":"2"},{"1":"1","2":"0","3":"0","4":"1","5":"0","6":"0","7":"0"},{"1":"2","2":"0","3":"0","4":"1","5":"2","6":"0","7":"1"},{"1":"1","2":"1","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"2","2":"0","3":"0","4":"1","5":"1","6":"0","7":"0"},{"1":"2","2":"1","3":"0","4":"1","5":"0","6":"1","7":"0"},{"1":"1","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"0","2":"0","3":"NA","4":"NA","5":"1","6":"NA","7":"0"},{"1":"1","2":"0","3":"2","4":"1","5":"1","6":"1","7":"1"},{"1":"2","2":"2","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"1","2":"1","3":"1","4":"1","5":"0","6":"0","7":"0"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"1","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"2","2":"0","3":"0","4":"0","5":"0","6":"1","7":"0"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"2","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"2","2":"1","3":"1","4":"1","5":"2","6":"1","7":"2"},{"1":"2","2":"1","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"1","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"1","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"0","2":"0","3":"0","4":"1","5":"0","6":"0","7":"2"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"1","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"1","2":"0","3":"0","4":"0","5":"0","6":"0","7":"1"},{"1":"1","2":"0","3":"0","4":"1","5":"1","6":"0","7":"1"},{"1":"2","2":"2","3":"0","4":"2","5":"0","6":"0","7":"0"},{"1":"2","2":"0","3":"0","4":"0","5":"0","6":"1","7":"0"},{"1":"2","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"2","2":"0","3":"1","4":"0","5":"1","6":"1","7":"0"},{"1":"1","2":"0","3":"0","4":"0","5":"0","6":"1","7":"0"},{"1":"2","2":"0","3":"1","4":"0","5":"0","6":"1","7":"0"},{"1":"2","2":"1","3":"1","4":"2","5":"1","6":"1","7":"0"},{"1":"2","2":"1","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"2","2":"0","3":"0","4":"0","5":"0","6":"1","7":"0"},{"1":"2","2":"1","3":"0","4":"2","5":"0","6":"1","7":"0"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"1"},{"1":"0","2":"0","3":"0","4":"1","5":"0","6":"0","7":"0"},{"1":"2","2":"0","3":"1","4":"1","5":"1","6":"1","7":"0"},{"1":"1","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"2","2":"1","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"2","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"0","2":"0","3":"0","4":"1","5":"0","6":"0","7":"0"},{"1":"1","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"2","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"2","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"0","2":"0","3":"0","4":"2","5":"0","6":"0","7":"0"},{"1":"1","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"1","2":"0","3":"0","4":"0","5":"0","6":"1","7":"1"},{"1":"0","2":"2","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"2","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"1","2":"0","3":"0","4":"0","5":"0","6":"1","7":"0"},{"1":"0","2":"0","3":"1","4":"1","5":"1","6":"1","7":"1"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"2","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"2","2":"1","3":"0","4":"1","5":"0","6":"1","7":"0"},{"1":"1","2":"1","3":"0","4":"1","5":"0","6":"0","7":"1"},{"1":"1","2":"0","3":"0","4":"0","5":"2","6":"0","7":"0"},{"1":"2","2":"1","3":"0","4":"0","5":"0","6":"1","7":"2"},{"1":"0","2":"0","3":"0","4":"1","5":"0","6":"1","7":"0"},{"1":"2","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"0","2":"1","3":"0","4":"1","5":"0","6":"0","7":"0"},{"1":"1","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"1","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"2","2":"0","3":"0","4":"0","5":"0","6":"0","7":"2"},{"1":"2","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"2","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"2","2":"1","3":"1","4":"1","5":"1","6":"2","7":"2"},{"1":"2","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"1","2":"0","3":"0","4":"0","5":"1","6":"0","7":"0"},{"1":"1","2":"0","3":"1","4":"0","5":"0","6":"0","7":"0"},{"1":"1","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"2","2":"2","3":"0","4":"2","5":"2","6":"1","7":"0"},{"1":"0","2":"2","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"0","2":"2","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"0","2":"0","3":"2","4":"2","5":"2","6":"0","7":"2"},{"1":"0","2":"1","3":"0","4":"1","5":"0","6":"2","7":"0"},{"1":"1","2":"2","3":"0","4":"0","5":"2","6":"0","7":"0"},{"1":"0","2":"2","3":"0","4":"0","5":"0","6":"2","7":"1"},{"1":"1","2":"0","3":"0","4":"0","5":"0","6":"1","7":"0"},{"1":"1","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"2","2":"0","3":"0","4":"0","5":"1","6":"0","7":"1"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"2","2":"0","3":"0","4":"0","5":"NA","6":"1","7":"1"},{"1":"1","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"2","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"1","2":"0","3":"0","4":"0","5":"0","6":"1","7":"0"},{"1":"2","2":"1","3":"0","4":"0","5":"1","6":"0","7":"0"},{"1":"1","2":"0","3":"0","4":"0","5":"0","6":"1","7":"0"},{"1":"2","2":"0","3":"0","4":"0","5":"1","6":"0","7":"1"},{"1":"2","2":"1","3":"0","4":"0","5":"0","6":"1","7":"0"},{"1":"1","2":"1","3":"0","4":"1","5":"0","6":"0","7":"0"},{"1":"1","2":"NA","3":"NA","4":"NA","5":"NA","6":"NA","7":"NA"},{"1":"1","2":"0","3":"2","4":"2","5":"0","6":"0","7":"2"},{"1":"2","2":"1","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"1","2":"0","3":"0","4":"1","5":"1","6":"1","7":"1"},{"1":"1","2":"2","3":"0","4":"2","5":"1","6":"2","7":"1"},{"1":"2","2":"0","3":"0","4":"0","5":"0","6":"0","7":"2"},{"1":"1","2":"0","3":"0","4":"0","5":"0","6":"1","7":"0"},{"1":"1","2":"0","3":"2","4":"2","5":"0","6":"0","7":"0"},{"1":"2","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"1","2":"1","3":"0","4":"0","5":"0","6":"0","7":"1"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"1","7":"0"},{"1":"1","2":"0","3":"0","4":"0","5":"0","6":"1","7":"0"},{"1":"2","2":"0","3":"0","4":"1","5":"0","6":"0","7":"2"},{"1":"2","2":"0","3":"1","4":"0","5":"1","6":"0","7":"0"},{"1":"2","2":"1","3":"0","4":"0","5":"0","6":"1","7":"0"},{"1":"2","2":"1","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"2","2":"0","3":"0","4":"1","5":"0","6":"1","7":"1"},{"1":"1","2":"0","3":"0","4":"0","5":"1","6":"0","7":"0"},{"1":"2","2":"2","3":"2","4":"NA","5":"1","6":"NA","7":"NA"},{"1":"1","2":"0","3":"0","4":"0","5":"1","6":"0","7":"0"},{"1":"2","2":"2","3":"0","4":"0","5":"1","6":"1","7":"1"},{"1":"2","2":"0","3":"1","4":"1","5":"1","6":"0","7":"1"},{"1":"1","2":"0","3":"0","4":"1","5":"0","6":"0","7":"0"},{"1":"1","2":"0","3":"0","4":"0","5":"2","6":"0","7":"2"},{"1":"1","2":"1","3":"1","4":"1","5":"0","6":"1","7":"1"},{"1":"2","2":"0","3":"0","4":"2","5":"0","6":"1","7":"0"},{"1":"2","2":"2","3":"0","4":"2","5":"2","6":"2","7":"2"},{"1":"0","2":"0","3":"1","4":"2","5":"0","6":"0","7":"0"},{"1":"1","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"2","2":"1","3":"0","4":"0","5":"1","6":"1","7":"0"},{"1":"1","2":"0","3":"0","4":"0","5":"0","6":"1","7":"0"},{"1":"2","2":"0","3":"1","4":"2","5":"2","6":"0","7":"0"},{"1":"2","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"1","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"2","2":"2","3":"0","4":"1","5":"0","6":"1","7":"0"},{"1":"1","2":"0","3":"0","4":"0","5":"1","6":"1","7":"0"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"2","2":"0","3":"2","4":"1","5":"2","6":"1","7":"2"},{"1":"0","2":"1","3":"0","4":"0","5":"1","6":"0","7":"0"},{"1":"2","2":"2","3":"0","4":"0","5":"0","6":"1","7":"0"},{"1":"0","2":"2","3":"0","4":"0","5":"0","6":"1","7":"0"},{"1":"2","2":"0","3":"1","4":"1","5":"2","6":"1","7":"1"},{"1":"2","2":"0","3":"1","4":"1","5":"0","6":"0","7":"0"},{"1":"2","2":"NA","3":"NA","4":"2","5":"NA","6":"NA","7":"2"},{"1":"1","2":"0","3":"0","4":"1","5":"2","6":"2","7":"2"},{"1":"2","2":"0","3":"1","4":"2","5":"2","6":"1","7":"0"},{"1":"0","2":"1","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"2","2":"0","3":"0","4":"0","5":"1","6":"1","7":"1"},{"1":"1","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"2","2":"0","3":"0","4":"1","5":"1","6":"1","7":"2"},{"1":"1","2":"0","3":"0","4":"0","5":"1","6":"1","7":"0"},{"1":"0","2":"2","3":"0","4":"2","5":"0","6":"0","7":"2"},{"1":"1","2":"0","3":"0","4":"1","5":"0","6":"1","7":"0"},{"1":"1","2":"0","3":"0","4":"0","5":"0","6":"0","7":"1"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"1","2":"0","3":"0","4":"1","5":"0","6":"0","7":"0"},{"1":"2","2":"0","3":"0","4":"0","5":"0","6":"1","7":"0"},{"1":"0","2":"0","3":"0","4":"0","5":"2","6":"0","7":"1"},{"1":"1","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"1","7":"0"},{"1":"1","2":"0","3":"0","4":"0","5":"1","6":"1","7":"0"},{"1":"1","2":"0","3":"0","4":"0","5":"0","6":"1","7":"0"},{"1":"1","2":"1","3":"0","4":"0","5":"0","6":"1","7":"0"},{"1":"1","2":"1","3":"NA","4":"NA","5":"NA","6":"NA","7":"NA"},{"1":"2","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"1","2":"0","3":"1","4":"0","5":"2","6":"0","7":"2"},{"1":"1","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"1","2":"0","3":"1","4":"0","5":"1","6":"0","7":"1"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"1","2":"0","3":"0","4":"1","5":"NA","6":"1","7":"0"},{"1":"2","2":"0","3":"0","4":"0","5":"2","6":"1","7":"2"},{"1":"2","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"1","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"2","2":"2","3":"1","4":"0","5":"2","6":"1","7":"2"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"1","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"2","2":"1","3":"1","4":"0","5":"0","6":"0","7":"0"},{"1":"2","2":"0","3":"0","4":"1","5":"1","6":"1","7":"0"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"1","7":"0"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"2","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"2","2":"2","3":"0","4":"1","5":"0","6":"0","7":"0"},{"1":"2","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"1","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"1","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"2","2":"0","3":"0","4":"0","5":"1","6":"1","7":"0"},{"1":"2","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"2","2":"0","3":"0","4":"0","5":"0","6":"1","7":"0"},{"1":"1","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"1","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"2","2":"1","3":"0","4":"0","5":"0","6":"1","7":"0"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"2","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"1","2":"1","3":"0","4":"0","5":"0","6":"0","7":"1"},{"1":"2","2":"NA","3":"1","4":"1","5":"1","6":"1","7":"0"},{"1":"2","2":"1","3":"0","4":"0","5":"0","6":"1","7":"0"},{"1":"1","2":"0","3":"0","4":"1","5":"0","6":"0","7":"0"},{"1":"1","2":"0","3":"0","4":"0","5":"0","6":"1","7":"0"},{"1":"0","2":"0","3":"0","4":"2","5":"0","6":"0","7":"0"},{"1":"1","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"2","2":"2","3":"0","4":"NA","5":"0","6":"0","7":"0"},{"1":"2","2":"0","3":"0","4":"0","5":"0","6":"1","7":"0"},{"1":"2","2":"0","3":"0","4":"0","5":"2","6":"0","7":"NA"},{"1":"1","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"2","2":"0","3":"1","4":"1","5":"0","6":"1","7":"0"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"1","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"2","2":"2","3":"2","4":"2","5":"2","6":"2","7":"0"},{"1":"1","2":"1","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"2","2":"2","3":"0","4":"0","5":"1","6":"1","7":"0"},{"1":"1","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"1","2":"0","3":"0","4":"1","5":"0","6":"0","7":"0"},{"1":"2","2":"0","3":"0","4":"2","5":"0","6":"0","7":"0"},{"1":"1","2":"0","3":"0","4":"1","5":"1","6":"0","7":"2"},{"1":"2","2":"0","3":"0","4":"0","5":"0","6":"0","7":"1"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"2"},{"1":"1","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"2","2":"2","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"2","2":"0","3":"0","4":"0","5":"1","6":"1","7":"1"},{"1":"2","2":"1","3":"2","4":"2","5":"2","6":"1","7":"1"},{"1":"2","2":"0","3":"0","4":"1","5":"1","6":"1","7":"0"},{"1":"2","2":"1","3":"0","4":"0","5":"0","6":"1","7":"1"},{"1":"1","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"2","2":"1","3":"1","4":"1","5":"1","6":"0","7":"0"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"1","2":"1","3":"1","4":"2","5":"1","6":"1","7":"1"},{"1":"2","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"1","2":"0","3":"0","4":"0","5":"1","6":"2","7":"1"},{"1":"1","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"2","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"1","2":"0","3":"0","4":"0","5":"0","6":"2","7":"NA"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"1","7":"0"},{"1":"2","2":"0","3":"0","4":"0","5":"0","6":"1","7":"0"},{"1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"1","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"2","2":"0","3":"0","4":"1","5":"0","6":"0","7":"1"},{"1":"2","2":"2","3":"1","4":"0","5":"0","6":"NA","7":"0"},{"1":"2","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"2","2":"2","3":"0","4":"0","5":"2","6":"0","7":"0"},{"1":"1","2":"NA","3":"2","4":"2","5":"2","6":"NA","7":"NA"},{"1":"1","2":"0","3":"0","4":"1","5":"1","6":"1","7":"0"},{"1":"2","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"},{"1":"2","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<pre><code>##                         impactTargetGroup.pub. impactTargetGroup.busi.
+## groupsInvolved.res.                  0.3145902              0.19246968
+## groupsInvolved.busi.                 0.3015681              0.46075440
+## groupsInvolved.civsoc.               0.1682761              0.06281773
+## groupsInvolved.policy.               0.2396566              0.10821326
+## groupsInvolved.citiz.                0.2817575              0.11150925
+## groupsInvolved.media.                0.2891542              0.12752404
+## groupsInvolved.welfare.              0.2797532              0.05238681
+##                         impactTargetGroup.socgr. impactTargetGroup.welfare.
+## groupsInvolved.res.                    0.1797035                  0.2528773
+## groupsInvolved.busi.                   0.1448552                  0.1570119
+## groupsInvolved.civsoc.                 0.4107034                  0.2627477
+## groupsInvolved.policy.                 0.3177518                  0.2883071
+## groupsInvolved.citiz.                  0.4173404                  0.4358436
+## groupsInvolved.media.                  0.2233659                  0.2515279
+## groupsInvolved.welfare.                0.3601413                  0.4940480
+##                         impactTargetGroup.civsoc. impactTargetGroup.policy.
+## groupsInvolved.res.                     0.1563784                 0.1649552
+## groupsInvolved.busi.                    0.1643840                 0.1795239
+## groupsInvolved.civsoc.                  0.5767046                 0.3722993
+## groupsInvolved.policy.                  0.4143047                 0.6315179
+## groupsInvolved.citiz.                   0.3405687                 0.3083973
+## groupsInvolved.media.                   0.2297618                 0.2738240
+## groupsInvolved.welfare.                 0.1947239                 0.2317896
+##                         impactTargetGroup.acad.
+## groupsInvolved.res.                  0.17493725
+## groupsInvolved.busi.                 0.07000418
+## groupsInvolved.civsoc.              -0.03830061
+## groupsInvolved.policy.               0.03148114
+## groupsInvolved.citiz.                0.06519930
+## groupsInvolved.media.                0.16026242
+## groupsInvolved.welfare.              0.06372895</code></pre>
+<pre><code>## Call:corr.p(r = corm$r, n = corm$n)
+## Correlation matrix 
+##                         impactTargetGroup.pub. impactTargetGroup.busi.
+## groupsInvolved.res.                       0.31                    0.19
+## groupsInvolved.busi.                      0.30                    0.46
+## groupsInvolved.civsoc.                    0.17                    0.06
+## groupsInvolved.policy.                    0.24                    0.11
+## groupsInvolved.citiz.                     0.28                    0.11
+## groupsInvolved.media.                     0.29                    0.13
+## groupsInvolved.welfare.                   0.28                    0.05
+##                         impactTargetGroup.socgr. impactTargetGroup.welfare.
+## groupsInvolved.res.                         0.18                       0.25
+## groupsInvolved.busi.                        0.14                       0.16
+## groupsInvolved.civsoc.                      0.41                       0.26
+## groupsInvolved.policy.                      0.32                       0.29
+## groupsInvolved.citiz.                       0.42                       0.44
+## groupsInvolved.media.                       0.22                       0.25
+## groupsInvolved.welfare.                     0.36                       0.49
+##                         impactTargetGroup.civsoc. impactTargetGroup.policy.
+## groupsInvolved.res.                          0.16                      0.16
+## groupsInvolved.busi.                         0.16                      0.18
+## groupsInvolved.civsoc.                       0.58                      0.37
+## groupsInvolved.policy.                       0.41                      0.63
+## groupsInvolved.citiz.                        0.34                      0.31
+## groupsInvolved.media.                        0.23                      0.27
+## groupsInvolved.welfare.                      0.19                      0.23
+##                         impactTargetGroup.acad.
+## groupsInvolved.res.                        0.17
+## groupsInvolved.busi.                       0.07
+## groupsInvolved.civsoc.                    -0.04
+## groupsInvolved.policy.                     0.03
+## groupsInvolved.citiz.                      0.07
+## groupsInvolved.media.                      0.16
+## groupsInvolved.welfare.                    0.06
+## Sample Size 
+##                         impactTargetGroup.pub. impactTargetGroup.busi.
+## groupsInvolved.res.                        355                     352
+## groupsInvolved.busi.                       346                     345
+## groupsInvolved.civsoc.                     348                     347
+## groupsInvolved.policy.                     350                     349
+## groupsInvolved.citiz.                      347                     346
+## groupsInvolved.media.                      346                     346
+## groupsInvolved.welfare.                    347                     346
+##                         impactTargetGroup.socgr. impactTargetGroup.welfare.
+## groupsInvolved.res.                          353                        354
+## groupsInvolved.busi.                         345                        347
+## groupsInvolved.civsoc.                       348                        348
+## groupsInvolved.policy.                       350                        350
+## groupsInvolved.citiz.                        347                        348
+## groupsInvolved.media.                        346                        347
+## groupsInvolved.welfare.                      346                        348
+##                         impactTargetGroup.civsoc. impactTargetGroup.policy.
+## groupsInvolved.res.                           347                       354
+## groupsInvolved.busi.                          339                       346
+## groupsInvolved.civsoc.                        342                       348
+## groupsInvolved.policy.                        344                       349
+## groupsInvolved.citiz.                         341                       347
+## groupsInvolved.media.                         340                       345
+## groupsInvolved.welfare.                       340                       346
+##                         impactTargetGroup.acad.
+## groupsInvolved.res.                         357
+## groupsInvolved.busi.                        348
+## groupsInvolved.civsoc.                      350
+## groupsInvolved.policy.                      352
+## groupsInvolved.citiz.                       349
+## groupsInvolved.media.                       348
+## groupsInvolved.welfare.                     349
+## These are the unadjusted probability values. 
+##  To see the values  adjusted for multiple tests see the p.adj object. 
+##                         impactTargetGroup.pub. impactTargetGroup.busi.
+## groupsInvolved.res.                       0.00                    0.01
+## groupsInvolved.busi.                      0.00                    0.00
+## groupsInvolved.civsoc.                    0.03                    1.00
+## groupsInvolved.policy.                    0.00                    0.35
+## groupsInvolved.citiz.                     0.00                    0.34
+## groupsInvolved.media.                     0.00                    0.18
+## groupsInvolved.welfare.                   0.00                    1.00
+##                         impactTargetGroup.socgr. impactTargetGroup.welfare.
+## groupsInvolved.res.                         0.01                       0.00
+## groupsInvolved.busi.                        0.08                       0.04
+## groupsInvolved.civsoc.                      0.00                       0.00
+## groupsInvolved.policy.                      0.00                       0.00
+## groupsInvolved.citiz.                       0.00                       0.00
+## groupsInvolved.media.                       0.00                       0.00
+## groupsInvolved.welfare.                     0.00                       0.00
+##                         impactTargetGroup.civsoc. impactTargetGroup.policy.
+## groupsInvolved.res.                          0.04                      0.03
+## groupsInvolved.busi.                         0.04                      0.02
+## groupsInvolved.civsoc.                       0.00                      0.00
+## groupsInvolved.policy.                       0.00                      0.00
+## groupsInvolved.citiz.                        0.00                      0.00
+## groupsInvolved.media.                        0.00                      0.00
+## groupsInvolved.welfare.                      0.01                      0.00
+##                         impactTargetGroup.acad.
+## groupsInvolved.res.                        0.02
+## groupsInvolved.busi.                       1.00
+## groupsInvolved.civsoc.                     1.00
+## groupsInvolved.policy.                     1.00
+## groupsInvolved.citiz.                      1.00
+## groupsInvolved.media.                      0.04
+## groupsInvolved.welfare.                    1.00
+## 
+##  To see confidence intervals of the correlations, print with the short=FALSE option</code></pre>
+<pre><code>## Scale for &#39;fill&#39; is already present. Adding another scale for &#39;fill&#39;, which
+## will replace the existing scale.</code></pre>
+</div>
+<div id="g2-intended-effects" class="section level2">
+<h2>G2: Intended Effects</h2>
+<div id="intended-short--or-long-term-change-benefiting-specific-target-groups-or-the-general-population" class="section level6">
+<h6>Intended short- or long-term change benefiting specific target groups or the general population:</h6>
+<p><img src="hypotheses_files/figure-html/G2_bar-1.svg" width="1152" style="display: block; margin: auto;" /></p>
+<ul>
+<li>Improving the <em>understanding</em> in the general population as well as raising the <em>awareness</em> by far the most frequently selected category (79 and 50 times)</li>
+<li><em>Changing behaviour</em> most frequently stated for policy-makers/public administrators</li>
+</ul>
+<pre><code>## Call:corr.test(x = feat_df.num$natureOfInvolvement.citiz., y = feat_df.num$kindOfChange.pub.)
+## Correlation matrix 
+## [1] 0.11
+## Sample Size 
+## [1] 54
+## These are the unadjusted probability values.
+##   The probability values  adjusted for multiple tests are in the p.adj object. 
+## [1] 0.41
+## 
+##  To see confidence intervals of the correlations, print with the short=FALSE option</code></pre>
+<p><img src="hypotheses_files/figure-html/G2E2-1.svg" width="672" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="g4-g5-uptake-by-decision-makers" class="section level2">
+<h2>G4 &amp; G5: Uptake by Decision-Makers</h2>
+<div id="to-what-extent-were-project-results-taken-up-by-policy-making-andor-public-administration-andor-governmental-agencies" class="section level6">
+<h6><em>To what extent were project results taken up by policy-making and/or public administration and/or governmental agencies?</em></h6>
+<p><img src="hypotheses_files/figure-html/G4_bar-1.svg" width="672" /></p>
+<ul>
+<li>~ 20 % rated the <em>uptake of the project results by decision-makers</em> moderate to high</li>
+</ul>
+</div>
+<div id="in-what-way-were-those-results-taken-up-by-policy-making-andor-public-administration-andor-governmental-agencies" class="section level6">
+<h6>In what way were those results taken up by policy-making and/or public administration and/or governmental agencies?</h6>
+<p><img src="hypotheses_files/figure-html/G5_bar-1.svg" width="672" /></p>
+<ul>
+<li>9 projects claimed to have influenced <em>specific laws or regulations</em></li>
+<li>53 projects stated to have changed a <em>policy or agenda</em></li>
+</ul>
+<pre><code>## [1] 0.06924939</code></pre>
+<pre><code>## Warning in Ops.factor(x, 3): &#39;&lt;=&#39; not meaningful for factors</code></pre>
+<p><img src="hypotheses_files/figure-html/G5E2-1.svg" width="960" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="g6-impact-statements" class="section level2">
+<h2>G6: Impact Statements</h2>
+<p><img src="hypotheses_files/figure-html/G6_bar-1.svg" width="1152" style="display: block; margin: auto;" /></p>
+<ul>
+<li>Academic dimension most frequently chosen,</li>
+<li>followed by <em>issues not widely known in society</em> and <em>generate a deeper understanding of a specific social issues</em>.</li>
+</ul>
+<pre><code>## Scale for &#39;fill&#39; is already present. Adding another scale for &#39;fill&#39;, which
+## will replace the existing scale.
+## Scale for &#39;fill&#39; is already present. Adding another scale for &#39;fill&#39;, which
+## will replace the existing scale.
+## Scale for &#39;fill&#39; is already present. Adding another scale for &#39;fill&#39;, which
+## will replace the existing scale.</code></pre>
+<pre><code>## Warning: Removed 5 rows containing non-finite values (stat_boxplot).</code></pre>
+<pre><code>## Warning: Removed 70 rows containing non-finite values (stat_boxplot).</code></pre>
+<pre><code>## Warning: Removed 87 rows containing non-finite values (stat_boxplot).</code></pre>
+<p><img src="hypotheses_files/figure-html/G6D1-boxplot-1.svg" width="960" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="dissemination-and-exploitation" class="section level1">
+<h1>Dissemination and Exploitation</h1>
+</div>
+<div id="h1-dissemination-channels" class="section level1">
+<h1>H1: Dissemination Channels</h1>
+<p><img src="hypotheses_files/figure-html/H1_bar-1.svg" width="960" style="display: block; margin: auto;" /> * Unsurprisingly, the vast majority published in peer-reviewed journals * Policy briefs were rated lowest but 110 projects stated to have organised events for non-academic practitioners</p>
+</div>
+<div id="h2-dissemination-and-exploitation-scalability" class="section level1">
+<h1>H2: Dissemination and Exploitation: Scalability</h1>
+<p><img src="hypotheses_files/figure-html/H2_bar-1.svg" width="960" style="display: block; margin: auto;" /></p>
+<ul>
+<li>69 % of the respondents were confident of the scaling-up potential of the project results</li>
+</ul>
+<hr />
 </div>
 <div id="notes" class="section level1">
 <h1>Notes</h1>
