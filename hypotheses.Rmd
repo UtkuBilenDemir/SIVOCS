@@ -194,6 +194,21 @@ The survey questions *motivation to directly address a natural, technical, econo
 
 <!--- TODO: Display A2/A3 descriptively --->
 
+## AGE
+
+```{r Acage_bar, echo=FALSE, fig.width=8, fig.height=4, dev='svg', fig.retina=2, fig.align='center'}
+c <- as.data.frame(table(data.questions$academicAge))
+c <- c[2:nrow(c), ]
+levels(c$Var1) <- c("", "6-10 years", "11-15 years", ">15 years" )
+ggplot(data=c, aes(x=Var1, y=Freq)) +
+  theme_light() +
+  geom_bar(stat="identity", fill = col_bar) +
+  xlab("Academic Age") +
+  ylab("Count")
+  
+
+```
+
 
 ## B1: Distribution of SI-Familiarity
 
@@ -249,6 +264,26 @@ b1domain.df %>%
 ```
 
 The analysis of the survey results yields a statistically significant dependence of the SI-familiarity to the scientific domains (Kruskal-Wallis [K-W] rank sum test p-value < 0.05). However, as Figure 4 also visualises, the domains Mathematics, Natural -, & Engineering Sciences and Biology & Medicine are statistically not significantly differ from each other while Social Sciences and Humanities (SSH) show a stat. significant difference to both of the other domains. ^[Results of the pairwise comparisons using Wilcoxon rank sum test with continuity correction with Bonferonni p-value adjustment yields a p-value greater than 0.05 for Mathematics, Natural-, & Engineering Sciences. SSH, however, associated with p-values significantly smaller than 0.05 with both of the other domains]. 
+
+
+## C2
+
+```{r}
+table(feat_df$contribToSI.rate.)
+```
+
+```{r C2_bar, echo=FALSE, fig.width=8, fig.height=4, dev='svg', fig.retina=2, fig.align='center'}
+c <- as.data.frame(table(feat_df.num$contribToSI.rate.))
+
+ggplot(data=c, aes(x=Var1, y=Freq)) +
+  theme_light() +
+  geom_bar(stat="identity", fill = col_bar) +
+  xlab("SI-Contribution (self-assessment)") +
+  ylab("Count") 
+
+```
+
+
 
 # Intention & Agency
 
