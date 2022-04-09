@@ -1142,6 +1142,40 @@ Interdisciplinary involvement is more common among the SNF funded projects, 41% 
 + similar across different groups in terms of extent and depth of involvement (*marginal* / *central*)
 
 
+#### How many of the projects were not transdisciplinary?
+```{r, echo=FALSE, fig.width=5, fig.height=3, dev='svg', fig.retina=2, fig.align='center'}
+e1.df.nona <- na.omit(e1.df)
+e1.df.nona_trans <- e1.df.nona[, 2:ncol(e1.df.nona)]
+
+trans_table <- table(rowSums(e1.df.nona_trans != 0))
+
+trans_df <- data.frame(
+  types = c("No trans. inv.", "3 or fewer types", "More than 3 types (max. 6)"),
+  num = c(trans_table[1], sum(trans_table[2:4]), sum(trans_table[5:7]))
+)
+
+trans_df$types <- factor(trans_df$types, levels = trans_df$types)
+g <- ggplot(trans_df, aes(x = types, y=num))
+g + geom_col(fill=col_bar) + 
+  theme_light() + theme(axis.text.x = element_text()) + 
+  scale_x_discrete("Number of transdisciplinary involvement types") + 
+  scale_y_continuous("count") + 
+  geom_text(aes(label=paste0(num, "\n", round(num/361, 2)* 100, "%")), vjust=1.6, color="white", size=5) + theme( axis.text.y = element_text( 
+    size=g_tick_size_side)
+    , axis.text.x = element_text(
+      size=g_tick_size_side)
+    , axis.title=element_text(size=g_tick_size_side)
+    , legend.text=element_text(size=g_tick_size_side)) + 
+  annotate("label", x = 3.2, y = 140, label = "bold(n) == ~342/361", parse = TRUE) +
+  labs(caption = paste0("\nTransdisciplinary involvement types:\n"
+                                                                                                           , "* company/business representatives"
+                                                                                                           , "\n* representatives of NGOs, civil society groups", "\n* policy makers, public administrations etc."
+                                                                                                           , "\n* individual citizens"
+                                                                                                           , "\n* media representatives"
+                                                                                                           , "\n* representatives from welfare- or education-providing institutions")) 
+```
+
+
 
 ```{r E2-Nature, echo=FALSE, fig.width=12, fig.height=6 , fig.retina=2, fig.align='center',  dev='svg'}
 
@@ -1676,7 +1710,25 @@ g + geom_col(fill="#D32F49")+
   annotate("label", x = 2.2, y = 250, label = "bold(n) == 357/361", parse = TRUE) 
 
 ```
+
 * Vast majority of participants (275) stated *gender* was no explicit consideration in their project
+
+###### Gender Dimension among sci fields
+```{r}
+gender <-   ifelse(data$concepts2== "Y", 1, 0)
+
+gender_con_df <- data.frame(gender_con = data$concepts2
+                            , domain = data$domain
+                            )
+
+
+library(plyr)
+count(gender_con_df)
+
+```
+
+
+
 
 
 ## F3: Regulatory Framework: Gender Dimension & Support for Policy-Making
@@ -1803,7 +1855,7 @@ a <- eg_df[, c(1,6)] %>%
 
 ###### Intended short- or long-term change benefiting specific target groups or the general population:
 
-```{r G2_bar, echo=FALSE, fig.width=12, fig.height=4, dev='svg', fig.retina=2, fig.align='center'}
+```{r G2_bar, echo=FALSE, fig.width=6, fig.height=3, dev='svg', fig.retina=2, fig.align='center'}
 
 den_df <- as.data.frame(sapply(FUN=table, g2.df[, 1:ncol(g2.df)-1]))
 rownames(den_df)[1] <- "NA"
@@ -1862,7 +1914,8 @@ ggplot(den3_df,
              "#92c5de",
              "#4393c3",
              "#2166ac")[4:1]
-  ) +  
+  
+  ) +guides(fill = guide_legend(reverse = TRUE))+  
   geom_text(aes(label = Count),
             size = 5, 
             position = position_stack(vjust = 0.5),
@@ -1878,7 +1931,7 @@ ggplot(den3_df,
   annotate("label", x = 5, y = 170, label = "bold(n) == 68/361", parse = TRUE) +
   annotate("label", x = 6, y = 170, label = "bold(n) == 86/361", parse = TRUE) +
   
-  theme(legend.position="bottom")
+  theme(legend.position="bottom") 
 
 
 ```
@@ -1913,6 +1966,15 @@ ggcorrplot(corr, type = "lower", lab = TRUE,
            ggtheme = ggplot2::theme_light,
            colors = c(col_seq[3], "white", col_seq[1])) +
   labs(caption = "KoC: Kind of Change\nNoI: Nature of Involvement")
+```
+```{r, echo=FALSE, fig.width=9, fig.height=6, dev='svg', fig.retina=2, fig.align='center'}
+library(GGally)
+#ggcorr(nat_change, method = c("pairwise", "spearman")) 
+?ggcorr
+
+ggpairs(nat_change, lower = list( combo = "box_no_facet")) + 
+  theme_light()
+
 ```
 
 ```{r}
@@ -2010,12 +2072,55 @@ g + geom_col(fill="#338BBE")+
 
 *  ~ 20 % rated the *uptake of the project results by decision-makers* moderate to high
 
+###### Correlation between the intent and uptake policy making
+
+```{r, echo=FALSE, fig.width=3, dev='svg', fig.retina=2, fig.align='center'}
+policy_intent <- ifelse(data$concepts3 == "Y", 1, 0)
+policy_uptake <- g4.df
+
+policy_df <- data.frame(
+  policy_intent = data$concepts3,
+  policy_uptake = g4.df
+)
+colnames(policy_df)[2] <- "policy_uptake"
+unique(data$concepts3)
+policy_df <- policy_df[!(data$concepts3 == ""), ]
+
+policy_df$policy_intent <- ifelse(policy_df$policy_intent == "Y", "Yes", "No")
+policy_df %>% 
+  filter(!is.na(policy_intent)) %>%
+  filter(!is.na(policy_uptake)) %>%
+  gather(key="policy_uptake", value="policy_intent") %>%
+  ggplot(aes(x=policy_uptake, y=policy_intent, fill=policy_intent),  show.legend = FALSE) +
+  geom_boxplot() +
+  ylab(" ") +
+  theme_light() +
+  theme(axis.text.y = element_blank()) +
+  scale_x_continuous(breaks = seq(0,10,2)) +
+  xlab("Uptake of the project results by policymakers") + 
+  ylab(" ") + 
+  scale_fill_manual(values=col_seq[c(1,2)], name = "Intent to support policymaking")+guides(fill = guide_legend(reverse = TRUE)) + annotate("label", x = 9, y = 2.4, label = "bold(n) == 356/361", parse = TRUE)
+
+library(papaja)
+policy_df$policy_intent <- ifelse(policy_df$policy_intent == "Yes", 1, 0)
+a <- psych::corr.test(policy_df, method = "spearman", use = "pairwise.complete.obs", n=T )
+printnum(a, gt1 = FALSE, digits = 2)
+round(data.frame(a))
+
+
+
+
+
+```
+
+
+
 
 ###### In what way were those results taken up by policy-making and/or public administration and/or governmental agencies?
 
 
 
-```{r G5_bar, echo=FALSE, fig.height=4}
+```{r G5_bar, echo=FALSE, fig.width=4, dev='svg', fig.retina=2, fig.align='center'}
 
 g5_freq.df <- g5.df[, 1:ncol(g5.df)-1]
 g5_freq.df <- as.data.frame(sapply(FUN=table, g5_freq.df))
@@ -2038,7 +2143,7 @@ g + geom_col(fill="#D32F49")+
       size=g_tick_size_side), axis.title=element_text(size=g_tick_size_side), legend.text=element_text(size=g_tick_size_side)) +
   labs(subtitle = "In what way were those results taken up by 
        policy-making and/or public administration and/or governmental agencies?") +
-  annotate("label", x = 3.2, y = 29, label = "bold(n) == 361/361", parse = TRUE) 
+  annotate("label", x = 3.2, y = 29, label = "bold(n) == 62/361", parse = TRUE) 
 
 ```
 
@@ -2258,6 +2363,8 @@ outcome_likert + theme( axis.text.y = element_text(
 
 * 69 % of the respondents were confident of the scaling-up potential of the project results
 
+
+# 
 
 
 
