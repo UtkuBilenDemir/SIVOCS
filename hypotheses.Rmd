@@ -286,12 +286,29 @@ a11_boxplot + a12_boxplot
 
 ```
 
-```{r }
+```{r, echo=FALSE, fig.width=10, fig.height=3, dev='svg', fig.retina=2, fig.align='center' }
+library(modelsummary)
 library(Hmisc)
-rcorr(as.matrix(as.data.frame(cbind(
+model <- rcorr(as.matrix(as.data.frame(cbind(
   Trans._Exp. =feat_df.num$transdisciplinaryExp.rate., 
   Mot._to_add_Pr. = ad_df$d12, 
   Mot._to_imp._HC = ad_df$d13))), type = "spearman")
+
+
+
+
+
+whatever <- as.data.frame(as.matrix(as.data.frame(cbind(
+  Trans._Exp. =feat_df.num$transdisciplinaryExp.rate., 
+  Mot._to_add_Pr. = ad_df$d12, 
+  Mot._to_imp._HC = ad_df$d13))))
+datasummary_correlation(whatever
+                        #, output = "./05_report/02_final_feedback/model1.docx"
+                        , method = "spearman"
+                        , modelsummary_factory_word = 'flextable',
+                        statistic = "({p.value})" )
+
+datasummary(whatever)
 ```
 
 
@@ -2105,7 +2122,6 @@ library(papaja)
 policy_df$policy_intent <- ifelse(policy_df$policy_intent == "Yes", 1, 0)
 a <- psych::corr.test(policy_df, method = "spearman", use = "pairwise.complete.obs", n=T )
 printnum(a, gt1 = FALSE, digits = 2)
-round(data.frame(a))
 
 
 
@@ -2364,11 +2380,157 @@ outcome_likert + theme( axis.text.y = element_text(
 * 69 % of the respondents were confident of the scaling-up potential of the project results
 
 
-# 
+# Programme-specific details
+
+```{r, echo=FALSE, fig.width=6, fig.retina=2, dev = "svg", fig.align='center'}
+sample_df <- read.csv("./01_data/snf_df_-_fname_lname.csv")
+
+sample_funding <- as.data.frame(table(sample_df$SP.Funding) )
+respondent_funding <- as.data.frame(table(data$funding))
+
+# Compute percentages
+sample_funding$fraction <- sample_funding$Freq / sum(sample_funding$Freq)
+respondent_funding$fraction <- respondent_funding$Freq / sum(respondent_funding$Freq)
+
+# Compute the cumulative percentages (top of each rectangle)
+sample_funding$ymax <- cumsum(sample_funding$fraction)
+respondent_funding$ymax <- cumsum(respondent_funding$fraction)
+
+# Compute the bottom of each rectangle
+sample_funding$ymin <- c(0, head(sample_funding$ymax, n=-1))
+respondent_funding$ymin <- c(0, head(respondent_funding$ymax, n=-1))
+
+# Compute label position
+sample_funding$labelPosition <- (sample_funding$ymax + sample_funding$ymin) / 2
+respondent_funding$labelPosition <- (respondent_funding$ymax + respondent_funding$ymin) / 2
+
+# Compute a good label
+sample_funding$label <- paste0(sample_funding$Freq, "\n", round(sample_funding$fraction, 2) * 100, "%")
+respondent_funding$label <- paste0(respondent_funding$Freq, "\n", round(respondent_funding$fraction, 2) * 100, "%")
+
+# Make the plot
+a <- ggplot(sample_funding, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=3, fill=Var1)) +
+  geom_rect() +
+  geom_label( x=3.5, aes(y=labelPosition, label=label), size=6) +
+  scale_fill_brewer(palette="Pastel2") +
+  coord_polar(theta="y") +
+  xlim(c(2, 4)) +
+  theme_void() + guides(fill = guide_legend(
+    title = "Funding programme",
+    override.aes = aes(label = "")
+  ))  + theme( legend.key = element_rect(fill = "white", colour = "black"),
+               plot.title = element_text(color="Black", size=18, face="bold",hjust = 0.5 )) + 
+  theme(legend.position = "none") + 
+  ggtitle("Sample")
+
+a#+
+#  theme(legend.position = "none")
+b <- ggplot(respondent_funding, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=3, fill=Var1)) +
+  geom_rect() +
+  geom_label( x=3.5, aes(y=labelPosition, label=label), size=6) +
+  scale_fill_brewer(palette="Pastel2") +
+  coord_polar(theta="y") +
+  xlim(c(2, 4)) +
+  theme_void() + guides(fill = guide_legend(
+    title = "Funding instrument",
+    override.aes = aes(label = "")
+  ))  + theme(legend.key = element_rect(fill = "white", colour = "black"),
+              plot.title = element_text(color="Black", size=18, face="bold",hjust = 0.5
+                                        )) +
+  ggtitle("Respondents")
+
+a + b
+```
+
+
+```{r}
+
+samres_funding <- as.data.frame(cbind(
+  programme = rep(as.character(sample_funding[, 1]), 2)
+  , Freq = as.numeric(c(sample_funding$Freq, respondent_funding$Freq ))
+  , Category = c(rep("Sample",4), rep("Respondents", 4)))
+)
+samres_funding$Freq <- as.numeric(samres_funding$Freq)
+class(samres_funding$Freq)
+ggplot(samres_funding, aes(fill=Category, y=Freq, x=programme)) + 
+  geom_bar(position="dodge", stat="identity") +
+  xlab("Funding programmes") +
+  ylab("Count") + scale_x_discrete(limits= c("0", "1", "2"), labels = c("0" = "no", "1"="to a minor extent", "2"="to a large extent")) + 
+  theme_light() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))  + scale_fill_manual(values=c("#FC4E07", "#E7B800", "#00AFBB"), name="Domain") 
+
+
+```
+
+
+```{r echo=FALSE, fig.width=6 , fig.retina=2, fig.align='center', dev='svg'}
+d1.df_named <- d1.df
+# names(d1.df_named) <- c(
+#   motivation.pheno. = "understand a natural, tech., econ., or social phenomenon?",
+#   motivation.prob. = "address a natural, tech., econ., or social problem?",
+#   motivation.welfare. = "improve the human condition/welfare (outside academia)?"
+# )
+
+d1.df_named$funding_programme <- data$funding
+
+d2domain.df$funding_programme <- data$funding
+benefit.df <- data.frame(benefit = data$benefitForNonAcademy,
+                         funding_programme = data$funding)
+
+whatever <- function(x) {
+  y <- ifelse(is.na(x), NA,
+              ifelse(x <= 3, 0,
+                     ifelse(x > 3 & x <7, 1,
+                            ifelse(x >= 7, 2, " "))))
+  y <- as.numeric(y)
+  #y <- factor(y, levels = c("0...not at all - 3", "4 - 6", "7 - 10...fully"))
+  
+  return(y)
+}
+  
+d1.df_named$motivation.pheno. <- whatever(d1.df_named$motivation.pheno.)
+d1.df_named$motivation.prob. <- whatever(d1.df_named$motivation.prob.)
+d1.df_named$motivation.welfare. <- whatever(d1.df_named$motivation.welfare.)
+
+pheno_prog <- as.data.frame(table(d1.df_named[,c(1,4)]))
+pheno_prob <- as.data.frame(table(d1.df_named[,c(2,4)]))
+pheno_welf <- as.data.frame(table(d1.df_named[,c(3,4)]))
+benef_prog <- as.data.frame(table(benefit.df))
+
+
+a <- ggplot(pheno_prog, aes(fill=funding_programme, y=Freq, x=motivation.pheno.)) + 
+  geom_bar(position="dodge", stat="identity") +
+  xlab("Motivation to better understand a natural, technical, economic, or social phenomenon") +
+  ylab("Count") + scale_x_discrete(limits= c("0", "1", "2"), labels = c("0...not at all - 3", "4 - 6", "7 - 10...fully")) + 
+  theme_light()+ geom_text(position = position_dodge(width= 0.9), aes(y=Freq+0.25, fill=funding_programme, label=Freq, hjust=0.3, vjust = -0.9)) +theme(axis.text.x = element_text( hjust = 1))  +scale_fill_brewer(palette="Pastel2", name="Funding instrument") + theme(legend.position = "none")+  annotate("label", x = 0.6, y = 120, label = paste0("bold(n) ==", sum(pheno_prog$Freq),"/361"), parse = TRUE)
+
+b <- ggplot(pheno_prob, aes(fill=funding_programme, y=Freq, x=motivation.prob.)) + 
+  geom_bar(position="dodge", stat="identity") +
+  xlab("Motivation to directly address a natural, technical, economic, or social problem?") +
+  ylab("Count") + scale_x_discrete(limits= c("0", "1", "2"), labels = c("0...not at all - 3", "4 - 6", "7 - 10...fully")) + 
+  theme_light()+ geom_text(position = position_dodge(width= 0.9), aes(y=Freq+0.25, fill=funding_programme, label=Freq, hjust=0.3, vjust = -0.9)) +theme(axis.text.x = element_text( hjust = 1))  +scale_fill_brewer(palette="Pastel2", name="Funding instrument")  + theme(legend.position = "none") +  annotate("label", x = 0.6, y = 120, label = paste0("bold(n) ==", sum(pheno_prob$Freq),"/361"), parse = TRUE)
+
+c <- ggplot(pheno_welf, aes(fill=funding_programme, y=Freq, x=motivation.welfare.)) + 
+  geom_bar(position="dodge", stat="identity") +
+  xlab("Motivation to improve the human condition/welfare (outside academia)?
+") +
+  ylab("Count") + scale_x_discrete(limits= c("0", "1", "2"), labels = c("0...not at all - 3", "4 - 6", "7 - 10...fully")) + 
+  theme_light()+ geom_text(position = position_dodge(width= 0.9), aes(y=Freq+0.25, fill=funding_programme, label=Freq, hjust=0.3, vjust = -0.9)) +theme(axis.text.x = element_text( hjust = 1))  +scale_fill_brewer(palette="Pastel2", name="Funding instrument") + 
+  annotate("label", x = 0.6, y = 120, label = paste0("bold(n) ==", sum(pheno_welf$Freq),"/361"), parse = TRUE)
+a + b + c
 
 
 
 
+benef_plot <- ggplot(benef_prog, aes(fill=funding_programme, y=Freq, x=benefit)) + 
+  geom_bar(position="dodge", stat="identity") +
+  xlab("Have you deliberately designed your project so that it might generate an immediate and intended benefit for the general population or a specific non-academic target group?") +
+  ylab("Count") + scale_x_discrete(limits= c("1", "2", "3"), labels = c("1" = "no", "2"="to a minor extent", "3"="to a large extent")) + 
+  theme_light()+ geom_text(position = position_dodge(width= 0.9), aes(y=Freq+0.25, fill=funding_programme, label=Freq, hjust=0.3, vjust = -0.9)) +theme(axis.text.x = element_text( hjust = 1))  +scale_fill_brewer(palette="Pastel2", name="Funding instrument") + 
+  annotate("label", x = 3.3, y = 110, label = paste0("bold(n) ==", sum(benef_prog$Freq),"/361"), parse = TRUE)
+
+benef_plot
+```
 
 ---
 
