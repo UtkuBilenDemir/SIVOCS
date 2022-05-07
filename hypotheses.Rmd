@@ -18,6 +18,7 @@ library(patchwork)
 library(psych)
 library(flextable)
 library(EnvStats)
+library(data.table)
 
 source("./02_analysis/02_static_responses.R")
 # colnames of the specific question groups
@@ -140,8 +141,7 @@ items_likert <-
 
 likert_plot(items_likert, h=FALSE, c=c(1,3,5)) + theme( axis.text.y = element_text( 
   size=g_tick_size_main), axis.text.x = element_text(
-    size=g_tick_size_side), axis.title=element_text(size=g_tick_size_side), legend.text=element_text(size=g_tick_size_side)) +
-  annotate("label", x = 3, y = -100, label = "bold(n) == 352/361", parse = TRUE) +
+    size=g_tick_size_side), axis.title=element_text(size=g_tick_size_side), legend.text=element_text(size=g_tick_size_side)) + annotate("label", x = 3, y = -100, label = "bold(n) == 352/361", parse = TRUE) +
   annotate("label", x = 2, y = -100, label = "bold(n) == 360/361", parse = TRUE) +
   annotate("label", x = 1, y = -100, label = "bold(n) == 112/361", parse = TRUE) 
 
@@ -308,7 +308,7 @@ datasummary_correlation(whatever
                         , modelsummary_factory_word = 'flextable',
                         statistic = "({p.value})" )
 
-datasummary(whatever)
+# datasummary(whatever)
 ```
 
 
@@ -417,18 +417,18 @@ b1_table_df <- data.frame(Answer = c("0..not at all", 1:9, "10..fully", "No answ
 b1_q <- "How familiar are you with the concept of social innovation?"
 
 
-myft <- flextable(b1_table_df
-                  #col_keys = c("Answer",	"Count",	"Gross percentage")
-)
-myft <- add_header_row(
-  x = myft, values = b1_q,
-  colwidths = c(3))
-
-myft <- theme_vanilla(myft)
-myft <- align(myft, j=3, align = "right", part = "all")
-myft <- set_table_properties(myft, layout = "autofit")
-print(myft, preview = "docx")
-myft
+# myft <- flextable(b1_table_df
+#                   #col_keys = c("Answer",	"Count",	"Gross percentage")
+# )
+# myft <- add_header_row(
+#   x = myft, values = b1_q,
+#   colwidths = c(3))
+# 
+# myft <- theme_vanilla(myft)
+# myft <- align(myft, j=3, align = "right", part = "all")
+# myft <- set_table_properties(myft, layout = "autofit")
+# print(myft, preview = "docx")
+# myft
 ```
 
 
@@ -904,6 +904,7 @@ g + geom_col(fill=col_bar2
              ,width=0.7
 ) + 
   theme_light() +
+  
   theme( axis.text.y = element_text( 
     size=g_tick_size_side), 
     axis.text.x = element_text(
@@ -944,7 +945,7 @@ d2domain.df %>%
   scale_x_discrete(limits= c("0", "1", "2"), labels = c("0" = "no", "1"="to a minor extent", "2"="to a large extent"))  
 
 ```
-```{r D2-barplot, echo=FALSE, fig.width=8, fig.height=4, dev='svg', fig.retina=2, fig.align='center'}
+```{r D2-barplot, echo=FALSE, fig.width=6, dev='svg', fig.retina=2, fig.align='center'}
 benefit <- c(rep("No" , 3), rep("To a minor extent" , 3), rep("To a major extent" , 3) )
 rep(unique(d2domain.df$domain ), 3)
 
@@ -954,12 +955,43 @@ dom_tab <- as.data.frame(table(d2domain.df$domain, d2domain.df$benefitForNonAcad
 dom_tab 
 
 # Grouped
-ggplot(dom_tab, aes(fill=Var1, y=Freq, x=Var2)) + 
+ggplot(
+  dom_tab
+  , aes(fill=Var1, y=Freq, x=Var2)
+  ) + 
   geom_bar(position="dodge", stat="identity") +
   xlab("Benefit for non-academy") +
-  ylab("Count") + scale_x_discrete(limits= c("0", "1", "2"), labels = c("0" = "no", "1"="to a minor extent", "2"="to a large extent")) + 
+  ylab("Count") + 
+  scale_x_discrete(
+    limits= c("0", "1", "2")
+    , labels = c("0" = "no"
+                 , "1"="to a minor extent"
+                 , "2"="to a large extent"
+                 )
+    ) + 
   theme_light() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))  + scale_fill_manual(values=c("#FC4E07", "#E7B800", "#00AFBB"), name="Domain") 
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))  + 
+  scale_fill_manual(values=c("#FC4E07", "#E7B800", "#00AFBB"), name="Domain") +
+  geom_text(
+    position = position_dodge(width= 0.9)
+    , aes(label = Freq), vjust=1.6, color = "black", size = 6
+    ) +
+  annotate(
+    "label"
+    , x = 3.2
+    , y = 70
+    , label = "bold(n) == ~360/361"
+    , parse = TRUE
+    ) + 
+  theme( 
+    axis.text.y = element_text(size=g_tick_size_side)
+    , axis.text.x = element_text(size=g_tick_size_side)
+    , axis.title=element_text(size=g_tick_size_side)
+    , legend.text=element_text(size=g_tick_size_side)
+    , legend.position = "bottom"
+    )
+
+
 ```
 
 ```{r echo=FALSE}
@@ -1091,25 +1123,96 @@ Directly aiming to benefit society expected to correlate relatively higher with 
 
 ## D3: Direct benefit for the general population or a specific non-academic group
 
-```{r D3-bar, echo=FALSE, fig.width=8, fig.height=4, dev='svg', fig.retina=2, fig.align='center'}
-d3.df_colsum <- as.data.frame(colSums(d3.df))
-rownames(d3.df_colsum) <- c("societal",
-                            "economic",
-                            "ecological/natural",
-                            "medical/health",
-                            "technical")
+```{r D3-bar, echo=FALSE, fig.width = 6, fig.height=4, dev='svg', fig.retina=2, fig.align='center'}
+# D3: Was there an impulse from the non-academic world that motivated you 
+# to start the project, namely ...
+# <Code-Reviewed>
 
-den <- as.data.frame(d3.df)
+# -> Calculate also the "other" category
+other <- ifelse(data$impulseForNonAcad.other. == "", "", "Y")
 
-g <- ggplot(d3.df_colsum, aes(x=rownames(d3.df_colsum), y=`colSums(d3.df)`))
-# Number of cars in each class:
-g + geom_col(fill=col_bar2) + 
-  theme_light() + theme(axis.text.x = element_text()) + 
+# -> Calc. frequencies under domains
+soc_dom <- as.data.frame(table(data$domain, data$impulseForNonAcad.soc. == "Y")) %>%
+  filter(Var2 == TRUE) %>%
+  select(-Var2)
+eco_dom <- as.data.frame(table(data$domain, data$impulseForNonAcad.econ. == "Y")) %>%
+  filter(Var2 == TRUE) %>%
+  select(-Var2)
+nat_dom <- as.data.frame(table(data$domain, data$impulseForNonAcad.ecol. == "Y")) %>%
+  filter(Var2 == TRUE) %>%
+  select(-Var2)
+hea_dom <- as.data.frame(table(data$domain, data$impulseForNonAcad.health. == "Y")) %>%
+  filter(Var2 == TRUE) %>%
+  select(-Var2)
+tec_dom <- as.data.frame(table(data$domain, data$impulseForNonAcad.tech. == "Y")) %>%
+  filter(Var2 == TRUE) %>%
+  select(-Var2)
+oth_dom <- as.data.frame(table(data$domain, other == "Y")) %>%
+  filter(Var2 == TRUE) %>%
+  select(-Var2)
+
+# -> Collect under the same df
+d3.freq_df <- rbind(
+  soc_dom
+  , eco_dom
+  , nat_dom
+  , hea_dom
+  , tec_dom
+  , oth_dom
+  )
+
+# -> Category column
+cats <- c(
+  "societal",
+  "economic",
+  "ecological/natural",
+  "medical/health",
+  "technical",
+  "other"
+  )
+d3.freq_df$Category <- rep(
+  cats
+  , each = 3
+)
+d3.freq_df$Category <- factor(d3.freq_df$Category,
+       levels = cats)
+
+
+# -> Visualise
+g <- ggplot(d3.freq_df
+            , aes(fill = Var1 ,x = Category, y = Freq)
+            )
+
+g + 
+  geom_bar(position="dodge", stat="identity") +
+  theme_light() + 
+  theme(axis.text.x = element_text()) + 
   scale_x_discrete("") + 
-  scale_y_continuous("count") + geom_text(aes(label=`colSums(d3.df)`), vjust=1.6, color="white", size=5) + theme( axis.text.y = element_text( 
-    size=g_tick_size_side), axis.text.x = element_text(
-      size=g_tick_size_side), axis.title=element_text(size=g_tick_size_side), legend.text=element_text(size=g_tick_size_side)) + 
-  annotate("label", x = 5.2, y = 130, label = "bold(n) == ~360/361", parse = TRUE) 
+  scale_y_continuous("Count") + 
+  geom_text(
+    position = position_dodge(width= 0.9)
+    , aes(label = Freq), vjust=1.6, color = "black", size = 6
+    ) + 
+  theme( 
+    axis.text.y = element_text(size=g_tick_size_side)
+    , axis.text.x = element_text(size=g_tick_size_side)
+    , axis.title=element_text(size=g_tick_size_side)
+    , legend.text=element_text(size=g_tick_size_side)
+    , legend.position = "bottom"
+    ) + 
+  annotate(
+    "label"
+    , x = 6.2
+    , y = 90
+    , label = "bold(n) == ~360/361"
+    , parse = TRUE
+    ) +
+  scale_fill_manual(
+    values = c("#FC4E07", "#E7B800", "#00AFBB")
+    , name = "Domain"
+    ) 
+
+
 ```
 
 
@@ -1185,11 +1288,11 @@ g + geom_col(fill=col_bar) +
     , legend.text=element_text(size=g_tick_size_side)) + 
   annotate("label", x = 3.2, y = 140, label = "bold(n) == ~342/361", parse = TRUE) +
   labs(caption = paste0("\nTransdisciplinary involvement types:\n"
-                                                                                                           , "* company/business representatives"
-                                                                                                           , "\n* representatives of NGOs, civil society groups", "\n* policy makers, public administrations etc."
-                                                                                                           , "\n* individual citizens"
-                                                                                                           , "\n* media representatives"
-                                                                                                           , "\n* representatives from welfare- or education-providing institutions")) 
+                        , "* company/business representatives"
+                        , "\n* representatives of NGOs, civil society groups", "\n* policy makers, public administrations etc."
+                        , "\n* individual citizens"
+                        , "\n* media representatives"
+                        , "\n* representatives from welfare- or education-providing institutions")) 
 ```
 
 
@@ -1517,35 +1620,108 @@ rcorr(e1domain2.df, type = "spearman")
 
 ##### *Your project has..*
 
-```{r E3_bar, echo=FALSE, fig.width=12, fig.height=4, dev='svg', fig.retina=2, fig.align='center'}
+```{r E3_bar, echo=FALSE, fig.width=6, dev='svg', fig.retina=2, fig.align='center'}
+# Please indicate whether the following statements 
+# fit your project:   
+# Your project has ... 
+# <code-reviewed>
+e3.freq_df <- as.data.frame(
+  sapply(FUN = table, e3.df)
+  )
 
-library(data.table)
+# Some of the variables are pointing to concrete results other intended
+# -> Split e3 into 2 main groups: concrete, intended
+e3_concrete.freq_df <- e3.freq_df %>%
+  select(c("targetGroupsGoals.diversity.", "targetGroupsGoals.socgroups."))
+e3_intended.freq_df <- e3.freq_df %>%
+  select(-c("targetGroupsGoals.diversity.", "targetGroupsGoals.socgroups."))
 
-den_df <- as.data.frame(sapply(FUN=table, e3.df))
+# -> Adjust for ggplot type 1 freq column design 
+e3_concrete.freq_df.trans <- transpose(e3_concrete.freq_df)
+e3_concrete.freq_df.trans$statement <- colnames(e3_concrete.freq_df)
+colnames(e3_concrete.freq_df.trans) <- c("No", "Yes")
+e3_concrete.freq_df.trans <- e3_concrete.freq_df.trans %>%
+  gather("Response", "Freq", 1:2)
+e3_concrete.freq_df.trans$Freq <- as.integer(e3_concrete.freq_df.trans$Freq)
+colnames(e3_concrete.freq_df.trans)[1] <- "Statement"
 
-denden_df <- transpose(as.data.frame(sapply(FUN=table, e3.df)))
-denden_df$Statement <- colnames(den_df) 
+e3_intended.freq_df.trans <- transpose(e3_intended.freq_df)
+e3_intended.freq_df.trans$statement <- colnames(e3_intended.freq_df)
+colnames(e3_intended.freq_df.trans) <- c("No", "Yes")
+e3_intended.freq_df.trans <- e3_intended.freq_df.trans %>%
+  gather("Response", "Freq", 1:2)
+e3_intended.freq_df.trans$Freq <- as.integer(e3_intended.freq_df.trans$Freq)
+colnames(e3_intended.freq_df.trans)[1] <- "Statement"
 
-dene_df <- as.data.frame(cbind( c(denden_df$V1, denden_df$V2), c(denden_df$Statement, denden_df$Statement), c(rep("True", length(denden_df$Statement)), rep("False", length(denden_df$Statement)))))
+# -> Visualise "concrete"
+g_concrete <- ggplot(e3_concrete.freq_df.trans
+            , aes(fill = Response, x = Statement, y = Freq)
+            )
+g_concrete <- g_concrete +
+  geom_bar(position = "dodge", stat = "identity") +
+  theme_light() + 
+  theme(axis.text.x = element_text()) + 
+  scale_x_discrete("") + 
+  scale_y_continuous("Count") +
+  geom_text(
+    position = position_dodge(width= 0.9)
+    , aes(label = Freq), hjust=1.6, color = "white", size = 6
+    ) +
+  theme( 
+    axis.text.y = element_text(size = g_tick_size_side)
+    , axis.text.x = element_text(size = g_tick_size_side)
+    , axis.title = element_text(size = g_tick_size_side)
+    , legend.text = element_text(size = g_tick_size_side)
+    , legend.position = "bottom"
+    ) +
+  scale_fill_manual(
+    values = c(col_bar2, col_bar)
+    , name = "Response"
+    ) +
+  scale_x_discrete(
+    labels = c("targetGroupsGoals.diversity." = "...enabled diversity and exchange"
+               ,"targetGroupsGoals.socgroups." = "...included soc. disadvantaged or marginalised people."
+               )
+    ) + 
+  coord_flip()
 
-dene_df$V1 <-  as.numeric(dene_df$V1)
-
-ggplot(dene_df, aes(fill=V3, y=V1, x=V2)) + 
-  geom_bar(position="stack", stat="identity" ) + coord_flip() + theme_light() +
-  scale_x_discrete("", labels = c( 
-    "targeted a group of people with specific needs",
-    "included disadvantaged or marginalised people",
-    "worked towards improving people’s lives.",
-    "aimed at empowering people",
-    "enabled diversity and exchange of different perspectives") ) +
-  scale_y_continuous("Count")+
-  theme(text = element_text(size=13)) +  scale_fill_manual(values = c("#D32F49", "#338BBE"), name = "") + theme( axis.text.y = element_text( 
-    size=g_tick_size_side), axis.text.x = element_text(
-      size=g_tick_size_side), axis.title=element_text(size=g_tick_size_side), legend.text=element_text(size=g_tick_size_side)) +
-  geom_text(aes(label=V1),size = 5, position = position_stack(vjust = 0.5), color="white")
-#+
-# annotate("label", x = 230, y = 10, label = "bold(n) == 114/361", parse = TRUE) 
-
+ 
+# -> Visualise "concrete"
+g_intended <- ggplot(e3_intended.freq_df.trans
+            , aes(fill = Response, x = Statement, y = Freq)
+            )
+g_intended <- g_intended +
+  geom_bar(position = "dodge", stat = "identity") +
+  theme_light() + 
+  theme(axis.text.x = element_text()) + 
+  scale_x_discrete("") + 
+  scale_y_continuous("Count") +
+  geom_text(
+    position = position_dodge(width= 0.9)
+    , aes(label = Freq), hjust=1.6, color = "white", size = 6
+    ) +
+  theme( 
+    axis.text.y = element_text(size = g_tick_size_side)
+    , axis.text.x = element_text(size = g_tick_size_side)
+    , axis.title = element_text(size = g_tick_size_side)
+    , legend.text = element_text(size = g_tick_size_side)
+    , legend.position = "bottom"
+    ) +
+  scale_fill_manual(
+    values = c(col_bar2, col_bar)
+    , name = "Response"
+    ) +
+  scale_x_discrete(
+    labels = c("targetGroupsGoals.socneeds." = "...targeted a group of people with spec. social needs."
+               ,"targetGroupsGoals.improve." = "...worked towards improving people’s lives."
+               ,"targetGroupsGoals.empower." = "...aimed at empowering people"
+               )
+    ) + 
+  coord_flip()
+ 
+g_intended
+ 
+  
 
 ```
 
@@ -1736,7 +1912,7 @@ gender <-   ifelse(data$concepts2== "Y", 1, 0)
 
 gender_con_df <- data.frame(gender_con = data$concepts2
                             , domain = data$domain
-                            )
+)
 
 
 library(plyr)
@@ -1872,7 +2048,7 @@ a <- eg_df[, c(1,6)] %>%
 
 ###### Intended short- or long-term change benefiting specific target groups or the general population:
 
-```{r G2_bar, echo=FALSE, fig.width=6, fig.height=3, dev='svg', fig.retina=2, fig.align='center'}
+```{r G2_bar, echo=FALSE, fig.width=8, fig.height=3, dev='svg', fig.retina=2, fig.align='center'}
 
 den_df <- as.data.frame(sapply(FUN=table, g2.df[, 1:ncol(g2.df)-1]))
 rownames(den_df)[1] <- "NA"
@@ -1940,7 +2116,7 @@ ggplot(den3_df,
   ) + 
   labs(
     #title = "Effect of Vitamin C on Tooth Growth",
-    subtitle = "Intended short- or long-term change benefiting specific target groups or the general population:") +  
+    title = "What kind of change (short- or long-term) did your project\nintend to bring about in the following target groups or in the general population?") +  
   annotate("label", x = 1, y = 170, label = "bold(n) == 88/361", parse = TRUE) +
   annotate("label", x = 2, y = 170, label = "bold(n) == 50/361", parse = TRUE) +
   annotate("label", x = 3, y = 170, label = "bold(n) == 112/361", parse = TRUE) +
@@ -1948,7 +2124,9 @@ ggplot(den3_df,
   annotate("label", x = 5, y = 170, label = "bold(n) == 68/361", parse = TRUE) +
   annotate("label", x = 6, y = 170, label = "bold(n) == 86/361", parse = TRUE) +
   
-  theme(legend.position="bottom") 
+  theme(legend.position="bottom") + 
+  theme(plot.title = element_text(size=16))
+
 
 
 ```
@@ -1983,6 +2161,24 @@ ggcorrplot(corr, type = "lower", lab = TRUE,
            ggtheme = ggplot2::theme_light,
            colors = c(col_seq[3], "white", col_seq[1])) +
   labs(caption = "KoC: Kind of Change\nNoI: Nature of Involvement")
+
+
+a <- nat_change[, c(1,5)] %>% 
+  filter(!is.na(`Citizens (NoI)`)) %>%
+  filter(!is.na(`Citizens (KoC)`)) %>%
+  gather(key=`Citizens (NoI)`, value=`Citizens (KoC)`) %>%
+  ggplot(aes(x=`Citizens (NoI)`, y=`Citizens (KoC)`, fill=`Citizens (KoC)`),  show.legend = FALSE) +
+  geom_boxplot() +
+  ylab(" ") +
+  theme_light() +
+  theme(axis.text.y = element_blank(), legend.position = "none") +
+  scale_x_continuous(breaks = seq(0,10,2)) +
+  scale_fill_discrete(name = "Individual citizens") + 
+  xlab("Rate of scalability") + 
+  ylab("Level of involvement (ind. citizens)") + 
+  scale_fill_manual(values=col_seq) + 
+  guides(fill=guide_legend(title="Nature of Involvement", reverse = TRUE)) 
+
 ```
 ```{r, echo=FALSE, fig.width=9, fig.height=6, dev='svg', fig.retina=2, fig.align='center'}
 library(GGally)
@@ -2309,38 +2505,99 @@ rcorr(sapply(gd_df, FUN=as.numeric), type="spearman")
 
 # H1: Dissemination Channels
 
-```{r H1_bar, echo=FALSE, fig.width=10, fig.height=4, dev='svg', fig.retina=2, fig.align='center'}
-
-
+```{r H1_bar, echo=FALSE, fig.width=6, fig.height=4, dev='svg', fig.retina=2, fig.align='center'}
+# Dissemination Channels under trans inv.
 h11.df <- h1.df[,1:(ncol(h1.df)-1)]
 h12.df <- h11.df[,c(1:2, 4:9, 11)]
 h1den_df <- transpose(as.data.frame(sapply(FUN=table, h12.df)))
 h1den_df$diss <- colnames(h12.df) 
 
-h1den_df <- h1den_df[, 2:3]
-h1den_df$V2 <- as.numeric(h1den_df$V2)
+# h1den_df <- h1den_df[, 2:3]
+# h1den_df$V2 <- as.numeric(h1den_df$V2)
 
-g <- ggplot(h1den_df, aes(x=reorder(diss, V2), y=V2))
-# Number of cars in each class:
-g + geom_col(fill="#D32F49")+
-  #scale_x_discrete("", labels = c("No", "Yes")) +
-  scale_y_continuous("count") + 
-  scale_x_discrete("", labels = c(
-    dissChannels.peer.	= "Peer reviewed journal publication",
-    dissChannels.mono.	= "Monography, contribution to a book",
-    dissChannels.conf.	= "Conference proceeding",
-    dissChannels.policy. = "Policy brief(s)",	
-    dissChannels.trad.	= "Traditional media (TV/radio/print/etc.)",	
-    dissChannels.prof.	= "Professional journals/magazines targeting practitioners",
-    dissChannels.web.		=	"Own institutional or project website/blog",
-    dissChannels.socmed. = "Social media",
-    dissChannels.events. = "Targeted events for (non-academic) practitioners",
-    dissChannels.platf. = "Online platforms (other than social media channels)"
-  )) + 
-  theme_minimal()+ geom_text(aes(label=V2), hjust=1.6, color="white", size=5) + theme( axis.text.y = element_text( 
-    size=g_tick_size_side), axis.text.x = element_text(
-      size=g_tick_size_side), axis.title=element_text(size=g_tick_size_side), legend.text=element_text(size=g_tick_size_side)) + coord_flip()
+e1.df[is.na(e1.df)] <- 0 
+e1.df.nona <- e1.df
+e1.df.nona_trans <- e1.df.nona[, 2:ncol(e1.df.nona)]
 
+trans_bool <- rowSums(e1.df.nona_trans != 0) 
+trans_bool <- ifelse(trans_bool == 0, 0, 1)
+h12.df$trans <- trans_bool
+
+h12.freq_df <- as.data.frame(h12.df %>%
+  sapply(FUN= table, trans_bool))
+
+h12.freq_df$trans <- c("NoTrans-NoDiss", "NoTrans-YesDiss", "YesTrans-NoDiss", "YesTrans-YesDiss")
+
+no_trans <- h12.freq_df[1:2, ]
+yes_trans <- h12.freq_df[3:4, ]
+trans_df <-  h12.freq_df[c(2,4), ]
+
+
+
+no_trans <- transpose(no_trans[, 1:(ncol(no_trans) - 1)] )
+colnames(no_trans) <- c("No", "Yes")
+no_trans.nrow <- nrow(no_trans)
+no_trans <- no_trans %>%
+ gather("Dissemination" ,"Freq", 1:2)
+no_trans$Diss_name <- rep(colnames(h12.freq_df)[1:(ncol(h12.freq_df) - 1)], 2)
+
+
+yes_trans <- transpose(yes_trans[, 1:(ncol(yes_trans) - 1)] )
+colnames(yes_trans) <- c("No", "Yes")
+yes_trans.nrow <- nrow(yes_trans)
+yes_trans <- yes_trans %>%
+ gather("Dissemination" ,"Freq", 1:2)
+yes_trans$Diss_name <- rep(colnames(h12.freq_df)[1:(ncol(h12.freq_df) - 1)], 2)
+
+trans_df <- transpose(trans_df[, 1:(ncol(trans_df) - 1)] )
+colnames(trans_df) <- c("No", "Yes")
+trans_df.nrow <- nrow(trans_df)
+trans_df <- trans_df %>%
+ gather("Transdisciplinarity" ,"Freq", 1:2)
+trans_df$Diss_name <- rep(colnames(h12.freq_df)[1:(ncol(h12.freq_df) - 1)], 2)
+
+# -> Visualise "concrete"
+g_trans <- ggplot(trans_df
+            , aes(fill = Transdisciplinarity, x = Diss_name , y = Freq)
+            )
+g_trans <- g_trans +
+  geom_bar(position = "dodge", stat = "identity") +
+  theme_light() + 
+  theme(axis.text.x = element_text()) + 
+  scale_x_discrete("") + 
+  scale_y_continuous("Count") +
+  geom_text(
+    position = position_dodge(width= 0.9)
+    , aes(label = Freq), hjust=1.6, color = "white", size = 6
+    ) +
+  theme( 
+    axis.text.y = element_text(size = g_tick_size_side)
+    , axis.text.x = element_text(size = g_tick_size_side)
+    , axis.title = element_text(size = g_tick_size_side)
+    , legend.text = element_text(size = g_tick_size_side)
+    , legend.position = "bottom"
+    
+    ) +
+  scale_fill_manual(
+    values = c(col_bar2, col_bar)
+    , name = "Transdisciplinary involvement"
+    ) + 
+  coord_flip() +
+  scale_x_discrete(labels=c("dissChannels.peer." = "Peer reviewed journal publication"
+                            , "dissChannels.mono." = "Monography, contribution to a book"
+                            , "dissChannels.policy." = "Policy brief(s)"
+                            , "dissChannels.trad." = "Traditional media (TV/radio/print/etc.)"
+                            , "dissChannels.prof." = "Professional journals/magazines"
+                            , "dissChannels.policy." = "Policy brief(s)"
+                            , "dissChannels.web." = "Own institutional or project website/blog"
+                            , "dissChannels.socmed." = "Social media"
+                            , "dissChannels.platf." = "Online platforms"
+                            , "dissChannels.events." = "Targeted events for practitioners"
+                            )
+                   ) + xlab("Dissemination type")
+  
+g_trans
+ 
 ```
 * Unsurprisingly, the vast majority published in peer-reviewed journals
 * Policy briefs were rated lowest but 110 projects stated to have organised events for non-academic practitioners 
@@ -2352,12 +2609,12 @@ g + geom_col(fill="#D32F49")+
 # H2: Dissemination and Exploitation: Scalability
 
 
-```{r H2_bar, echo=FALSE, fig.width=10, fig.height=4, fig.retina=2, dev = "svg", fig.align='center'}
-h2.df_named <- h2.df
+```{r H2_bar, echo=FALSE, fig.width=6, fig.height=2, fig.retina=2, dev = "svg", fig.align='center'}
+
+h2.df_named <- h2.df[, 1:2]
 names(h2.df_named) <- c(
   scalabilityRating.up. = "Scaling-up",
-  scalabilityRating.out. ="Scaling-out",
-  scalabilityRating.deep. =  "Scaling-deep"
+  scalabilityRating.out. ="Scaling-out"
 )
 
 h2_items_likert <- 
@@ -2371,9 +2628,8 @@ outcome_likert <- likert_plot(h2_items_likert, h=FALSE, c = c(1,3,5)) + ggtitle(
 outcome_likert + theme( axis.text.y = element_text( 
   size=g_tick_size_side), axis.text.x = element_text(
     size=g_tick_size_side), axis.title=element_text(size=g_tick_size_side), legend.text=element_text(size=g_tick_size_side)) +
-  annotate("label", x = 1, y = 100, label = "bold(n) == 140/361", parse = TRUE) +
-  annotate("label", x = 2, y = 100, label = "bold(n) == 149/361", parse = TRUE) +
-  annotate("label", x = 3, y = 100, label = "bold(n) == 172/361", parse = TRUE) 
+  annotate("label", x = 1, y = 100, label = "bold(n) == 149/361", parse = TRUE) +
+  annotate("label", x = 2, y = 100, label = "bold(n) == 172/361", parse = TRUE) 
 
 ```
 
@@ -2436,7 +2692,7 @@ b <- ggplot(respondent_funding, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=3, fill=V
     override.aes = aes(label = "")
   ))  + theme(legend.key = element_rect(fill = "white", colour = "black"),
               plot.title = element_text(color="Black", size=18, face="bold",hjust = 0.5
-                                        )) +
+              )) +
   ggtitle("Respondents")
 
 a + b
@@ -2487,7 +2743,7 @@ whatever <- function(x) {
   
   return(y)
 }
-  
+
 d1.df_named$motivation.pheno. <- whatever(d1.df_named$motivation.pheno.)
 d1.df_named$motivation.prob. <- whatever(d1.df_named$motivation.prob.)
 d1.df_named$motivation.welfare. <- whatever(d1.df_named$motivation.welfare.)
