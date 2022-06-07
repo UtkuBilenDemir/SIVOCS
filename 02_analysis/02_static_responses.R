@@ -123,3 +123,4 @@ write.csv(data, "./01_data/mod_fata.csv")
 write.csv(fata.questions, "./01_data/mod_question_data.csv")
 write.csv(fata.questions, "./01_data/mod_question_fata.csv")
 write.csv(feat_df.num, "./01_data/fata_num_questions.csv")
+
