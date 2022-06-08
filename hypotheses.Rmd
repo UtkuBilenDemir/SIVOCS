@@ -145,6 +145,7 @@ likert_plot(items_likert, h=FALSE, c=c(1,3,5)) + theme( axis.text.y = element_te
   annotate("label", x = 2, y = -100, label = "bold(n) == 360/361", parse = TRUE) +
   annotate("label", x = 1, y = -100, label = "bold(n) == 112/361", parse = TRUE) 
 
+39 + 19 + 20 + 21 + 6 + 15
 ```
 
 ## A1: Experience with transdisciplinary Research
