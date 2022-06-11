@@ -19,7 +19,7 @@ library(psych)
 library(plotly)
 library(lavaan)
 library(tidyverse)
-library(tidyr)
+library(dplyr)
 
 setwd("../../utku_SIVOCS/")
 source("./02_analysis/02_static_responses.R")
@@ -28,8 +28,9 @@ source("./02_analysis/99_question_groups.R")
 feature_list <- read.csv("./02_analysis/PFA_feature_importance.csv")
 
 ```
+# 1. Variable Elimination
 
-1.  Previously removed variables
+1.1.  Previously removed variables
 
 ```{r}
 features_to_rm <- tail(feature_list$X0, 40)
@@ -55,7 +56,7 @@ features_to_rm <- c(features_to_rm,
 df_red <- feat_df.num_o[, !(colnames(feat_df.num_o ) %in% features_to_rm)]
 ```
 
-2.  We got a number of variables which actually measures the researchers, remove those.
+1.2.  We got a number of variables which actually measures the researchers, remove those.
 
 -   Remove the variables from the previous 1. factor
 -   Remove bussiness variables -\> useless
@@ -65,18 +66,18 @@ df_red <- feat_df.num_o[, !(colnames(feat_df.num_o ) %in% features_to_rm)]
 ## SI Familiarity Factor
 factor_1 <- c("familiarWithSI.response.", "transdisciplinaryExp.rate.")
 df_red <- df_red %>%
-  select(-all_of(factor_1))
+ dplyr::select(-all_of(factor_1))
 
 ## MISC:business
 factor_busi <- c("groupsInvolved.busi.", "impactTargetGroup.busi.", "kindOfChange.busi.")
 df_red <- df_red %>%
-  select(-all_of(factor_busi))
+  dplyr::select(-all_of(factor_busi))
 
 
 ## MISC:scalability
 factor_scale <- c("scalabilityRating.up.", "scalabilityRating.out.", "scalabilityRating.deep.")
 df_red <- df_red %>%
-  select(-all_of(factor_scale))
+  dplyr::select(-all_of(factor_scale))
 
 colnames(df_red)
 ```
@@ -85,12 +86,13 @@ colnames(df_red)
 
 ```{r}
 df_model <- feat_df.num_o %>%
-  select(-all_of(c(factor_1, "contribToSI.rate.")))
+  dplyr::select(-all_of(c(factor_1, "contribToSI.rate.")))
 
 colnames(df_model)
 ```
+# 2. Factor Analysis
 
-### Scree Plot
+## 2.1. Scree Plot
 
 Determine Number of Factors to Extract
 
@@ -105,9 +107,9 @@ plotnScree(nS)  # 9 Factors
 
 ```
 
-The optimal number of factors is 7
+The optimal number of factors is 7 (as opposed to 8 in the previous one)
 
-## Exploratory Factor Analysis
+## 2.2. Exploratory Factor Analysis
 
 ```{r}
 # --- FA explanatory
@@ -253,9 +255,7 @@ model_theory3 <-"
 "
 ```
 
-# FA: Model evaluation:
-
-## Factor analysis: Model 1
+###  2.3.1. Conf. Factor analysis: Model 1
 
 ```{r}
 fit_theory <- cfa(model_theory, df_model)
@@ -268,7 +268,7 @@ modificationindices(fit_theory) %>%
   head(10)
 ```
 
-## Factor analysis: Model 2
+### 2.3.2. Conf. Factor analysis: Model 2
 
 ```{r}
 fit_theory2 <- cfa(model_theory2, df_model)
@@ -283,7 +283,7 @@ modificationindices(fit_theory2) %>%
   head(10)
 ```
 
-## Factor analysis: Model 3
+### 2.3.3. Conf. Factor analysis: Model 3
 
 ```{r}
 fit_theory3 <- cfa(model_theory3, df_model)
@@ -296,7 +296,7 @@ modificationindices(fit_theory3) %>%
   head(10)
 ```
 
-## FA Model Comparison
+## 2.4. CFA Model Comparison
 
 ```{r}
 anova(
@@ -317,7 +317,7 @@ parameterestimates(fit_theory2b)
 fitmeasures(fit_theory3)
 ```
 
-## Fitting data into the FA model
+## 2.5. Fitting data into the FA model
 
 ```{r}
 library(scales)
@@ -331,13 +331,17 @@ df_fitted <- df_fitted %>%
 # fit_theory2b
 ```
 
-## Linear Regression: Concrete Outcome as DV
+# 4. Metadata Analysis through fitted data
+
+# 5. Simple Models
+
+## 5.1. Linear Regression: Concrete Outcome as DV
 
 ```{r}
 plot(df_fitted)
 ```
 
-Factors seem to be in linear relationships against each other
+Factors seem to be in linear relationships against each other.
 
 ```{r}
 lm_fitted <- lm(outcomes ~ 
@@ -357,7 +361,15 @@ Regression model fits relatively well:
 -   Adjusted R-squared high, p-value extremely small
 -   The dominant IDVs in the model are transdisciplinary goals, innovativeness and in general policy involvement. Trans. involvement has also a small p-value but only limited influence in the concrete outcomes.
 
-## Create an SI-Index and test against it
+```{r}
+lm_grid <- df_fitted %>% 
+  data_grid(trandisciplinary_involvement, .model = lm_fitted) %>% 
+  add_predictions(lm_fitted)
+lm_grid
+```
+
+
+## 5.1.1. Create an SI-Index and test against it
 
 ```{r}
 si_index <- rowMeans(df_fitted)
@@ -376,12 +388,11 @@ summary(lm_index_fitted)
 
 Testing against a self-induced index doesn't help much
 
-# Modelling approaches
+# 6. Complex Modelling approaches
 
-## Ordinal logistic regression
+## 6.1. Ordinal logistic regression
 
-* Split dataframe into test and train
-
+-   Split dataframe into test and train
 
 ```{r}
 # Split into 2 groups
@@ -391,7 +402,7 @@ test <- df_fitted[inds == 2, ]
 
 ```
 
-* Apply ordinal logistic regression or proportional odds logistic regression
+-   Apply ordinal logistic regression or proportional odds logistic regression
 
 ```{r}
 library(MASS)
@@ -409,37 +420,47 @@ ord_log_model <- polr(
   )
 summary(ord_log_model)
 ```
-* LRM p-values
+
+-   LRM p-values
 
 ```{r}
 (ctable <- coef(summary(ord_log_model)))
+p <- pnorm(abs(ctable[, "t value"]), lower.tail = F) * 2
+(ctable <- cbind("p value" = p))
 ```
 
+```{r}
+train[1:5, "outcomes"]
+```
 
+```{r}
+pred <- predict(ord_log_model, train[1:5, ], type = "prob")
+print(pred, digits = 2)
+colnames(pred)[apply(pred, 1,which.max)]
+```
 
+```{r}
+test[1:5, "outcomes"]
+```
 
+```{r}
+pred2 <- predict(ord_log_model, test[1:5, ], type = "prob")
+print(pred2, digits = 2)
+colnames(pred2)[apply(pred2, 1,which.max)]
+```
 
+-   Confusion Matrix
 
+```{r}
+pred3 <- predict(ord_log_model, train)
+(tab <- table(pred3, train$outcomes))
+1- sum(diag(tab))/sum(tab)
+babap <- as.data.frame(tab)
+```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+```{r}
+pred4 <- predict(ord_log_model, test)
+(tab1 <- table(pred4, test$outcomes))
+1- sum(diag(tab1))/sum(tab1)
+## babap <- as.data.frame(tab1)
+```
