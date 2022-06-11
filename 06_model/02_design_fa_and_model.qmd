@@ -362,10 +362,15 @@ Regression model fits relatively well:
 -   The dominant IDVs in the model are transdisciplinary goals, innovativeness and in general policy involvement. Trans. involvement has also a small p-value but only limited influence in the concrete outcomes.
 
 ```{r}
+library(modelr)
+library(ggplot2)
+
 lm_grid <- df_fitted %>% 
-  data_grid(trandisciplinary_involvement, .model = lm_fitted) %>% 
+  data_grid(ia_human_condition, .model = lm_fitted) %>% 
   add_predictions(lm_fitted)
 lm_grid
+ggplot(lm_grid, aes(ia_human_condition, pred)) + 
+  geom_point()
 ```
 
 
