@@ -98,9 +98,10 @@ Determine Number of Factors to Extract
 
 ```{r }
 library(nFactors)
-ev <- eigen(cor(df_red)) # get eigenvalues
+df_red2 <- df_red[, !colnames(df_red) %in% c("motivation.pheno.")] # Removing this one doesn't change anything
+ev <- eigen(cor(df_red2)) # get eigenvalues
 
-ap <- parallel(subject=nrow(df_red),var=ncol(df_red),
+ap <- parallel(subject=nrow(df_red2), var=ncol(df_red2),
                rep=1000,cent=.05)
 nS <- nScree(x=ev$values, aparallel=ap$eigen$qevpea)
 plotnScree(nS)  # 9 Factors
@@ -120,6 +121,86 @@ fit <- factanal(df_red, 7, rotation="varimax")
 print(fit, digits=2, cutoff=.3, sort=TRUE)
 
 ```
+```{r}
+fit$uniquenesses[order(fit$uniquenesses, decreasing = T)]
+```
+```{r}
+library(psych)
+library(GPArotation)
+fa(df_model, 5)
+```
+
+```{r}
+library("Hmisc")
+res2 <- rcorr(as.matrix(df_red))
+res2$r > 0.5
+```
+
+```{r}
+
+# Intention
+"
+motivation.welfare.+
+benefitForNonAcademy+
+targetGroupsGoals.improve.+
+targetGroupsGoals.empower.+
+impactTargetGroup.pub.+
+impulseForNonAcad.soc.+
+targetGroupsGoals.socgroups.+
+natureOfInvolvement.civsoc.+
+
+targetGroupsGoals.socneeds.+
+targetGroupsGoals.empower.+
+targetGroupsGoals.diversity.
+"
+## Intention-other
+"
+motivation.pheno.+
+motivation.prob.+
+impulseForNonAcad.ecol.+
+impulseForNonAcad.health.+
+impulseForNonAcad.tech.+
+impulseForNonAcad.econ. 
+"
+
+# Actors
+
+"
+groupsInvolved.citiz.+
+natureOfInvolvement.citiz.+
+groupsInvolved.welfare.+
+natureOfInvolvement.welfare.+
+impactTargetGroup.welfare.+
+
+groupsInvolved.civsoc.+
+natureOfInvolvement.civsoc.+
+impactTargetGroup.civsoc.+
+kindOfChange.civsoc. 
+"
+
+
+"
+kindOfChange.policy.+
+impactTargetGroup.policy.+
+kindOfChange.pub.+
+kindOfChange.socgr.+
+kindOfChange.acad. 
+kindOfChange.welfare.+
+"
+
+"
+Impactstatements.capab.+
+Impactstatements.emanc.+
+Impactstatements.understanding.+
+Impactstatements.mitig.+
+Impactstatements.unknown.+
+Impactstatements.unaddressed.+
+impactTargetGroup.socgr. 
+"
+
+```
+
+
 
 ```{r}
 model_theory <-"
@@ -196,6 +277,10 @@ model_theory2 <-"
 ```
 
 ```{r}
+cor(df_fitted$ia_human_condition, df_fitted$outcomes)
+```
+
+```{r}
 model_theory3 <-"
   # SOLUTION ORIENTATION
   ia_human_condition =~ 
@@ -267,6 +352,8 @@ modificationindices(fit_theory) %>%
   arrange(-mi) %>%
   head(10)
 ```
+
+
 
 ### 2.3.2. Conf. Factor analysis: Model 2
 
