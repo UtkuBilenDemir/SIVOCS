@@ -4,7 +4,7 @@ library(ordinal)  #ordinal regression package
 library(rcompanion) #pseudo R square 
 library(MASS) #plyr method (for getting data that allows the test of proportional odds)
 library(brant)# test of proportional odds
-
+library(magrittr)
 
 # Linear Regression Model
 #-------------------------------------------------------------------------------
@@ -17,9 +17,104 @@ lm_fitted <- lm(outcomes ~
      )
 summary(lm_fitted)
 
+# Build SI-indices
+#-------------------------------------------------------------------------------
+
+# 1. Row means based index
+si_index.rowmeans <- rowMeans(df_pred.strict)
+
+# 2. These are what we call socially innovative "projects"
+# Incrementally higher than 3 in all of the fitted features
+# This approach is too strict
+# a new df
+df_fitted <- df_pred
+df_colnames <- colnames(df_pred)
+df_fitted <- as.data.frame(df_fitted)
+df_fitted$id <- 1:nrow(df_fitted)
+
+# These are what we call socially innovative "projects"
+# Incrementally higher than 3 in all of the fitted features
+si_index.strict <- df_fitted %>%
+  dplyr::filter(.[[df_colnames[1]]] > 3) %>%
+  dplyr::filter(.[[df_colnames[2]]] > 3) %>%
+  dplyr::filter(.[[df_colnames[3]]] > 3) %>%
+  dplyr::filter(.[[df_colnames[4]]] > 3) %>%
+  dplyr::filter(.[[df_colnames[5]]] > 3) %>%
+  dplyr::select(id)
+ 
+# 3. Note each of the columns (some coluns include subcolumns)
+si_index.ord_weight <- rep(0, nrow(df_pred.strict)) 
+
+si_index.ord_weight <- ifelse(
+  df_pred.strict$ia_human_condition > 6, si_index.ord_weight + 2,
+    ifelse(df_pred.strict$ia_human_condition > 3, si_index.ord_weight + 1, 
+      si_index.ord_weight + 0
+           )
+       )
+si_index.ord_weight <- ifelse(
+  df_pred.strict$transdisciplinary_involvement > 6, si_index.ord_weight + 1,
+    ifelse(df_pred.strict$transdisciplinary_involvement > 3, si_index.ord_weight + 0.5, 
+      si_index.ord_weight + 0
+           )
+       )
+si_index.ord_weight <- ifelse(
+  df_pred.strict$transdisciplinary_goals > 6, si_index.ord_weight + 1,
+    ifelse(df_pred.strict$transdisciplinary_goals > 3, si_index.ord_weight + 0.5, 
+      si_index.ord_weight + 0
+           )
+       )
+si_index.ord_weight <- ifelse(
+  df_pred.strict$innovativeness > 6, si_index.ord_weight + 2,
+    ifelse(df_pred.strict$innovativeness > 3, si_index.ord_weight + 1, 
+      si_index.ord_weight + 0
+           )
+       )
+si_index.ord_weight <- ifelse(
+  df_pred.strict$outcomes > 6, si_index.ord_weight + 2,
+    ifelse(df_pred.strict$outcomes > 3, si_index.ord_weight + 1, 
+      si_index.ord_weight + 0
+           )
+       )
+
+si_index.ord_weight <- round(scales::rescale(si_index.ord_weight, c(0,10)), 2)
+
+# 4. Note each of the columns (subcolumns are not weighted)
+si_index.ord <- rep(0, nrow(df_pred.strict)) 
+si_index.ord <- ifelse(
+  df_pred.strict$ia_human_condition > 6, si_index.ord + 2,
+    ifelse(df_pred.strict$ia_human_condition > 3, si_index.ord + 1, 
+      si_index.ord + 0
+           )
+       )
+si_index.ord <- ifelse(
+  df_pred.strict$transdisciplinary_involvement > 6, si_index.ord + 2,
+    ifelse(df_pred.strict$transdisciplinary_involvement > 3, si_index.ord + 1, 
+      si_index.ord + 0
+           )
+       )
+si_index.ord <- ifelse(
+  df_pred.strict$transdisciplinary_goals > 6, si_index.ord + 2,
+    ifelse(df_pred.strict$transdisciplinary_goals > 3, si_index.ord + 1, 
+      si_index.ord + 0
+           )
+       )
+si_index.ord <- ifelse(
+  df_pred.strict$innovativeness > 6, si_index.ord + 2,
+    ifelse(df_pred.strict$innovativeness > 3, si_index.ord + 1, 
+      si_index.ord + 0
+           )
+       )
+si_index.ord <- ifelse(
+  df_pred.strict$outcomes > 6, si_index.ord + 2,
+    ifelse(df_pred.strict$outcomes > 3, si_index.ord + 1, 
+      si_index.ord + 0
+           )
+       )
+
+si_index.ord <- round(scales::rescale(si_index.ord, c(0,10)), 2)
+
 # Ordinal Logistic Regression
 #-------------------------------------------------------------------------------
-si_index <- rowMeans(df_pred.strict)
 
 
 # Split into 2 groups

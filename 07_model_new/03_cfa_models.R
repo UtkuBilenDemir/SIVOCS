@@ -2,6 +2,7 @@ source("./07_model_new/02_efa_model.R")
 
 library(semPlot)
 library(lavaan)
+library(psych)
 
 # CFA Models
 #-------------------------------------------------------------------------------
