@@ -1,7 +1,8 @@
 source("./07_model_new/01_feature_removal.R")
 
 library(nFactors)
-
+library(psych)
+library(scales)
 
 # Scree Plot
 #-------------------------------------------------------------------------------
@@ -13,8 +14,9 @@ ap <- parallel(subject=nrow(df_red2), var=ncol(df_red2),
 nS <- nScree(x=ev$values, aparallel=ap$eigen$qevpea)
 plotnScree(nS)  # 9 Factors
 
-df_red.rescaled <- sapply(df_red2, rescale, c(0,10))
+df_red.rescaled <- sapply(df_red2, scales::rescale, c(0,10))
 df_red.rescaled <- na.omit(df_red.rescaled)
+as.data.frame(df_red.rescaled)
 efa_model <- fa.parallel(df_red.rescaled, fm = "ml", fa = "fa")
 efa_model$fa.values  # 4 or 5 factors
 
@@ -22,6 +24,7 @@ efa_model$fa.values  # 4 or 5 factors
 ncol(df_red.rescaled)
 # EFA with different number of factors
 #-------------------------------------------------------------------------------
+
 four_factor <- fa(df_red.rescaled, "varimax", fm = "ml", nfactors = 4)
 five_factor <- fa(df_red.rescaled, "varimax", fm = "ml", nfactors = 5)
 six_factor <- fa(df_red.rescaled, "varimax", fm = "ml", nfactors = 6)
@@ -44,3 +47,9 @@ summary(ten_factor)
 print(five_factor, cut = .4, digits = 2)
 plot(five_factor)
 cor.plot(five_factor)
+
+# Herman's method variance bias
+#-------------------------------------------------------------------------------
+single_factor <- fa(df_red.rescaled, rotate = "none", fm = "ml", nfactors = 1)
+# -- Explained Variance by 1 Factor is 0.26 which is smaller than 0.5 ==> 
+# No Bias

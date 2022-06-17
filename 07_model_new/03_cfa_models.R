@@ -230,7 +230,7 @@ model_theory4 <-"
 # Scale also df_model
 df_model <- na.omit(df_model)
 df_model.no_scale <- df_model
-df_model <- sapply(FUN=rescale, df_model, c(0, 10))
+df_model <- sapply(FUN=scales::rescale, df_model, c(0, 10))
 fit.model2 <- cfa(model_theory3, data = df_model, estimator = "MLR", mimic = "Mplus")
 fit.model3.strict <- cfa(model_theory3.strict, data = df_model, estimator = "MLR", mimic = "Mplus")
 fit.model4 <- cfa(model_theory4, data = df_model, estimator = "MLR", mimic = "Mplus")
@@ -253,8 +253,8 @@ pred <- predict(fit.model2)
 pred.strict <- predict(fit.model3.strict)
 ## pred <- t(pred)
 
-df_pred <- apply(apply(pred,MARGIN = 2, rescale, c(0,10)), MARGIN = 2, round, 2)
-df_pred.strict <- apply(apply(pred.strict ,MARGIN = 2, rescale, c(0,10)), MARGIN = 2, round, 2)
+df_pred <- apply(apply(pred,MARGIN = 2, scales::rescale, c(0,10)), MARGIN = 2, round, 2)
+df_pred.strict <- apply(apply(pred.strict ,MARGIN = 2, scales::rescale, c(0,10)), MARGIN = 2, round, 2)
 df_pred <- as.data.frame(df_pred)
 df_pred.strict <- as.data.frame(df_pred.strict)
 
