@@ -1,0 +1,24 @@
+---
+title: "99_last_meeting"
+output: html_document
+date: '2022-06-17'
+---
+
+```{r}
+#| echo: false
+#| include: false
+# source("./07_metadata_SI-index_relations.R")
+```
+
+# SIVOCS FA & Model Generation
+
+
+## 1. Feature removal (update after the last meeting)
+
+Previously removed  features
+
+1. PFA - Variables
+```{r}
+features_to_rm
+```
+2. 

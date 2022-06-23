@@ -25,13 +25,12 @@ features_to_rm <- c(features_to_rm,
                     "concepts2"
                     )
 
-# remove the weak features
+# -> remove the weak features
 df_red <- feat_df.num_o[, !(colnames(feat_df.num_o ) %in% features_to_rm)]
 
 
-# Further feature removal 
+# Further feature removal (NEW) 
 #-------------------------------------------------------------------------------
-
 
 ## SI Familiarity Factor
 factor_1 <- c("familiarWithSI.response.", "transdisciplinaryExp.rate.")

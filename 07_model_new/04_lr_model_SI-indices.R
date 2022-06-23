@@ -1,3 +1,5 @@
+# TODO: ROW SUM Index
+
 source("./07_model_new/03_cfa_models.R")
 
 library(ordinal)  #ordinal regression package
@@ -35,7 +37,7 @@ si_index.strict_which <- df_fitted %>%
 
 si_index.strict <- rep(0, nrow(df_pred.strict)) 
 si_index.strict[unlist(si_index.strict_which)] <- 1
-
+sum(si_index.strict)
  
 # 3. Note each of the columns (some coluns include subcolumns)
 si_index.ord_weight <- rep(0, nrow(df_pred.strict)) 

@@ -74,7 +74,7 @@ library(car)
 library(candisc)
 library(jtools)
 
-setwd("/home/ubd/Nextcloud/utku_SIVOCS")
+#setwd("/home/ubd/Nextcloud/utku_SIVOCS")
 # Data Frame
 source("./02_analysis/02_static_responses.R")
 # colnames of the specific question groups

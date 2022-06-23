@@ -6,7 +6,7 @@ library(MASS)
 #-------------------------------------------------------------------------------
 
 # 1. DV: OUTCOMES
-ord_log_model.1 <- polr(
+ord_log_model <- polr(
   as.factor(round(outcomes)) ~ 
     ia_human_condition + 
     transdisciplinary_involvement +
@@ -16,15 +16,13 @@ ord_log_model.1 <- polr(
   Hess = T
   )
 ord_log_model.2 <- clm(
-  "as.factor(round(outcomes))~ia_human_condition+transdisciplinary_involvement+transdisciplinary_goals+innovativeness",
-  train,
+  as.factor(round(outcomes)) ~ ia_human_condition+transdisciplinary_involvement+transdisciplinary_goals+innovativeness,
+  data = train,
   link = "logit"
   )
+
 summary(ord_log_model.2)
-
-summary(ord_log_model.1)
-
-
+summary(ord_log_model)
 
 
 (ctable <- coef(summary(ord_log_model)))
@@ -58,16 +56,16 @@ model.rowmeans.1 <- clm("as.factor(si_index.rowmeans)~ia_human_condition+transdi
               data = train,
               link = "logit")
 
-model.rowmeans.2 <- polr("as.factor(si_index.rowmeans)~ia_human_condition+transdisciplinary_involvement+transdisciplinary_goals+innovativeness+outcomes",  
-              data = train,
-              Hess = T)
+## model.rowmeans.2 <- polr("as.factor(si_index.rowmeans)~ia_human_condition+transdisciplinary_involvement+transdisciplinary_goals+innovativeness+outcomes",  
+##               data = train,
+##               Hess = T)
 
-anova(modelnull.rowmeans, model.rowmeans)
-nagelkerke(fit  = model.rowmeans,
-           null = modelnull.rowmeans)  
-
-
-summary(model.rowmeans.1)
+## anova(modelnull.rowmeans, model.rowmeans)
+## nagelkerke(fit  = model.rowmeans,
+##            null = modelnull.rowmeans)  
+## 
+## 
+## summary(model.rowmeans.1)
 
 # 3. DV = si_index.ord_weight
 

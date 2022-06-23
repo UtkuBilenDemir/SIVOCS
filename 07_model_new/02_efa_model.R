@@ -41,14 +41,13 @@ summary(ten_factor)
 # RMSA is sufficient with 0.05
 # Factors can be corrrelated with each other up to 0.75
 
-
-
 #-------------------------------------------------------------------------------
 print(five_factor, cut = .4, digits = 2)
 plot(five_factor)
 cor.plot(five_factor)
 
-# Herman's method variance bias
+
+# Harman's method variance bias
 #-------------------------------------------------------------------------------
 single_factor <- fa(df_red.rescaled, rotate = "none", fm = "ml", nfactors = 1)
 # -- Explained Variance by 1 Factor is 0.26 which is smaller than 0.5 ==> 
