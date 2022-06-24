@@ -2269,7 +2269,7 @@ g4_freq.df <-  g4.df %>%
 
 sum(!is.na(g4.df))
 
-g <- ggplot(g4_freq.df, aes(x=., y=Freq))
+g <- ggplot(g4_freq.df, aes(x=g4.df, y=Freq))
 # Number of cars in each class:
 g + geom_col(fill="#338BBE")+
   #scale_x_discrete("", labels = c("No", "Yes")) +
@@ -2357,6 +2357,9 @@ g + geom_col(fill="#D32F49")+
   labs(subtitle = "In what way were those results taken up by 
        policy-making and/or public administration and/or governmental agencies?") +
   annotate("label", x = 3.2, y = 29, label = "bold(n) == 62/361", parse = TRUE) 
+
+den <- unlist(as.numeric(as.vector(feat_df$adoptByPolicyHow.SQ003. )) )+ as.numeric(as.vector(feat_df$adoptByPolicyHow.SQ002. ))+ as.numeric(as.vector(feat_df$adoptByPolicyHow.SQ001. ))
+sum(den>0)
 
 ```
 
@@ -2558,7 +2561,7 @@ trans_df <- trans_df %>%
 trans_df$Diss_name <- rep(colnames(h12.freq_df)[1:(ncol(h12.freq_df) - 1)], 2)
 
 # -> Visualise "concrete"
-g_trans <- ggplot(trans_df
+g_trans <- ggplot(trans_df[-c(1,2, 10, 11),]
             , aes(fill = Transdisciplinarity, x = Diss_name , y = Freq)
             )
 g_trans <- g_trans +
@@ -2584,9 +2587,9 @@ g_trans <- g_trans +
     , name = "Transdisciplinary involvement"
     ) + 
   coord_flip() +
-  scale_x_discrete(labels=c("dissChannels.peer." = "Peer reviewed journal publication"
-                            , "dissChannels.mono." = "Monography, contribution to a book"
-                            , "dissChannels.policy." = "Policy brief(s)"
+  scale_x_discrete(labels=c( #"dissChannels.peer." = "Peer reviewed journal publication"
+                            # "dissChannels.mono." = "Monography, contribution to a book"
+                             "dissChannels.policy." = "Policy brief(s)"
                             , "dissChannels.trad." = "Traditional media (TV/radio/print/etc.)"
                             , "dissChannels.prof." = "Professional journals/magazines"
                             , "dissChannels.policy." = "Policy brief(s)"
