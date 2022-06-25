@@ -36,6 +36,128 @@ corr_matrix <- df_model2 %>%
 best_correlations <- corr_matrix[order(corr_matrix$r, decreasing = T),]
 write.csv(best_correlations[1:100, ], "./07_model_new/best_correlations.csv")
 
+# OLD MODELS
+model_theory3 <-"
+  # SOLUTION ORIENTATION
+  ia_human_condition =~ 
+  motivation.welfare.+ 
+  benefitForNonAcademy+ 
+  targetGroupsGoals.improve. 
+  
+  #  ACTORS & NETWORKS
+  transdisciplinary_involvement =~ 
+  groupsInvolved.citiz. + 
+  groupsInvolved.civsoc. + 
+  groupsInvolved.welfare. + 
+  groupsInvolved.policy.+
+  natureOfInvolvement.citiz. + 
+  natureOfInvolvement.civsoc. + 
+  natureOfInvolvement.policy.+
+  natureOfInvolvement.welfare.
+  
+  
+  transdisciplinary_goals =~ 
+  targetGroupsGoals.socneeds. + 
+  targetGroupsGoals.socgroups. + 
+  targetGroupsGoals.empower. + 
+  targetGroupsGoals.diversity.
+  
+  # NOVELTY 
+  innovativeness =~
+  kindOfChange.pub. + 
+  kindOfChange.socgr. + 
+  kindOfChange.policy.+
+  kindOfChange.welfare. 
+  
+  
+  # OUTCOME
+  outcomes =~ 
+  impactTargetGroup.pub. + 
+  impactTargetGroup.socgr. + 
+  impactTargetGroup.welfare. + 
+  impactTargetGroup.civsoc. + 
+  impactTargetGroup.policy.+
+  Impactstatements.capab. + 
+  Impactstatements.emanc. + 
+  Impactstatements.understanding. + 
+  Impactstatements.mitig. + 
+  Impactstatements.unknown. + 
+  Impactstatements.unaddressed.
+"
+
+model_theory3.strict <-"
+  # SOLUTION ORIENTATION
+  ia_human_condition =~ 
+  motivation.welfare.+ 
+  benefitForNonAcademy+ 
+  targetGroupsGoals.improve. 
+  
+  #  ACTORS & NETWORKS
+  transdisciplinary_involvement =~
+  groupsInvolved.citiz.+
+  groupsInvolved.civsoc.+ 
+  natureOfInvolvement.citiz.+
+  natureOfInvolvement.civsoc.
+  
+  transdisciplinary_goals =~ 
+  targetGroupsGoals.socneeds. + 
+  targetGroupsGoals.socgroups. + 
+  targetGroupsGoals.empower. + 
+  targetGroupsGoals.diversity.
+  
+  # NOVELTY 
+  innovativeness =~
+  kindOfChange.pub. + 
+  kindOfChange.socgr. + 
+  kindOfChange.policy.+
+  kindOfChange.welfare. 
+  
+  # OUTCOME
+  outcomes =~ 
+  impactTargetGroup.pub. + 
+  impactTargetGroup.socgr. + 
+  impactTargetGroup.civsoc. + 
+  impactTargetGroup.policy.+
+  Impactstatements.capab. + 
+  Impactstatements.emanc. + 
+  Impactstatements.understanding. + 
+  Impactstatements.mitig.
+"
+model_theory4 <-"
+  # SOLUTION ORIENTATION
+  ia_human_condition =~ 
+  motivation.welfare.+ 
+  benefitForNonAcademy+ 
+  targetGroupsGoals.improve. 
+  
+  #  ACTORS & NETWORKS
+  transdisciplinary_involvement =~
+  groupsInvolved.citiz.+
+  groupsInvolved.civsoc.+ 
+  natureOfInvolvement.citiz.+
+  natureOfInvolvement.civsoc.
+  
+  transdisciplinary_goals =~ 
+  targetGroupsGoals.socneeds. + 
+  targetGroupsGoals.socgroups. + 
+  targetGroupsGoals.empower. + 
+  targetGroupsGoals.diversity.+
+  kindOfChange.socgr.
+  
+  # OUTCOME
+  outcomes =~ 
+  impactTargetGroup.pub. + 
+  impactTargetGroup.socgr. + 
+  impactTargetGroup.civsoc. + 
+  impactTargetGroup.policy.+
+  Impactstatements.capab. + 
+  Impactstatements.emanc. + 
+  Impactstatements.understanding. + 
+  Impactstatements.mitig.
+"
+
+
+# NEW MODELS
 
 # Collection of the variables that doesn't fit well:
 # impulseForNonAcad.tech.+
@@ -50,8 +172,6 @@ write.csv(best_correlations[1:100, ], "./07_model_new/best_correlations.csv")
 # ---
 # Impactstatements.unknown.+
 # Impactstatements.unaddressed.+
-
-
 
 miro_model <- "
 solution_orientation =~
@@ -287,8 +407,7 @@ solution_orientation =~
 motivation.welfare.+
 benefitForNonAcademy+
 impulseForNonAcad.soc.+
-targetGroupsGoals.improve.+
-targetGroupsGoals.empower.
+targetGroupsGoals.improve.
 
 actors_networks =~
 groupsInvolved.civsoc.+
@@ -300,7 +419,9 @@ trans_goals_achievements =~
 Impactstatements.emanc. +
 Impactstatements.capab.+
 targetGroupsGoals.socneeds.+
-targetGroupsGoals.socgroups.
+targetGroupsGoals.socgroups.+
+targetGroupsGoals.empower.+
+targetGroupsGoals.diversity.
 
 novelty =~
 scalabilityRating.out.+
@@ -311,7 +432,6 @@ kindOfChange.socgr.+
 kindOfChange.civsoc.
 
 outputs_outcomes =~
-targetGroupsGoals.diversity.+
 concepts3+
 impactTargetGroup.pub.+
 impactTargetGroup.socgr.+
@@ -319,6 +439,46 @@ impactTargetGroup.civsoc.+
 adoptByPolicy.rate.+
 Impactstatements.mitig.+
 Impactstatements.understanding.
+"
+
+# Even Broader outcome
+miro_model7 <- "
+solution_orientation =~
+motivation.welfare.+
+benefitForNonAcademy+
+impulseForNonAcad.soc.+
+targetGroupsGoals.improve.
+
+actors_networks =~
+groupsInvolved.civsoc.+
+groupsInvolved.citiz.+
+natureOfInvolvement.civsoc.+
+natureOfInvolvement.citiz.
+
+trans_goals_achievements =~
+Impactstatements.emanc. +
+Impactstatements.capab.+
+targetGroupsGoals.socneeds.+
+targetGroupsGoals.socgroups.+
+targetGroupsGoals.empower.+
+targetGroupsGoals.diversity.
+
+novelty =~
+scalabilityRating.out.+
+scalabilityRating.up.+
+Impactstatements.unknown.
+
+outputs_outcomes =~
+concepts3+
+impactTargetGroup.pub.+
+impactTargetGroup.socgr.+
+impactTargetGroup.civsoc.+
+adoptByPolicy.rate.+
+Impactstatements.mitig.+
+Impactstatements.understanding.+
+kindOfChange.pub.+
+kindOfChange.socgr.+
+kindOfChange.civsoc.
 "
 
 
@@ -339,7 +499,17 @@ fit.miro_model_ordered <- cfa(
   , ordered = T
   )
 
+fit.old_model_ordered <- cfa(
+  model_theory4
+  , data = df_model2
+  , estimator = "WLSMV"
+  , mimic = "Mplus"
+  , std.lv = T
+  , ordered = T
+  )
+
 summary(fit.miro_model_ordered, fit.measures = T, standardized = T, rsq = T)  # Not a good fit
+summary(fit.old_model_ordered, fit.measures = T, standardized = T, rsq = T)  # Not a good fit
 summary(fit.miro_model, fit.measures = T, standardized = T, rsq = T)  # Not a good fit
 
 parameterestimates(fit.miro_model)
