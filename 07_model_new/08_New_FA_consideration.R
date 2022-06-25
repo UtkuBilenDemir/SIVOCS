@@ -44,12 +44,76 @@ summary(six_factor_c)
 summary(eight_factor_v)
 
 print(eight_factor_v, cut = .4, digits = 2)
-plot(five_factor)
-cor.plot(five_factor)
 
 
 
----
+# ---
+  
+
+model_miro_1 <-"
+
+motivation_change =~ motivation.welfare.+
+benefitForNonAcademy+
+kindOfChange.pub.+
+kindOfChange.busi.+
+kindOfChange.socgr.+
+kindOfChange.welfare.+
+kindOfChange.civsoc.+
+kindOfChange.policy.
+
+motivation_impulse =~ 
+impulseForNonAcad.health.
+
+
+transdisciplinary_involvement =~ groupsInvolved.busi.+
+groupsInvolved.civsoc.+
+groupsInvolved.policy.+
+groupsInvolved.citiz.+
+groupsInvolved.media.+
+groupsInvolved.welfare.+
+natureOfInvolvement.res.+
+natureOfInvolvement.busi.+
+natureOfInvolvement.civsoc.+
+natureOfInvolvement.policy.+
+natureOfInvolvement.citiz.+
+natureOfInvolvement.media.+
+natureOfInvolvement.welfare.
 
 
 
+transdisciplinary_goals =~ 
+targetGroupsGoals.socneeds.+
+targetGroupsGoals.socgroups.+
+targetGroupsGoals.improve.+
+targetGroupsGoals.empower.+
+targetGroupsGoals.diversity.
+
+outcomes =~ impactTargetGroup.pub.+
+impactTargetGroup.busi.+
+impactTargetGroup.socgr.+
+impactTargetGroup.welfare.+
+impactTargetGroup.civsoc.+
+impactTargetGroup.policy.+
+Impactstatements.capab.+
+Impactstatements.emanc.+
+Impactstatements.understanding.+
+Impactstatements.mitig.+
+Impactstatements.unknown.+
+Impactstatements.unaddressed.
+"
+
+df_model <- as.data.frame(df_model)
+df_model$impulseForNonAcad.health.
+
+fit.model_miro <- cfa(model_miro_1, data = df_model, estimator = "MLR", mimic = "Mplus")
+
+summary(fit.model_miro, fit.measures = T, standardized = T, rsq = T)  # Not a good fit
+
+
+
+impulseForNonAcad.soc.+
+impulseForNonAcad.econ.+
+  
+impulseForNonAcad.ecol.+
+  
+impulseForNonAcad.tech.
