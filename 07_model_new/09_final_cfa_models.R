@@ -1,6 +1,12 @@
 # LAST SALVO STARTS HERE:
 source("./07_model_new/08_miroboard_models.R")
 
+# NOTES
+# ---
+# - Explain excluded variables
+# - ordered = T is a special computation for the ordinal variables
+
+
 # Collection of the variables that doesn't fit well:
 # impulseForNonAcad.tech.+
 # impulseForNonAcad.ecol.+
@@ -9,21 +15,22 @@ source("./07_model_new/08_miroboard_models.R")
 # motivation.prob.+
 # ---
 
-# model_miro6
-final_model1<- "
+# initially miro_model6
+final_model1 <- "
 solution_orientation =~
 motivation.welfare.+
 benefitForNonAcademy+
 impulseForNonAcad.soc.+
 targetGroupsGoals.improve.
 
-actors_networks =~
+# ACTORS & NETWORKS
+an_transdisciplinary_inv =~
 groupsInvolved.civsoc.+
 groupsInvolved.citiz.+
 natureOfInvolvement.civsoc.+
 natureOfInvolvement.citiz.
 
-trans_goals_achievements =~
+an_trandisciplinary_goals =~
 Impactstatements.emanc. +
 Impactstatements.capab.+
 targetGroupsGoals.socneeds.+
@@ -35,9 +42,9 @@ novelty =~
 scalabilityRating.out.+
 scalabilityRating.up.+
 Impactstatements.unknown.+
+Impactstatements.unaddressed.+
 kindOfChange.pub.+
-kindOfChange.socgr.+
-kindOfChange.civsoc.
+kindOfChange.socgr.
 
 outputs_outcomes =~
 concepts3+
@@ -57,13 +64,14 @@ benefitForNonAcademy+
 impulseForNonAcad.soc.+
 targetGroupsGoals.improve.
 
-actors_networks =~
+# ACTORS & NETWORKS
+an_transdisciplinary_inv =~
 groupsInvolved.civsoc.+
 groupsInvolved.citiz.+
 natureOfInvolvement.civsoc.+
 natureOfInvolvement.citiz.
 
-trans_goals_achievements =~
+an_transdisciplinary_goals =~
 Impactstatements.emanc. +
 Impactstatements.capab.+
 targetGroupsGoals.socneeds.+
@@ -75,7 +83,9 @@ novelty =~
 scalabilityRating.out.+
 scalabilityRating.up.+
 Impactstatements.unknown.+
-Impactstatements.unaddressed.
+Impactstatements.unaddressed.+
+kindOfChange.pub.
+
 
 outputs_outcomes =~
 concepts3+
@@ -84,10 +94,7 @@ impactTargetGroup.socgr.+
 impactTargetGroup.civsoc.+
 adoptByPolicy.rate.+
 Impactstatements.mitig.+
-Impactstatements.understanding.+
-kindOfChange.pub.+
-kindOfChange.socgr.+
-kindOfChange.civsoc.
+Impactstatements.understanding.
 "
 
 
@@ -117,7 +124,7 @@ summary(
   , fit.measures = T
   , standardized = T
   , rsq = T
-  ) 
+  )
 
 # -> FIT both models
 pred1 <- predict(fit.final_model1)
@@ -153,3 +160,4 @@ pred_df2 <- as.data.frame(
 
 
 
+den$FIT["tli"]
