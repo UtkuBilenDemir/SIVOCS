@@ -54,7 +54,6 @@ acad_mot <- c("motivation.pheno.")
 df_red <- df_red %>%
   dplyr::select(-all_of(acad_mot))
 
-colnames(df_red)
 
 # Contribution to SI is a control variable
 #-------------------------------------------------------------------------------

@@ -108,13 +108,12 @@ fit.final_model1 <- cfa(
   , ordered = T
   )
 
-
 fit.final_model2 <- cfa(
   final_model2
   , data = df_model2
   , estimator = "WLSMV"
   , mimic = "Mplus"
-  , std.lv = T
+  # , std.lv = T
   , ordered = T
   )
 
@@ -159,5 +158,54 @@ pred_df2 <- as.data.frame(
 
 
 
+library(semPlot)
+semPlot::semPaths(fit.final_model2)
 
-den$FIT["tli"]
+
+## semPaths(fit.final_model2,
+##          what = "std", # this argument controls what the color of edges represent. In this case, standardized parameters
+##          whatLabels = "est", # This argument controls what the edge labels represent. In this case, parameter estimates
+##          style = "lisrel", # This will plot residuals as arrows, closer to what we use in class
+##          residScale = 8, # This makes the residuals larger
+##          theme = "colorblind", # qgraph colorblind friendly theme
+##          nCharNodes = 0, # Setting this to 0 disables abbreviation of nodes
+##          # manifests = paste0("Q",1:10), # Names of manifests, to order them appropriatly.
+##          reorder = FALSE, # This disables the default reordering
+##          # nodeNames = nodeNames, # Add a legend with node names
+##          legend.cex = 0.5, # Makes the legend smaller
+##          rotation = 2, # Rotates the plot
+##          layout = "tree2", # tree layout options are "tree", "tree2", and "tree3"
+##          cardinal = "lat cov", # This makes the latent covariances connet at a cardinal center point
+##          curvePivot = TRUE, # Changes curve into rounded straight lines
+##          sizeMan = 4, # Size of manifest variables
+##          sizeLat = 10, # Size of latent variables
+##          mar = c(2,5,2,5.5), # Figure margins
+##          filetype = "pdf", width = 8, height = 6, filename = "SIVOCS_path_diag" # Save to PDF
+## )
+
+
+lavInspect(fit.final_model2, "cov.lv")
+lavInspect(fit.final_model2, "cor.lv")
+
+
+
+inspect(fit.final_model2, "cor.lv")
+
+
+
+# ------------------------------------------------------------------------------
+# Model Tables
+
+library(modelsummary)
+library(kableExtra)
+library(gt)
+
+models <- list(
+  "Model" = fit.final_model2
+)
+
+modelsummary(models)
+
+
+
+

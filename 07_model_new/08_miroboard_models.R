@@ -521,25 +521,25 @@ cov(df_model2)
 
 
 library(semPlot)
-semPaths(fit.miro_model_ordered, what = "std", # this argument controls what the color of edges represent. In this case, standardized parameters
-         whatLabels = "est", # This argument controls what the edge labels represent. In this case, parameter estimates
-         style = "lisrel", # This will plot residuals as arrows, closer to what we use in class
-         residScale = 8, # This makes the residuals larger
-         theme = "colorblind", # qgraph colorblind friendly theme
-         nCharNodes = 0, # Setting this to 0 disables abbreviation of nodes
-         ## manifests = paste0("Q",1:10), # Names of manifests, to order them appropriatly.
-         reorder = FALSE, # This disables the default reordering
-         ## nodeNames = nodeNames, # Add a legend with node names
-         legend.cex = 0.5, # Makes the legend smaller
-         rotation = 2, # Rotates the plot
-         layout = "tree2", # tree layout options are "tree", "tree2", and "tree3"
-         cardinal = "lat cov", # This makes the latent covariances connet at a cardinal center point
-         curvePivot = TRUE, # Changes curve into rounded straight lines
-         sizeMan = 4, # Size of manifest variables
-         sizeLat = 10, # Size of latent variables
-         mar = c(2,5,2,5.5), # Figure margins
-         filetype = "pdf", width = 8, height = 6, filename = "SIVOCS" #  Save to PDF
-)
+## semPaths(fit.miro_model_ordered, what = "std", # this argument controls what the color of edges represent. In this case, standardized parameters
+##          whatLabels = "est", # This argument controls what the edge labels represent. In this case, parameter estimates
+##          style = "lisrel", # This will plot residuals as arrows, closer to what we use in class
+##          residScale = 8, # This makes the residuals larger
+##          theme = "colorblind", # qgraph colorblind friendly theme
+##          nCharNodes = 0, # Setting this to 0 disables abbreviation of nodes
+##          ## manifests = paste0("Q",1:10), # Names of manifests, to order them appropriatly.
+##          reorder = FALSE, # This disables the default reordering
+##          ## nodeNames = nodeNames, # Add a legend with node names
+##          legend.cex = 0.5, # Makes the legend smaller
+##          rotation = 2, # Rotates the plot
+##          layout = "tree2", # tree layout options are "tree", "tree2", and "tree3"
+##          cardinal = "lat cov", # This makes the latent covariances connet at a cardinal center point
+##          curvePivot = TRUE, # Changes curve into rounded straight lines
+##          sizeMan = 4, # Size of manifest variables
+##          sizeLat = 10, # Size of latent variables
+##          mar = c(2,5,2,5.5), # Figure margins
+##          filetype = "pdf", width = 8, height = 6, filename = "SIVOCS" #  Save to PDF
+## )
 
 
 

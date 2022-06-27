@@ -1,6 +1,5 @@
 source("./07_model_new/13_logit_models.R")
 
-source("./07_model_new/05_logit_model.R")
 library(nnet)
 #multi_log_model <- multinom(as.factor(round(outcomes)) ~ 
 
