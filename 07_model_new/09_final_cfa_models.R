@@ -117,6 +117,15 @@ fit.final_model2 <- cfa(
   , ordered = T
   )
 
+saveRDS(fit.final_model2, "./07_model_new/fit.final_model2.Rds")
+saveRDS(df_model2, "./07_model_new/df_model2.Rds")
+
+fit2 <- semTable::semTable ( fit.final_model2 , file =
+                         file.path ( "./07_model_new/outputs/" , "fit" ) ,
+                        type = "csv" ,
+                       print.results = T,
+                       )
+
 
 summary(
   fit.final_model2
@@ -205,6 +214,15 @@ models <- list(
 )
 
 modelsummary(models)
+
+semoutput::sem_tables(fit.final_model2, )
+?sem_tables()
+
+sem_fitmeasures(fit.final_model2)
+sem_factorloadings(fit.final_model2)
+
+
+
 
 
 

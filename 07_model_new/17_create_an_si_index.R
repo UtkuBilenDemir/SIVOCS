@@ -160,7 +160,8 @@ factor_domain.plot <- ggarrange(
   , out_dist + rremove("ylab")
   , common.legend = TRUE
   , legend = "top"
-  )
+  ) + 
+  labs(caption = "(Pauloo, et al. 2017)")
 ggsave("../SIVOCS/utku/V8_Valuation of SNSF funded research through social innovation_utku_v3/factor_domain.svg", factor_domain.plot)
 
 

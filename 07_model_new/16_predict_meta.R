@@ -11,7 +11,7 @@ outcomes4 <- ifelse(
 )
 
 
-multi_log_model.domain <- multinom(SSH  ~ 
+multi_log_model.domain <- multinom(domain  ~ 
     solution_orientation + 
     an_transdisciplinary_inv +
     an_transdisciplinary_goals +

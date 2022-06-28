@@ -1,10 +1,10 @@
 source("./07_model_new/06_multinomial_logit_regression.R")
 
-library(dplyr)
 library(ggplot2)
 library(tidyverse)
 library(plotly)
 library(ggpubr)
+library(dplyr)
 
 summary(df_indexes$si_index.ord_weight)
 df_indexes$si_index_3 <-  ifelse(
@@ -23,7 +23,7 @@ df_meta_indexes <- as.data.frame(cbind(df_indexes, meta_df))
 si_domain_0 <- df_meta_indexes %>%
   dplyr::select(si_index_3, domain) %>%
   dplyr::group_by(domain, si_0 = si_index_3 == 0) %>%
-  dplyr::summarise(si_index_3 = n()) %>%
+  dplyr::summarise(si_index_3 = dplyr::n()) %>%
   filter(si_0 == T) %>%
   as.data.frame()
 
@@ -32,7 +32,7 @@ si_domain_0 <- df_meta_indexes %>%
 si_domain_1 <- df_meta_indexes %>%
   dplyr::select(si_index_3, domain) %>%
   dplyr::group_by(domain, si_1 = si_index_3 == 1) %>%
-  dplyr::summarise(si_index_3 = n()) %>%
+  dplyr::summarise(si_index_3 = dplyr::n()) %>%
   filter(si_1 == T) %>%
   as.data.frame()
 
@@ -40,23 +40,23 @@ si_domain_1 <- df_meta_indexes %>%
 si_domain_2 <- df_meta_indexes %>%
   dplyr::select(si_index_3, domain) %>%
   dplyr::group_by(domain, si_2 = si_index_3 == 2) %>%
-  dplyr::summarise(si_index_3 = n()) %>%
+  dplyr::summarise(si_index_3 = dplyr::n()) %>%
   filter(si_2 == T) %>%
   as.data.frame()
 
 si_domain_3 <- df_meta_indexes %>%
   dplyr::select(si_index_3, domain) %>%
   dplyr::group_by(domain, si_3 = si_index_3 == 3) %>%
-  dplyr::summarise(si_index_3 = n()) %>%
+  dplyr::summarise(si_index_3 = dplyr::n()) %>%
   filter(si_3 == T) %>%
   as.data.frame()
 
 
 
 df_meta_indexes %>% 
-  select(si_index.ord_weight, domain) %>%
-  group_by(si_index.ord_weight) %>%
-  summarise(n())
+  dplyr::select(si_index.ord_weight, domain) %>%
+  dplyr::group_by(si_index.ord_weight) %>%
+  dplyr::summarise(dplyr::n())
 
 as.data.frame(table(df_meta_indexes$si_index_3, df_meta_indexes$domain ))
 
