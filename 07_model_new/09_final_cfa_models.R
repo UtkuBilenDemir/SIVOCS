@@ -216,12 +216,6 @@ models <- list(
 modelsummary(models)
 
 semoutput::sem_tables(fit.final_model2, )
-?sem_tables()
-
-sem_fitmeasures(fit.final_model2)
-sem_factorloadings(fit.final_model2)
-
-
 
 
 

@@ -62,24 +62,6 @@ col_div <- c("#d53e4f",
              "#99d594",
              "#3288bd")
 
-# col_seq <- col_div[(length(col_div) - 2):length(col_div)]
-
-# col_seq <- c("#d1e5f0",
-# "#4393c3",
-# "#053061")
-
-# 10 Color sequential
-#67001f
-#b2182b
-#d6604d
-#f4a582
-#fddbc7
-#d1e5f0
-#92c5de
-#4393c3
-#2166ac
-#053061
-
 col_seq <- c("#f4a582",
              "#92c5de",
              "#2166ac")
@@ -139,11 +121,37 @@ items_likert <-
   #likert(grouping=data$domain)
   likert()
 
-likert_plot(items_likert, h=FALSE, c=c(1,3,5)) + theme( axis.text.y = element_text( 
+likert_plot2 <- function(recoded_likert, h=TRUE, t=4, c = 1:3) {
+  plot( recoded_likert, 
+        # Group the items alphabetically
+        group.order=as.vector(items_likert$results$Item)[c(2,3,1)],
+        # Plot the percentages for each response category
+        plot.percents = TRUE,
+        # Plot the total percentage for negative responses
+        plot.percent.low = FALSE,
+        # Plot the total percentage for positive responses
+        plot.percent.high = FALSE,
+        # Whether response categories should be centered
+        # This is only helpful when there is a middle response
+        # option such as "neutral" or "neither agree nor disagree"
+        centered = TRUE,
+        include.histogram = h,
+        # Wrap label text for item labels
+        wrap=80,
+        text.size=t,
+        colors =  c("#D32F49", "#F4A582", "#DFDFDF", "#92C5DE", "#338BBE")[c] 
+
+        )
+
+
+}
+
+likert_plot2(items_likert, h=FALSE, c=c(1,3,5)) + theme( axis.text.y = element_text( 
   size=g_tick_size_main), axis.text.x = element_text(
-    size=g_tick_size_side), axis.title=element_text(size=g_tick_size_side), legend.text=element_text(size=g_tick_size_side)) + annotate("label", x = 3, y = -100, label = "bold(n) == 352/361", parse = TRUE) +
-  annotate("label", x = 2, y = -100, label = "bold(n) == 360/361", parse = TRUE) +
-  annotate("label", x = 1, y = -100, label = "bold(n) == 112/361", parse = TRUE) 
+    size=g_tick_size_side), axis.title=element_text(size=g_tick_size_side), legend.text=element_text(size=g_tick_size_side)) + 
+  annotate("label", x = 1, y = -100, label = "bold(n) == 352/361", parse = TRUE) +
+  annotate("label", x = 3, y = -100, label = "bold(n) == 360/361", parse = TRUE) +
+  annotate("label", x = 2, y = -100, label = "bold(n) == 112/361", parse = TRUE) 
 
 39 + 19 + 20 + 21 + 6 + 15
 ```
@@ -792,72 +800,7 @@ c <- dg_df[, c(1,4)] %>%
 
 a+b+c
 
-## dg2_df <- as.data.frame(cbind(d1.problem_rec,
-##                              feat_df.num$impactTargetGroup.pub., 
-##                              feat_df.num$impactTargetGroup.civsoc.,
-##                              feat_df.num$impactTargetGroup.socgr.
-##                              )
-##                        )
-## dg3_df <- as.data.frame(cbind(d1.phenome_rec,
-##                              feat_df.num$impactTargetGroup.pub., 
-##                              feat_df.num$impactTargetGroup.civsoc.,
-##                              feat_df.num$impactTargetGroup.socgr.
-##                              )
-##                        )
-## 
-## dg2_df$d1.problem_rec <- likert_recode(feat_df.num$motivation.prob.)
-## dg3_df$d1.phenome_rec <- likert_recode(feat_df.num$motivation.pheno.)
-## 
-## a2 <- dg_df[, c(1,2)] %>% 
-##   filter(!is.na(d1.welfare_rec)) %>%
-##   gather(key="V2", value="d1.welfare_rec") %>%
-##   ggplot(aes(x=V2, y=d1.welfare_rec, fill=d1.welfare_rec),  show.legend = FALSE) +
-##     geom_boxplot() +
-##   ylab(" ") +
-##   theme_light() +
-##   theme(axis.text.y=element_blank(), legend.position = "none") +
-##   scale_fill_discrete(name = "Motivation to improve human condition") + 
-##   xlab("general population") + 
-##   scale_fill_manual(values=col_seq, name="Motivation to improve human condition")
-## a3 <- dg_df[, c(1,2)] %>% 
-##   filter(!is.na(d1.welfare_rec)) %>%
-##   gather(key="V2", value="d1.welfare_rec") %>%
-##   ggplot(aes(x=V2, y=d1.welfare_rec, fill=d1.welfare_rec),  show.legend = FALSE) +
-##     geom_boxplot() +
-##   ylab(" ") +
-##   theme_light() +
-##   theme(axis.text.y=element_blank(), legend.position = "none") +
-##   scale_fill_discrete(name = "Motivation to improve human condition") + 
-##   xlab("general population") + 
-##   scale_fill_manual(values=col_seq, name="Motivation to improve human condition")
-## 
-## 
-## b <- dg_df[, c(1,3)] %>% 
-##   filter(!is.na(d1.welfare_rec)) %>%
-##   gather(key="V3", value="d1.welfare_rec") %>%
-##   ggplot(aes(x=V3, y=d1.welfare_rec, fill=d1.welfare_rec),  show.legend = FALSE) +
-##     geom_boxplot() +
-##   ylab(" ") +
-##   theme_light() +
-##   theme(axis.text.y=element_blank(), legend.position = "none") +
-##   scale_fill_discrete(name = "Motivation to improve human condition") + 
-##   xlab("specific social groups") + 
-##   scale_fill_manual(values=col_seq, name="Motivation to improve human condition")
-## 
-## c <- dg_df[, c(1,4)] %>% 
-##   filter(!is.na(d1.welfare_rec)) %>%
-##   gather(key="V4", value="d1.welfare_rec") %>%
-##   ggplot(aes(x=V4, y=d1.welfare_rec, fill=d1.welfare_rec),  show.legend = FALSE) +
-##     geom_boxplot() +
-##   ylab(" ") +
-##   theme_light() +
-##   theme(axis.text.y=element_blank()) +
-##   scale_fill_discrete(name = "Motivation to improve human condition") + 
-##   xlab("NGOs, advocacy or civil soc. groups") + 
-##   scale_fill_manual(values=col_seq, name="Mot. to imp. human cond.") +
-## 
-##   guides(fill = guide_legend(reverse = TRUE))
-## 
+
 ```
 
 ```{r}
@@ -2333,7 +2276,7 @@ printnum(a, gt1 = FALSE, digits = 2)
 
 
 
-```{r G5_bar, echo=FALSE, fig.width=4, dev='svg', fig.retina=2, fig.align='center'}
+```{r G5_bar, echo=FALSE, dev='svg', fig.retina=2, fig.align='center'}
 
 g5_freq.df <- g5.df[, 1:ncol(g5.df)-1]
 g5_freq.df <- as.data.frame(sapply(FUN=table, g5_freq.df))
@@ -2356,7 +2299,7 @@ g + geom_col(fill="#D32F49")+
       size=g_tick_size_side), axis.title=element_text(size=g_tick_size_side), legend.text=element_text(size=g_tick_size_side)) +
   labs(subtitle = "In what way were those results taken up by 
        policy-making and/or public administration and/or governmental agencies?") +
-  annotate("label", x = 3.2, y = 29, label = "bold(n) == 62/361", parse = TRUE) 
+  annotate("label", x = 3.2, y = 29, label = "bold(n) == 62/79", parse = TRUE) 
 
 den <- unlist(as.numeric(as.vector(feat_df$adoptByPolicyHow.SQ003. )) )+ as.numeric(as.vector(feat_df$adoptByPolicyHow.SQ002. ))+ as.numeric(as.vector(feat_df$adoptByPolicyHow.SQ001. ))
 sum(den>0)

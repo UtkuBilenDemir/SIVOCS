@@ -1,38 +1,29 @@
 source("./07_model_new/17_create_an_si_index.R")
 
- # install.packages("GGally")
+library("dplyr")
+library("ggplot2")
+library("alluvial")
+library("ggforce")
+library("ggalluvial")
+library("ggparallel")
 library(GGally)
 
-# -> greated intervalls in fitted df
+# -> split factors into intervalls in fitted df
 den <- cfa_pred_df[, 1:5]
 split3 <- function(var) {
   var <- ifelse(var <= 3, 0,
-           ifelse(var <= 6, 1, 2))
+           ifelse(var < 7 , 1, 2))
   return(var)
 }
 
-split4 <- function(var) {
-  var <- ifelse(var < 3, 0,
-           ifelse(var < 7, 1, 2))
-  return(var)
-}
-
+# -> Create a basis for the SI-Indec by calculating the rowSums of the factors
 den <- as.data.frame(sapply(den, split3))
 den$sum <- as.vector(rowSums(den))
 
+# -> Introduce the raw index and place it with the other factors
 cfa_pred_df$den_ind <- factor(split3(den$sum))
-cfa_pred_df  <- cfa_pred_df[, c(1:5, 8 , 6:7, 9:12)]
-
-## ggparcoord(data = cfa_pred_df,
-##            columns = 1:6,
-##            groupColumn = "den_ind",
-##            showPoints = TRUE,
-##            scale = "globalminmax"
-##            
-##            ) +
-##   scale_color_brewer(palette = "Set2") +
-##   theme_light()
-
+colnames(cfa_pred_df)
+cfa_pred_df  <- cfa_pred_df[, c(1:5, 13 , 6:12)]
 
 class(den)
 
@@ -40,66 +31,14 @@ class(den)
 # -> Try alluvial:
 #-------------------------------------------------------------------------------
 
-library("dplyr")
-library("ggplot2")
-library("alluvial")
-## devtools::install_github('thomasp85/ggforce')
-library("ggforce")
-## devtools::install_github("corybrunson/ggalluvial")
-library("ggalluvial")
-library("ggparallel")
-
+# -> Define graph colors (darker colors for SI-Index)
 A_col <- "darkorchid1"
 A_col2 <- "darkorchid3"
-# A_col <- "#F87474"
-# A_col <- "#d73027"
-# A_col2 <- "#a50026"
 B_col <- "darkorange1"
 B_col2 <- "darkorange3"
-# B_col <- "#FFB562"
-# B_col <- "#fdae61"
-# B_col2 <- "#f46d43"
 C_col <- "skyblue1"
 C_col2 <- "skyblue3"
-# C_col <- "#3AB0FF"
-# C_col <- "#4575b4"
-# C_col2 <- "#313695"
 alpha <- 0.7 # transparency value
-fct_levels <- c("A","C","B")
-
-dat_raw <- data.frame(Tested  = sample(c("A","B","C"),100,
-                                       replace = TRUE,prob=c(0.2,0.6,0.25)),
-                      Modeled = sample(c("A","B","C"),100,
-                                       replace = TRUE,prob=c(0.56,0.22,0.85)),
-                      stringsAsFactors = FALSE)
-dat <- dat_raw %>%
-  group_by(Tested,Modeled) %>%
-  dplyr::summarise(freq = n()) %>%
-  ungroup()
-dat_raw2 <- dat_raw %>%
-  mutate_at(vars(Modeled, Tested), 
-            funs(factor(., levels = fct_levels)))
-
-dat_raw2$test2 <- dat_raw2$Tested
-levels(dat_raw2$test2) <- c("A 25%", "C 35%", "B 60%")
-
-ggparallel(list("Modeled", "Tested", "test2"), data = dat_raw2, 
-           alpha = alpha
-           , order = 0
-           , label.size = 6,
-           , text.angle=0) +
-  scale_fill_manual(values  = c(A_col, B_col, C_col, A_col, B_col, C_col, A_col, B_col, C_col)) +
-  scale_color_manual(values  = c(A_col, B_col, C_col, A_col, B_col, C_col, A_col, B_col, C_col)) +
-  theme_minimal() +
-  theme(
-    legend.position = "none",
-    panel.grid.major = element_blank(), 
-    panel.grid.minor = element_blank(),
-    axis.text.y = element_blank(),
-    axis.title.y = element_blank(),
-    axis.text.x = element_text(size = 18, face = "bold")
-  )
-
 
 si_index <- den$solution_orientation + 
   den$an_transdisciplinary_inv*0.5 + 
@@ -107,7 +46,6 @@ si_index <- den$solution_orientation +
   den$novelty +
   den$outputs_outcomes
 
-den <- den[, 1:5]
 # If there are more than 1 zero in a line, si_index is set to be a 0
 for (i in seq_len(nrow(den))) {
   k = 2
@@ -131,12 +69,13 @@ den$an_transdisciplinary_goals <- factor(den$an_transdisciplinary_goals)
 den$novelty <- factor(den$novelty)
 den$outputs_outcomes <- factor(den$outputs_outcomes)
 den$si_index <- factor(den$si_index)
-levels(den$solution_orientation) <- c("0 - 2\n(32%)", "3 - 6\n(57%)", "7 - 10\n(11%)")
-levels(den$an_transdisciplinary_inv) <- c("0 - 2\n(48%)", "3 - 6\n(46%)", "7 - 10\n(6%)")
-levels(den$an_transdisciplinary_goals) <- c("0 - 2\n(35%)", "3 - 6\n(56%)", "7 - 10\n(9%)")
-levels(den$novelty) <- c("0 - 2\n(35%)", "3 - 6\n(58%)", "7 - 10\n(7%)")
-levels(den$outputs_outcomes) <- c("0 - 2\n(31%)", "3 - 6\n(59%)", "7 - 10\n(10%)")
-levels(den$si_index) <- c("0 - 2\n(39%)", "3 - 6\n(51%)", "7 - 10\n(10%)")
+
+levels(den$solution_orientation) <- c("0 - 3\n(32%)", "4 - 6\n(57%)", "7 - 10\n(11%)")
+levels(den$an_transdisciplinary_inv) <- c("0 - 3\n(48%)", "4 - 6\n(46%)", "7 - 10\n(6%)")
+levels(den$an_transdisciplinary_goals) <- c("0 - 3\n(35%)", "4 - 6\n(56%)", "7 - 10\n(9%)")
+levels(den$novelty) <- c("0 - 3\n(35%)", "4 - 6\n(58%)", "7 - 10\n(7%)")
+levels(den$outputs_outcomes) <- c("0 - 3\n(31%)", "4 - 6\n(59%)", "7 - 10\n(10%)")
+levels(den$si_index) <- c("0 - 3\n(39%)", "4 - 6\n(51%)", "7 - 10\n(10%)")
 table(den$si_index)/361
   
 den_plot <- ggparallel(list(
@@ -165,7 +104,14 @@ den_plot <- ggparallel(list(
     axis.text.x = element_text(size = 16, face = "bold", angle = 45, hjust=1)
   ) + scale_x_discrete(labels= c("Sol.-Orientation", "Transdisc. Involvement", "Transdisc. Goals", "Novelty", "Outcomes", "SI-Index"))
 
-ggsave(den_plot, device="svg", filename = "../SIVOCS/utku/V8_Valuation of SNSF funded research through social innovation_utku_v3/si_alluvial.svg")
+ggsave(
+  den_plot
+  , device="svg"
+  , filename = "../SIVOCS/utku/V8_Valuation of SNSF funded research through social innovation_utku_v3/si_alluvial.svg"
+  , dpi = 900
+  , width = 16
+  , height = 10
+  )
 
 
 # -> Create a domain distribution plot
@@ -207,6 +153,72 @@ si_dist
 sum(7 <=cfa_pred_df$si_index)
 
 cor(cfa_pred_df$si_index, feat_df.num_o$contribToSI.rate.)
-anova(cfa_pred_df$si_index, feat_df.num_o$contribToSI.rate.)
+## anova(cfa_pred_df$si_index, feat_df.num_o$contribToSI.rate.)
+
+cfa_pred_df.rating_mean
+
+
+
+
+
+mean(cfa_pred_df$si_index - feat_df.num$contribToSI.rate., na.rm = T)
+sum(!is.na(feat_df.num$contribToSI.rate.))
+
+class(cfa_pred_df$si_index)
+
+index_contrib_df <- as.data.frame(
+  cbind(
+  si_index = cfa_pred_df$si_index,
+  contribToSI.rate. = feat_df.num$contribToSI.rate.
+  #, domain = cfa_pred_df$domain
+  )
+)
+
+likert_recode
+summary(feat_df.num$contribToSI.rate.)
+
+index_contrib_df$contribToSI.rate. <- likert_recode(index_contrib_df$contribToSI.rate.)
+col_seq <- c("#f4a582",
+             "#92c5de",
+             "#2166ac")
+
+index_contrib_cor <- cor(index_contrib_df$si_index, feat_df.num$contribToSI.rate., method = "spearman", use = "pairwise.complete.obs")
+index_contrib_df %>% 
+  filter(!is.na(contribToSI.rate.)) %>%
+  gather(key="contribToSI.rate.", value="si_index") %>%
+  ggplot( aes(x=si_index, y=contribToSI.rate., fill = contribToSI.rate.)) +
+  geom_boxplot() +
+  ylab(" ") +
+  scale_x_continuous(breaks = seq(0,10,2)) +
+  theme_light() + 
+  theme(axis.text.y=element_blank()) +
+  xlab("SI-Index") +
+  scale_fill_manual(values=col_seq, name="Contribution to SI (self-assessment)")+
+  guides(fill = guide_legend(reverse = TRUE)) + 
+  annotate("text", x = 1, y = 3.5, label = paste0("Cor. (Spearman's rho): ", round(index_contrib_cor, 2)))
+
+
+
+
+
+
+
+
+
+
+shapiro.test(as.numeric(cfa_pred_df$si_index - feat_df.num$contribToSI.rate.))
+t.test( feat_df.num$contribToSI.rate., cfa_pred_df$si_index,paired = TRUE, alternative = "two.sided")
+
+mean( feat_df.num_o$contribToSI.rate.)
+
+kruskal.test(cfa_pred_df$si_index ~ feat_df.num$contribToSI.rate.)
+wilcox.test(cfa_pred_df$si_index[!is.na(feat_df.num$contribToSI.rate.)], as.numeric(feat_df.num$contribToSI.rate.)[!is.na(feat_df.num$contribToSI.rate.)],
+                                   mu = 0,
+                                   alt = "two.sided",
+                                   conf.int = T,
+                                   conf.level = 0.95,
+                                   paired = F,
+                                   correct = T,
+                                   p.adjust="bonferroni" )
 
 

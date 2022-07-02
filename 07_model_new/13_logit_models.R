@@ -5,17 +5,6 @@ library(MASS)
 # ORDINAL LOGISTIC REGRESSION
 #-------------------------------------------------------------------------------
 
-# 1. DV: OUTCOMES
-## ord_log_model <- polr(
-##   as.factor(round(outputs_outcomes)) ~ 
-##     solution_orientation + 
-##      an_transdisciplinary_inv +
-##      an_transdisciplinary_goals +
-##      novelty,
-##    train,
-##   Hess = T
-##   )
-
 ord_log_model.2 <- clm(
   as.factor(round(outputs_outcomes)) ~ 
     solution_orientation + 
@@ -30,25 +19,6 @@ summary(ord_log_model.2)
 summary(ord_log_model)
 
 
-## (ctable <- coef(summary(ord_log_model)))
-## p <- pnorm(abs(ctable[, "t value"]), lower.tail = F) * 2
-## (ctable <- cbind("p value" = p))
-## 
-## 
-## train[1:5, "outputs_outcomes"]
-## pred <- predict(ord_log_model, train[1:5, ], type = "prob")
-## print(pred, digits = 2)
-## colnames(pred)[apply(pred, 1,which.max)]
-## 
-## 
-## pred2 <- predict(ord_log_model, test[1:5, ], type = "prob")
-## print(pred2, digits = 2)
-## colnames(pred2)[apply(pred2, 1,which.max)]
-## 
-## pred3 <- predict(ord_log_model, train)
-## (tab <- table(pred3, train$outcomes))
-## 1- sum(diag(tab))/sum(tab)
-## babap <- as.data.frame(tab)
 
 # 2. DV = si_index.rowmeans
 
