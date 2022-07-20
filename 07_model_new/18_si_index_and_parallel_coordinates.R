@@ -197,15 +197,6 @@ index_contrib_df %>%
   guides(fill = guide_legend(reverse = TRUE)) + 
   annotate("text", x = 1, y = 3.5, label = paste0("Cor. (Spearman's rho): ", round(index_contrib_cor, 2)))
 
-
-
-
-
-
-
-
-
-
 shapiro.test(as.numeric(cfa_pred_df$si_index - feat_df.num$contribToSI.rate.))
 t.test( feat_df.num$contribToSI.rate., cfa_pred_df$si_index,paired = TRUE, alternative = "two.sided")
 
