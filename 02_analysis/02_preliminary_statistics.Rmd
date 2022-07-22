@@ -1,0 +1,76 @@
+---
+title: "SIVOCS"
+output: html_notebook
+---
+
+```{r libraries, echo=FALSE, warning=FALSE}
+library(ggplot2)
+library(plotly)
+library(magrittr)
+library(limer)
+library(yaml)
+library(digest)
+library(caTools)
+library(base64enc)
+```
+
+```{r cred, warning=FALSE, include=FALSE}
+cred <- read_yaml("../01_data/cred.yaml")
+cred$user
+
+#change the next options (website, user, password)
+options(lime_api = cred$connector)
+options(lime_username = cred$user)
+options(lime_password = cred$password)
+
+# first get a session access key
+get_session_key()
+# list all surveys. A vector is returned
+survey_vector <- call_limer(method='list_surveys')
+# Convert the vector into a matrix
+survey_matrix <- matrix(survey_vector, ncol=5)
+
+
+```
+
+
+```{r echo=FALSE, warning=FALSE}
+na_values <- c("")
+df <- get_responses(iSurveyID = 718586, sResponseType = 'short')
+
+```
+
+```{r methods, echo=FALSE, warning=FALSE}
+
+barplot <- function (df, var) {
+  return(plot_ly(df, x = df[[var]]))
+}
+```
+
+
+## Age distribution
+
+```{r, warning=FALSE, echo=FALSE}
+barplot(df, 'How.old.are.you.')
+```
+
+
+```{r, fig.margin=TRUE}
+
+cross_den <-
+  ggplot(df,
+         aes(y = groupsInvolved.civsoc., x = transdisciplinaryExp.rate.)
+         ) +
+  geom_smooth(
+    method = lm,
+    se = TRUE,
+    fullrange = TRUE,
+    color = '#e7298a'
+  ) +
+  geom_jitter(color = '#377eb8') +
+  theme_minimal() +
+  geom_point(color = '#377eb8') +
+  theme(legend.position = "top")
+
+cross_den
+```

@@ -1,0 +1,118 @@
+---
+title: "SIVOCS Interview Candidates | Batch 2"
+runningheader: "Selection Criteria" # only for pdf output
+subtitle: "" # only for html output
+author: ""
+date: "`r Sys.Date()`"
+output:
+  tufte::tufte_book:
+    citation_package: natbib
+    latex_engine: xelatex
+    keep_tex: true
+  tufte::tufte_handout:
+    citation_package: natbib
+    latex_engine: xelatex
+  tufte::tufte_html: default
+bibliography: skeleton.bib
+link-citations: yes
+---
+
+```{r setup, include=FALSE}
+library(tufte)
+library(ggplot2)
+library(tidyr)
+library(scales)
+library(ggthemes)
+library(ggthemr)
+library(gridExtra)
+library(stringr)
+# invalidate cache when the tufte version changes
+knitr::opts_chunk$set(cache.extra = packageVersion('tufte'))
+options(htmltools.dir.version = FALSE)
+# why do I even have to do this
+knitr::opts_knit$set(root.dir = rprojroot::find_rstudio_root_file())
+
+g_tick_size_main <- 9 
+g_tick_size_side <- 7 
+```
+
+
+```{r include=FALSE}
+df_ult <- readRDS("./batch2.1.RDS")
+source("./02_analysis/02_static_responses.R")
+
+```
+
+
+# Selection
+
+The second batch of interview candidates focuses on unusual or unexpected cases along with the projects that scored high in one or multiple SI-related variables. There are 2 main clusters that encapsulate the selection process; Cluster 1 is generally concerned with the projects that have been relatively high rated regarding multiple outcome variables despite having low ratings in other key SI variables or vice versa and Cluster 3 includes the projects that have overall high rating in key SI variables. 
+
+The criteria used for each cluster is as follows.
+
+## Cluster 1 (19 projects): 
+
+* Low motivation to benefit society - High SI contribution (self-assessment)
+* Low transdisciplinary involvement - High public outcome
+* Low motivation to improve human condition - high impact statement on emancipation/ capability/ understanding
+
+
+## Cluster 3 (12 projects):
+
+* High motivation to imp. human condition + changed behaviour (public, policy, civil society orgs)
+* High SI familiarity (and/or high overall SI stats)
+
+## Final
+
+After a manual elimination, from the ~80 selected projects, approximately 38 relatively less related projects are eliminated, **leaving 42 respondents in total** (12f | 29 ~ 30%).
+
+
+```{r gender, echo=FALSE, message=FALSE, warning=FALSE}
+gen <- as.data.frame(table(df_ult$gender))
+g <- ggplot(gen, aes(x=Var1, y=Freq))+
+  #theme_fivethirtyeight()+
+  #theme_calc()+
+  scale_x_discrete(breaks= pretty_breaks())
+
+
+
+# Number of cars in each class:
+
+g + 
+  geom_col(fill="#D32F49") + 
+  theme_light() +
+   theme( axis.text.y = element_text( 
+                         size=g_tick_size_side), axis.text.x = element_text(
+                         size=g_tick_size_side), axis.title=element_text(size=g_tick_size_side), legend.text=element_text(size=g_tick_size_side)) + geom_text(aes(label=Freq), vjust=1.6, color="white", size=5) +
+scale_x_discrete("") + 
+  scale_y_continuous("count") 
+ 
+```
+
+Also, the distribution of the sci. domains in the final sample is as follows:
+
+
+
+```{r echo=FALSE, fig.fullwidth = TRUE}
+gen <- as.data.frame(table(df_ult$domain))
+gen$Var1 <- as.vector(gen$Var1)
+gen$Var1[3] <- "Math., Natural- and Eng. Sci."
+gen$Var1[2] <- "HSS"
+g <- ggplot(gen, aes(x=Var1, y=Freq))
+
+
+
+# Number of cars in each class:
+
+g + 
+  geom_col(fill="#338BBE") + 
+  theme_light() +
+  theme( axis.text.y = element_text( 
+                         size=g_tick_size_side), axis.text.x = element_text(
+                         size=g_tick_size_side), axis.title=element_text(size=g_tick_size_side), legend.text=element_text(size=g_tick_size_side)) + geom_text(aes(label=Freq), hjust=1.6, color="white", size=5) +
+scale_x_discrete("") + 
+  scale_y_continuous("count") +
+  coord_flip() 
+
+```
+
