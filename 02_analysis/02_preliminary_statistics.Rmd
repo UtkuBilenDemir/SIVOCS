@@ -2,6 +2,7 @@
 title: "SIVOCS"
 output: html_notebook
 ---
+
 ```{r libraries, echo=FALSE, warning=FALSE}
 library(ggplot2)
 library(plotly)
@@ -11,8 +12,6 @@ library(yaml)
 library(digest)
 library(caTools)
 library(base64enc)
-
-
 ```
 
 ```{r cred, warning=FALSE, include=FALSE}
@@ -37,7 +36,6 @@ survey_matrix <- matrix(survey_vector, ncol=5)
 
 ```{r echo=FALSE, warning=FALSE}
 na_values <- c("")
-## df <- read.csv("../01_data/results-survey718586.csv", na = na_values)
 df <- get_responses(iSurveyID = 718586, sResponseType = 'short')
 
 ```
@@ -58,49 +56,21 @@ barplot(df, 'How.old.are.you.')
 
 
 ```{r, fig.margin=TRUE}
-# IDV: Satisfaction with democracy, DV: symp_fpoe
-cross_den <- ggplot(df, aes(y=groupsInvolved.civsoc., x=transdisciplinaryExp.rate.)) +
-  #geom_point(size=2, shape=23) +
-  geom_smooth(method=lm, se=TRUE, fullrange=TRUE, color='#e7298a'
-              )+
-  geom_jitter(color='#377eb8')+
+
+cross_den <-
+  ggplot(df,
+         aes(y = groupsInvolved.civsoc., x = transdisciplinaryExp.rate.)
+         ) +
+  geom_smooth(
+    method = lm,
+    se = TRUE,
+    fullrange = TRUE,
+    color = '#e7298a'
+  ) +
+  geom_jitter(color = '#377eb8') +
   theme_minimal() +
-  #scale_x_continuous(breaks = seq(1,20,1)) + 
-  geom_point(color='#377eb8')+
-  #scale_shape_manual(values=c(3, 16, 17))+ 
-  # scale_color_manual('#56B4E9')+
-  theme(legend.position="top")
-##+ 
-  #geom_color(label=coalitions$age < 35)
-  ## labs(
-    #title="Relationship between ideological placement and preference for ÖVP-ÖFP coalition",
-    ##)
+  geom_point(color = '#377eb8') +
+  theme(legend.position = "top")
+
 cross_den
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
----
-
-```{r test}
-unique(df$How.old.are.you.)
-```
-
-```{r}
-
-
-```
-

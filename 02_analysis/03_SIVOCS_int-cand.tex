@@ -48,8 +48,17 @@
 
 % pandoc syntax highlighting
 
-% longtable
-\usepackage{longtable,booktabs}
+% table with pandoc
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
 
 % multiplecol
 \usepackage{multicol}
@@ -67,7 +76,7 @@
 
 % title / author / date
 \title[Selection Criteria]{SIVOCS Interview Candidates}
-\date{2021-12-16}
+\date{2022-07-22}
 
 
 \begin{document}
@@ -197,9 +206,9 @@ Also, the distribution of the sci. disciplines in the final sample is as
 follows:
 
 \begin{longtable}[]{@{}lr@{}}
-\toprule
+\toprule()
 Var1 & Freq \\
-\midrule
+\midrule()
 \endhead
 Architecture and Social urban science & 1 \\
 Arts & 1 \\
@@ -230,7 +239,7 @@ Swiss history & 4 \\
 Technical Physics & 1 \\
 Visual arts and Art history & 2 \\
 Zoology & 1 \\
-\bottomrule
+\bottomrule()
 \end{longtable}
 
 \bibliography{skeleton.bib}

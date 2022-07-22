@@ -1,4 +1,3 @@
-base
 tufte
 dplyr
 ggplot2
@@ -10,3 +9,17 @@ psych
 corrplot
 lattice
 nFactors
+kableExtra
+ggiraph
+ggiraphExtra
+plyr
+sjPlot
+sjmisc
+sjlabelled
+fastDummies
+stringr
+scales
+GGally
+carData
+car
+plotly

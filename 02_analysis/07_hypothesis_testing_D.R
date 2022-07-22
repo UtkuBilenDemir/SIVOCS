@@ -80,6 +80,3 @@ print(d.fit)
 # Visualize
 loads <- e1.fit$loadings
 fa.diagram(loads)
-
-summary(e1.df)
-

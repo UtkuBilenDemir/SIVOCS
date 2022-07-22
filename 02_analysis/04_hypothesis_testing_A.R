@@ -55,21 +55,7 @@ a1e1.princomp <- princomp(na.omit(a1e1.df), cor = T)
 summary(a1e1.princomp)
 plot(a1e1.princomp)
 
-a1e1.factanal <- factanal(na.omit(data[, c("transdisexp",e1.colnames)]), factors = 3, rotation = "varimax") 
-a1e1.factanal
-
 biplot(a1e1.princomp)
-fa(r = na.omit(data[, c("transdisexp",e1.colnames)]),
-   nfactors = 3,
-   rotate = "varimax",
-   fm = "ml",
-   residuals = T
-    )
-# Corr. Matrix of all A1-E1
-chart.Correlation(data[, c("transdisexp",e1.colnames)], histogram=TRUE, pch=19)
-
-
-
 
 # A1 into 3 clusters (kinda redundant?)
 trans_exp <- data$transdisciplinaryExp.rate.
@@ -88,26 +74,14 @@ ggplot(data, aes(x = transdisexp, y = groupsInvolved.res.)) +
   stat_smooth(method = "lm") +
   geom_jitter()
 
-data$groupsInvolved.civsoc.
-
 a <- lm(data=data, transdisexp ~ groupsInvolved.citiz. + groupsInvolved.res. + groupsInvolved.citiz.:groupsInvolved.res.)
 b <- lm(data=data, transdisexp ~ groupsInvolved.citiz. + groupsInvolved.res.)
 
 c <- lm(data=data, transdisexp ~ groupsInvolved.citiz. + groupsInvolved.res. + groupsInvolved.civsoc. + groupsInvolved.citiz.:groupsInvolved.res.)
 
-
-
-
-
-
-
-
-corrplot(data.questions)
 data.questions.numeric <- data.questions[, as.vector(sapply(FUN=is.numeric, data.questions))]
 
 corrplot(cor(na.omit(data.questions.numeric[, 1:10])))
 chart.Correlation(data[, c("transdisexp",e1.colnames)],
                            histogram = TRUE,
                            pch = 19)
-
-

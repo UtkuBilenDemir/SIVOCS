@@ -192,26 +192,6 @@ gen_dist <- tibble(
   percentages = c(den$Sample..1002.[1:2], den$Respondents..361.[1:2]),
   fct = c(rep("Sample (n = 1002)", 2), rep("Restpondents (n = 361)", 2))
 ) 
-
-
-## gen_waffle <- ggplot(gen_dist, aes(fill=gender, values=percentages*100)) +
-##   geom_waffle(color = "white", size=1.125, n_rows = 10, n_cols=10) +
-##   facet_wrap(~fct, ncol=2) +
-##   scale_x_discrete(expand=c(0,0)) +
-##   scale_y_discrete(expand=c(0,0)) +
-##   scale_fill_manual(values=c("#43bea5", "#BB3099")) +
-##   coord_equal() +
-##   labs(
-##     title = "",
-##     fill = "Gender"
-##   ) +
-##   
-##   theme_ipsum_rc(grid="") +
-##   theme_enhance_waffle()
-## 
-## gen_waffle
-## ggsave(file="gen_waffle.svg", plot=gen_waffle, scale=0.5, dpi=900)
-
 ```
 
 
@@ -223,7 +203,6 @@ dene <- den[, 2:4]
 dene$Sample..1002. <- label_percent(accuracy = 1)(dene$Sample..1002.) 
 dene$Respondents..361. <- label_percent(accuracy = 1)(dene$Respondents..361.) 
 colnames(dene) <- c("Category", "Sample (n=1002)", "Respondents (n=361)") 
-#den[[1]] <- inMinipage(den[[1]], "2.5cm")
 dene$Category[dene$Category == unique(dene$Category)[5] ] <- "Math., Natur. and Eng. Sci."
 
 
@@ -506,12 +485,6 @@ knitr::include_graphics("../trans_likert.svg")
   + similar across different groups in terms of extent and depth of involvement (*marginal* / *central*)
 
 
-```{r}
-
-#save_plot("trans_likert.svg", trans_likert , width = 22, height = 20) + font_size(axis_title.x = 40)
-```
-
-
 ---
 
 # Transdisciplinary Aspects: Nature of Involvement
@@ -680,9 +653,6 @@ g + geom_col(fill= "#338BBE") +
 ]
 
 
-
-
-
 ---
 # Outcome-orientation: Direct Contribution
 
@@ -755,8 +725,6 @@ den3_df <- as.data.frame(cbind(
 ))
 
 den3_df$Count <- as.numeric(den3_df$Count)
-##dene_df <- as.data.frame(cbind( c(denden_df$V1 , denden_df$V2, denden_df$V3, denden_df$V4, denden_df$V5, denden_df$V6), c(denden_df$change, denden_df$change, denden_df$change, denden_df$change, denden_df$change, denden_df$change), rep(rownames(den_df), length(denden_df$change), each=TRUE)))
-##dene_df$V1 <- as.numeric(dene_df$V1)
 den3_df <- den3_df[!den3_df$target_group == "kindOfChange.acad.",]
 rownames(den3_df) <- 1:nrow(den3_df)
 den3_df <- den3_df[c(19:24, 7:12, 1:6, 13:18) ,]
@@ -803,18 +771,9 @@ g4_freq.df <-  g4.df %>%
   table() %>%
   as.data.frame()
 
-## g4_items_likert <- 
-##   #round(d1.df) %>%
-##   g4.df %>%
-##   mutate_all(likert_recode) %>%
-##   likert(grouping = data$domain)
-##  
-## likert_plot(g4_items_likert, h=FALSE)
-
 g <- ggplot(g4_freq.df, aes(x=., y=Freq))
 # Number of cars in each class:
 g + geom_col(fill="#338BBE")+
-  #scale_x_discrete("", labels = c("No", "Yes")) +
   scale_y_continuous("count") + 
   theme_minimal()+ geom_text(aes(label=Freq), vjust=1.6, color="white", size=5) + theme( axis.text.y = element_text( 
                          size=g_tick_size_side), axis.text.x = element_text(

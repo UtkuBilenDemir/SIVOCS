@@ -16,7 +16,6 @@ library(sjlabelled)
 library(tidyverse)
 library(gt)
 
-
 # Data Frame
 source("./02_analysis/02_static_responses.R")
 # colnames of the specific question groups
@@ -122,12 +121,6 @@ ggplot(g1e1.df3,
   theme_minimal() +
   scale_x_continuous(breaks = seq(1,20,1)) + 
   geom_point(color='#377eb8') +
-  #scale_y_continuous(name = "UNC45A", limits = c(5,15), breaks = seq(5, 15, 2)) + 
-  #theme(plot.title = element_text(hjust = 0.5), 
-        #panel.background = element_blank(), 
-  #      axis.line = element_line(color="black"), 
-  #      axis.line.x = element_line(color="black")) 
-  #theme_bw()
   labs(
     x="groupsInvolved",
     y = "impactTargetGroup")
@@ -150,6 +143,3 @@ corr_matrix_plt(cbind(g4.df, f3.df, e1.modf, d1.df, d2.df, g1.modf.3))
 
 #--- G6
 corr_matrix_plt(g6.df)
-
-
-#... G composite

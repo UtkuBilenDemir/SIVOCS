@@ -1,31 +1,79 @@
 ---
-title: "R Notebook"
+title: "SIVOCS | Model building"
 output:
-  pdf_document: default
-  html_notebook: default
+  html: default
+  github_document: default
 ---
 
-```{r setup, echo = FALSE}
-# Data Frame
-source("02_static_responses.R")
+```{r setup, include=FALSE}
+source("./02_analysis/02_static_responses.R")
+# Load the feature importances from python script
+feature_list <- read.csv("./02_analysis/PFA_feature_importance.csv")
 
 ```
 
-
-```{r aa, warning=FALSE}
-feature_list <- read.csv("./PFA_feature_importance.csv")
-
-barplot(x=feature_list$X0, y = feature_list$X1)
+```{r include = FALSE}
+library(psych)
+library(plotly)
 ```
 
-Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Cmd+Option+I*.
 
-When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Cmd+Shift+K* to preview the HTML file). 
+## Principal Feature Analysis
 
-The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
+> In some applications it might be desired to pick a subset of the original features rather then find a mapping that uses all of the original features. The benefits of finding this subset of features could be in saving cost of computing unnecessary features, saving cost of sensors (in physical measurement systems), and in excluding noisy features while keeping their information using “clean” features (for example tracking points on a face using easy to track points- and inferring the other points based on those few measurements).
 
 
-```{python}
+How does the algorithm look like:
 
+```python:
+
+class PFA(object):
+    def __init__(self, n_features, q=None):
+        self.q = q
+        self.n_features = n_features
+
+    def fit(self, X):
+        if not self.q:
+            self.q = X.shape[1]
+
+        sc = StandardScaler()
+        X = sc.fit_transform(X)
+
+        pca = PCA(n_components=self.q).fit(X)
+        A_q = pca.components_.T
+
+        kmeans = KMeans(n_clusters=self.n_features).fit(A_q)
+        clusters = kmeans.predict(A_q)
+        cluster_centers = kmeans.cluster_centers_
+
+        dists = defaultdict(list)
+        for i, c in enumerate(clusters):
+            dist = euclidean_distances([A_q[i, :]], [cluster_centers[c, :]])[0][0]
+            dists[c].append((i, dist))
+
+        self.indices_ = [sorted(f, key=lambda x: x[1])[0][0] for f in dists.values()]
+        self.features_ = X[:, self.indices_]
 ```
 
+##  Results of PFA
+
+* PFA has been looped **1000** times, feature frequencies are as follows
+
+
+```{r}
+
+fig <- plot_ly(x = feature_list$X1, y = feature_list$X0, type = 'bar', orientation = 'h')
+
+fig
+```
+
+
+
+
+
+```{r pressure, echo=FALSE}
+features_to_rm <- tail(feature_list$X0, 40)
+features_to_rm
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

@@ -1,6 +1,9 @@
 library(fastDummies)
 library(stringr)
 
+# This will be the main source of df generation
+# since querying through limesurvey-API behaves buggy
+
 data <- read.csv("./01_data/results-survey718586.csv")
 fata <- read.csv("./01_data/results-survey718586.csv", stringsAsFactors = TRUE)
 

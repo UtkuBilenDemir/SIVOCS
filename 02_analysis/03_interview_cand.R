@@ -2,15 +2,6 @@ library(dplyr)
 library(ggplot2)
 source("./02_analysis/02_static_responses.R")
 
-colnames(data)[142:ncol(data)] <- c("persID",
-                                    "gender",
-                                    "projID",
-                                    "title",
-                                    "discipline",
-                                    "funding",
-                                    "runtime"
-                                    )
-
 stem.fields <- c("Astronomy, Astrophysics and Space Sciences",
                   "Biophysic",
                   "Experimental Microbiology",
@@ -20,11 +11,6 @@ stem.fields <- c("Astronomy, Astrophysics and Space Sciences",
                   "Neurophysiology and Brain Research",
                   "Organic Chemistry",
                   "Technical Physics")
-
-## ggplot(data=data, aes(x=contribToSI.rate., y=transdisciplinaryExp.rate.))+
-##   geom_point()+
-##   geom_smooth(method="lm") +
-##   geom_text(aes(label=id))
 
 si.sum <- summary(as.numeric(data$contribToSI.rate.))
 si.sum
@@ -66,17 +52,13 @@ df_high_td.not_stem.si <- df_high_td.not_stem[temp_ind,]
 df_high_td.not_stem.si
 
 
-table(df_high_td.stem.si$gender)
-table(df_high_td.not_stem.si$gender)
 # 2. Add the cases with high transdisciplinarity exp. 
 # and high self SI asses.
 df_ult <- rbind(df_ult, df_high_td.stem.si)
 df_ult <- rbind(df_ult, df_high_td.stem.fe)
 df_ult <- rbind(df_ult, df_high_td.not_stem.si)
 df_ult <- df_ult[!duplicated(df_ult), ] # 52 Obs | 10f 42m
-table(df_ult$discipline)
 
-table(df_ult$gender)
 # Remove those from the main df
 data <- data[!(data$id %in% df_ult$id),]
 
@@ -87,21 +69,9 @@ hc.high_range <- hc.sum["3rd Qu."] : hc.sum["Max."]
 hc.high_ind <- which(data$motivation.welfare. %in% hc.high_range)
 df_high_hc <- data[hc.high_ind, ]
 
-summary(df_high_hc$contribToSI.rate.)
 df_high_hc.cit <- df_high_hc %>% filter(groupsInvolved.citiz. > 0)
-cbind(df_high_hc.cit$id, df_high_hc.cit$discipline, df_high_hc.cit$title)
-
-
-df_high_hc.cit
-dim(df_high_hc.cit)
-
 
 df_high_hc.civsoc <- df_high_hc %>% filter(impactTargetGroup.civsoc. > 3)
-cbind(df_high_hc.civsoc$discipline, df_high_hc.civsoc$title)
-
-
-data[data$id == 216,]
-(data)
 
 # Unsatisfactory representation 
 data_fem <- data[data$gender == "female", ]
@@ -144,7 +114,6 @@ df_ult <- df_ult[, c(11, 1:10, 12:ncol(df_ult))]
 # Remove duplicates
 df_ult <- df_ult[!duplicated(df_ult), ] # 64
 
-table(df_ult$gender)
 # Reset row numbers
 row.names(df_ult) <- 1:nrow(df_ult)
 
@@ -157,6 +126,5 @@ df_ult <- df_ult[-c(64,66,46,39,35,33,59,69,63,45, 26, 23, 16, 1, 55,70),]
 row.names(df_ult) <- 1:nrow(df_ult)
 
 
-table(df_ult$gender)
 write.csv(df_ult, "SIVOCS_int-cand.csv")
 saveRDS(df_ult, "df_ult.RDS")

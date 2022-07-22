@@ -26,6 +26,8 @@ library(ggthemes)
 library(ggthemr)
 library(gridExtra)
 library(stringr)
+library(PerformanceAnalytics)
+
 # invalidate cache when the tufte version changes
 knitr::opts_chunk$set(cache.extra = packageVersion('tufte'))
 options(htmltools.dir.version = FALSE)
@@ -46,15 +48,9 @@ The selection of ~60 candidates for the interview process has been carried out w
 
 The distribution of some of the important variables as well as their correlations with each other can be seen in the Figure \@ref(fig:corr).
 
-
 ```{r corr, echo=FALSE, message=FALSE, warning=FALSE}
-# TODO: Correlation matrix
-
-library("PerformanceAnalytics")
 chart.Correlation(data[, c("contribToSI.rate.", "familiarWithSI.response.", "transdisciplinaryExp.rate.", "motivation.welfare.","groupsInvolved.citiz.")], histogram=TRUE, pch=19)
-
 ```
-
 
 ## Step 1: Contribution to SI (self-assessment)
 
@@ -66,8 +62,6 @@ The selected 34 (28m | 6f) participants are lying between the 3rd quantile (8) a
 ggthemr("fresh")
 ggplot(data, aes(x=contribToSI.rate.))+
   geom_bar()+
-  #theme_fivethirtyeight()+
-  #theme_calc()+
   scale_x_continuous(breaks= pretty_breaks())
 ```
 
@@ -94,13 +88,7 @@ Variables *motivation to improve the human condition* and *rate of involvement o
 
 ```{r wf_gi_lm, echo=FALSE, message=FALSE, warning=FALSE}
 data$collaboration <- factor(data$natureOfInvolvement.citiz. %in% c('cocr' , "collab"))
-##data$cocreation <- factor(data$natureOfInvolvement.citiz. == "cocr")
-##cocr <- ggplot(data=data, aes(x=motivation.welfare., y=groupsInvolved.citiz., color=cocr))+
-##  geom_point()+
-##  geom_smooth(method="lm") 
-##collab <- ggplot(data=data, aes(x=motivation.welfare., y=groupsInvolved.citiz., color=collab))+
-##  geom_point()+
-##  geom_smooth(method="lm") 
+
 cocr <- ggplot(data=data, aes(x=motivation.welfare., y=groupsInvolved.citiz., colour= collaboration))+
   geom_point()+
   geom_smooth(method="lm") +
@@ -128,27 +116,22 @@ Considering the observations in the study correspond to the projects and not the
 ggthemr("fresh")
 ggplot(data, aes(x=familiarWithSI.response.))+
   geom_bar()+
-  #theme_fivethirtyeight()+
-  #theme_calc()+
   scale_x_continuous(breaks= pretty_breaks())
 ```
+
 This relatively small cluster has been also analyzed manually with the consideration of answers to open and meta-questions like *feedback*, *title of the project* etc., some of the participants were specially selected for their critical feedback on the nature of the study. This process added 8 more participants to the list. 
 
 # Final
 
 After a manual elimination, from the 71 selected projects in total 16 relatively less related projects are eliminated, **leaving 55 participants in total** (14f | 41 ~ 25%, see Figure \@ref(fig:gender)).
 
-
 ```{r gender, echo=FALSE, message=FALSE, warning=FALSE}
 ggplot(df_ult, aes(x=factor(gender), fill=factor(gender)))+
   geom_bar()+
-  #theme_fivethirtyeight()+
-  #theme_calc()+
   scale_x_discrete(breaks= pretty_breaks())
 ```
 
 Also, the distribution of the sci. disciplines in the final sample is as follows:
-
 
 ```{r warning=FALSE, , echo=FALSE}
 ##ggplot(df_ult, aes(x=discipline))+
